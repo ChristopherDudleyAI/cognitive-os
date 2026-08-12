@@ -1,0 +1,13 @@
+# Secrets
+config.json
+
+# Data (local databases)
+data/
+
+# Python
+__pycache__/
+*.pyc
+venv/
+
+# Claude Code local settings
+.claude/settings.local.json
