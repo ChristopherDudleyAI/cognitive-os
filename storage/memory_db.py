@@ -5,6 +5,37 @@ from datetime import datetime
 
 class MemoryDB:
 
+    # Canonical column order. row_to_dict() zips this against SELECT *,
+    # so it must stay in the same order as the CREATE TABLE below, and
+    # new columns must be appended rather than inserted mid-list.
+    EXPECTED_COLUMNS = [
+        ('id', 'TEXT'),
+        ('memory_type', 'TEXT'),
+        ('memory_text', 'TEXT'),
+        ('practice_area', 'TEXT'),
+        ('matter_type', 'TEXT'),
+        ('matter_id', 'TEXT'),
+        ('extraction_category', 'TEXT'),
+        ('importance', 'TEXT'),
+        ('date_created', 'TEXT'),
+        ('date_of_event', 'TEXT'),
+        ('last_used', 'TEXT'),
+        ('retrieval_count', 'INTEGER'),
+        ('source_attorney', 'TEXT'),
+        ('confidence', 'TEXT'),
+        ('status', 'TEXT'),
+        ('outcome', 'TEXT'),
+        ('outcome_date', 'TEXT'),
+        ('opposing_counsel', 'TEXT'),
+        ('judge', 'TEXT'),
+        ('fact_pattern_tags', 'TEXT'),
+        ('related_memories', 'TEXT'),
+        ('tags', 'TEXT'),
+        ('permission_level', 'TEXT'),
+        ('source', 'TEXT'),
+        ('source_type', 'TEXT'),
+    ]
+
     def __init__(self, db_path="data/memories.db"):
         self.db_path = db_path
         self.init_database()
@@ -40,13 +71,32 @@ class MemoryDB:
                 fact_pattern_tags TEXT,
                 related_memories TEXT,
                 tags TEXT,
-                permission_level TEXT
+                permission_level TEXT,
+                source TEXT,
+                source_type TEXT
             )
         """)
+
+        self.migrate_schema(cursor)
 
         conn.commit()
         conn.close()
         print("Legal memory database initialized.")
+
+    def migrate_schema(self, cursor):
+        # Adds any column the table is missing. Without this, a database
+        # created before a column was introduced silently keeps its old
+        # shape (CREATE TABLE IF NOT EXISTS does not alter it) and every
+        # save() fails on the column count.
+        cursor.execute("PRAGMA table_info(memories)")
+        existing = {row[1] for row in cursor.fetchall()}
+
+        for column, coltype in self.EXPECTED_COLUMNS:
+            if column not in existing:
+                cursor.execute(
+                    f"ALTER TABLE memories ADD COLUMN {column} {coltype}"
+                )
+                print(f"Schema migration: added column '{column}'.")
 
     def save(self, memory: dict):
         if 'id' not in memory or not memory['id']:
@@ -70,7 +120,8 @@ class MemoryDB:
                 :outcome, :outcome_date,
                 :opposing_counsel, :judge,
                 :fact_pattern_tags, :related_memories,
-                :tags, :permission_level
+                :tags, :permission_level,
+                :source, :source_type
             )
         """, {
             'id': memory.get('id'),
@@ -95,7 +146,9 @@ class MemoryDB:
             'fact_pattern_tags': json.dumps(memory.get('fact_pattern_tags', [])),
             'related_memories': json.dumps(memory.get('related_memories', [])),
             'tags': json.dumps(memory.get('tags', [])),
-            'permission_level': memory.get('permission_level', 'llm_allowed')
+            'permission_level': memory.get('permission_level', 'llm_allowed'),
+            'source': memory.get('source'),
+            'source_type': memory.get('source_type')
         })
 
         conn.commit()
@@ -219,18 +272,7 @@ class MemoryDB:
         conn.close()
 
     def row_to_dict(self, row):
-        columns = [
-            'id', 'memory_type', 'memory_text',
-            'practice_area', 'matter_type', 'matter_id',
-            'extraction_category', 'importance',
-            'date_created', 'date_of_event',
-            'last_used', 'retrieval_count',
-            'source_attorney', 'confidence', 'status',
-            'outcome', 'outcome_date',
-            'opposing_counsel', 'judge',
-            'fact_pattern_tags', 'related_memories',
-            'tags', 'permission_level'
-        ]
+        columns = [name for name, _ in self.EXPECTED_COLUMNS]
 
         memory = dict(zip(columns, row))
 

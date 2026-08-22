@@ -80,22 +80,31 @@ class Structurer:
 
     def structure(self, candidate: dict,
                   source: str = "manual",
-                  project: str = None) -> dict:
+                  source_type: str = None,
+                  matter_id: str = None,
+                  date_of_event: str = None) -> dict:
 
         memory_id = "mem_" + str(uuid.uuid4())[:8]
         now = datetime.now().isoformat()
 
+        # matter_id, source, source_type and date_of_event come from the
+        # ingest form, not from the extractor. The model cannot know a
+        # firm's matter numbering, which document it is reading, or when
+        # the underlying event happened — so these are supplied by the
+        # caller and take precedence over anything the model emitted.
         memory = {
             "id": memory_id,
             "memory_type": candidate.get('memory_type', 'operational'),
             "memory_text": candidate.get('memory_text', '').strip(),
             "practice_area": candidate.get('practice_area', 'general'),
             "matter_type": candidate.get('matter_type', 'general'),
-            "matter_id": candidate.get('matter_id', None),
+            "matter_id": matter_id or candidate.get('matter_id') or None,
+            "source": source,
+            "source_type": source_type,
             "extraction_category": candidate.get('extraction_category', 'general'),
             "importance": candidate.get('importance', 'medium'),
             "date_created": now,
-            "date_of_event": candidate.get('date_of_event') or now,
+            "date_of_event": date_of_event or candidate.get('date_of_event') or now,
             "last_used": None,
             "retrieval_count": 0,
             "source_attorney": candidate.get('source_attorney', None),
@@ -245,13 +254,21 @@ class Structurer:
 
     def structure_batch(self, candidates: list,
                         source: str = "manual",
-                        project: str = None) -> list:
+                        source_type: str = None,
+                        matter_id: str = None,
+                        date_of_event: str = None) -> list:
 
         structured = []
 
         for candidate in candidates:
             try:
-                memory = self.structure(candidate, source, project)
+                memory = self.structure(
+                    candidate,
+                    source=source,
+                    source_type=source_type,
+                    matter_id=matter_id,
+                    date_of_event=date_of_event
+                )
                 structured.append(memory)
             except Exception as e:
                 print(f"Failed to structure candidate: {e}")

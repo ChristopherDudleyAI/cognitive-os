@@ -1292,4 +1292,54 @@ Whether the config's transcribed thresholds or the originally-reasoned ones are 
 
 ---
 
+### DECISION: Ingest form captures labels; extraction gets a branch-routing seam
+DATE: August 22, 2026
+STATUS: confirmed — implemented and tested (closes the four labeling issues)
+
+WHAT WAS DECIDED:
+Built the labeling batch as one change while the database was empty:
+- **Schema:** added `source` and `source_type` columns. Column order now lives once in `MemoryDB.EXPECTED_COLUMNS`; `row_to_dict()` derives from it instead of keeping a second hand-maintained list.
+- **Migration:** added `MemoryDB.migrate_schema()`, which `ALTER TABLE`s any missing column on startup.
+- **Structurer:** `structure()` and `structure_batch()` now accept and persist `source`, `source_type`, `matter_id`, and `date_of_event`. Form values take precedence over anything the model emits. The unused `project` parameter was removed.
+- **Extractor:** added a `BRANCHES` registry keyed by source type, each entry naming a prompt builder, chunk size, and default confidence. `extract()` routes through it and falls back to the court-transcript branch for unknown types. Prompt text is unchanged; it moved into `_court_transcript_prompt()` and the API call moved into `_call_model()`.
+- **UI:** Ingest tab now collects Source Type, Source Name, Matter ID, and Date of Event. Source Name, Matter ID, and text are required; the warning names exactly which are missing.
+- **Vector store:** `source_type` and `source` added to ChromaDB metadata so semantic search can filter on them later.
+
+WHY:
+Sequencing was the whole argument. The database was empty following the third reset, which made schema changes free — no migration, nothing to re-ingest. Any memory ingested before these fields existed would have needed full re-ingestion, since none of the four can be inferred from document text. Doing this before writing transcripts avoids a fourth reset for the same reason as the first three.
+
+Two design choices worth recording:
+1. **The dropdown is generated from `Extractor.BRANCHES`, not a config list.** It therefore cannot offer a source type with no extraction prompt behind it — the two cannot drift apart.
+2. **The routing seam was built now; the branches were not.** Only the court-transcript branch exists. Adding a second means adding a registry entry and a prompt builder rather than editing the extraction flow. This mirrors the existing `ingestion_model` config seam: build the seam early, fill it later.
+
+Christopher deferred the timing question — "ill let you decide when you think we are at a point to write transcripts" — so the sequencing call (labels before data) was made rather than asked.
+
+ALTERNATIVES CONSIDERED (if known):
+Writing Reynolds transcripts first, since it produces visible progress — rejected: anything ingested first would be thrown away. Adding `matter_id` to the extraction prompt — rejected on the standing rule that a model cannot know a firm's matter numbering. Building all eight extraction branches now — out of scope; only the seam was built. Keeping `project` and wiring it up — rejected as speculative; removed instead of left dangling.
+
+STILL OPEN / NEEDS REVISITING:
+Per-branch `default_confidence` is declared in the registry but not yet applied — `structurer` still defaults everything to `probable`. That is the separate confidence-defaults issue and needs the second branch to be meaningful.
+
+---
+
+### CORRECTION: schema changes no longer require a database reset
+DATE: August 22, 2026
+STATUS: confirmed (verified by test against a simulated legacy database)
+
+WHAT WAS DECIDED:
+Recorded as a change in what is true, not a new decision: adding a column no longer forces a wipe. Three of this project's database resets were driven at least partly by schema evolution against `CREATE TABLE IF NOT EXISTS`, which silently leaves an existing table at its old shape — so every `save()` afterward fails on column count with no obvious cause.
+
+`MemoryDB.migrate_schema()` now reads `PRAGMA table_info` on startup and `ALTER TABLE`s in any column missing from `EXPECTED_COLUMNS`, printing what it added.
+
+WHY:
+Verified rather than assumed: a 23-column database was constructed with a pre-existing row, opened with the new code, and checked. Both columns were added, the existing row survived intact and read back with `None` in the new fields, and a subsequent save with the new columns succeeded.
+
+ALTERNATIVES CONSIDERED (if known):
+Continuing to reset the database on schema change — the de facto practice until now; it works only while data is disposable, which stops being true the moment real transcripts are loaded.
+
+STILL OPEN / NEEDS REVISITING:
+The migration only adds columns. Renaming, dropping, or changing a column type is not handled and would still need manual intervention.
+
+---
+
 *(Append new entries below this line, oldest first, using the template above.)*
