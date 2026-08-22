@@ -28,6 +28,10 @@ class Structurer:
         self.controlled_vocabulary = vocabulary.CONTROLLED_VOCABULARY
         self.tag_checked_categories = vocabulary.TAG_CHECKED_CATEGORIES
 
+        # Posture coverage counters — see coverage_report().
+        self.ruling_memory_count = 0
+        self.missing_posture_count = 0
+
     def _normalize_tag(self, tag) -> str:
         if not isinstance(tag, str):
             return ""
@@ -215,7 +219,43 @@ class Structurer:
                     f"Memory: {preview}..."
                 )
 
+        # A ruling tag without a posture tag is the expensive failure.
+        # get_ruling_direction() falls back to a verb-based partition
+        # whose return values deliberately never compare equal to the
+        # posture-derived ones, so an un-postured ruling memory lands in
+        # the same cluster as postured ones and is counted as deviating
+        # from memories describing the same ruling. Surfacing it here
+        # makes the gap visible at ingest instead of as unexplained
+        # deviation noise at query time.
+        tag_set = set(normalized_tags)
+        if tag_set & vocabulary.RULING_TYPE_TAGS:
+            self.ruling_memory_count += 1
+            if not tag_set & vocabulary.POSTURE_TAGS:
+                self.missing_posture_count += 1
+                preview = memory['memory_text'][:60]
+                print(
+                    f"[POSTURE WARNING] {memory['id']} "
+                    f"({memory['extraction_category']}): "
+                    f"carries a ruling tag "
+                    f"{sorted(tag_set & vocabulary.RULING_TYPE_TAGS)} "
+                    f"but no posture tag — will not cluster with "
+                    f"postured rulings. Memory: {preview}..."
+                )
+
         return memory
+
+    def coverage_report(self) -> dict:
+        # Posture coverage over everything structured by this instance.
+        # Call after a batch to see the rate rather than inferring it
+        # from scattered warnings.
+        total = self.ruling_memory_count
+        missing = self.missing_posture_count
+        return {
+            'ruling_memories': total,
+            'missing_posture': missing,
+            'coverage_pct': round(100 * (total - missing) / total, 1)
+                            if total else None,
+        }
 
     def structure_batch(self, candidates: list,
                         source: str = "manual",

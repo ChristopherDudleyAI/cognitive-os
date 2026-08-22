@@ -65,7 +65,10 @@ def initialize_system():
         st.session_state.initialized = True
 
 def parse_response(response_text: str):
-    note_marker = "### 📊 Confidence Note"
+    # Must match the header the prompt in llm_interface/interface.py
+    # instructs the model to emit. Change both together or parsing
+    # silently stops finding the section.
+    note_marker = "### Confidence Note"
     caveat_marker = "### Confidence Caveat"
 
     main = response_text
@@ -141,14 +144,6 @@ def render_confidence_blocks(pattern_evidence: dict):
     if not pattern_evidence:
         return
 
-    confidence_colors = {
-        'high': '🟢',
-        'medium': '🟡',
-        'low': '🔴',
-        'contradicted': '🚨',
-        'insufficient_data': '⚪'
-    }
-
     confidence_labels = {
         'high': 'HIGH CONFIDENCE',
         'medium': 'MEDIUM CONFIDENCE',
@@ -188,12 +183,11 @@ def render_confidence_blocks(pattern_evidence: dict):
         corroborating_ids = evidence.get('corroborating_ids', [])
         deviating_ids = evidence.get('deviating_ids', [])
 
-        color = confidence_colors.get(confidence, '⚪')
         label = confidence_labels.get(
             confidence, 'LOW CONFIDENCE'
         )
 
-        st.markdown(f"#### {color} {entity} — {entity_type}")
+        st.markdown(f"#### {entity} — {entity_type}")
         st.markdown(f"**{label}**")
 
         col1, col2 = st.columns(2)
@@ -210,13 +204,13 @@ def render_confidence_blocks(pattern_evidence: dict):
 
         if confidence == 'contradicted':
             st.error(
-                "⚠️ WARNING: Deviating memories outweigh "
+                "WARNING: Deviating memories outweigh "
                 "corroborating memories. Review all memory IDs "
                 "before relying on this conclusion."
             )
         elif deviating_count > 0:
             st.warning(
-                f"⚠️ {deviating_count} memory(s) deviate "
+                f"{deviating_count} memory(s) deviate "
                 f"from this pattern."
             )
 
@@ -234,7 +228,7 @@ def render_confidence_blocks(pattern_evidence: dict):
 
         if deviating_ids:
             with st.expander(
-                f"⚠️ Deviating Memory IDs ({deviating_count})"
+                f"Deviating Memory IDs ({deviating_count})"
             ):
                 st.caption(
                     "These memories contradict or deviate "
@@ -248,13 +242,12 @@ def render_confidence_blocks(pattern_evidence: dict):
 def main():
     st.set_page_config(
         page_title="Cognitive OS — Legal Intelligence",
-        page_icon="⚖️",
         layout="wide"
     )
 
     initialize_system()
 
-    st.title("⚖️ Cognitive OS — Legal Intelligence Platform")
+    st.title("Cognitive OS — Legal Intelligence Platform")
 
     memory_count = st.session_state.memory_db.count()
     vector_count = st.session_state.vector_db.count()
@@ -376,7 +369,7 @@ def main():
                         if caveat_summary or caveat_bullets:
                             st.markdown("---")
                             st.markdown(
-                                "### ⚠️ Confidence Caveat"
+                                "### Confidence Caveat"
                             )
 
                             if caveat_summary:
