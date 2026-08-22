@@ -485,10 +485,49 @@ def main():
     with tab2:
         st.subheader("Ingest Legal Transcript or Document")
 
-        source_name = st.text_input(
-            "Source Name",
-            placeholder="e.g. Smith v Jones Deposition 2024"
-        )
+        # These four fields cannot be inferred from the document text.
+        # The model cannot know a firm's matter numbering, which document
+        # it is reading, or when the underlying event happened — so they
+        # are captured here, at the point of ingest. Retrofitting them
+        # later means re-ingesting everything.
+        branches = st.session_state.extractor.BRANCHES
+        branch_keys = list(branches.keys())
+
+        col1, col2 = st.columns(2)
+        with col1:
+            source_type = st.selectbox(
+                "Source Type",
+                branch_keys,
+                format_func=lambda k: branches[k]['label'],
+                help=(
+                    "Selects which extraction prompt reads this document. "
+                    "Only source types with a built extraction branch appear here."
+                )
+            )
+            source_name = st.text_input(
+                "Source Name",
+                placeholder="e.g. Smith v Jones Deposition 2024",
+                help="Which specific document this is."
+            )
+        with col2:
+            matter_id = st.text_input(
+                "Matter ID",
+                placeholder="e.g. 2024-MM-0143",
+                help=(
+                    "Links every memory from this document to its case. "
+                    "This is what allows a matter to be traced from intake "
+                    "through to outcome."
+                )
+            )
+            event_date = st.date_input(
+                "Date of Event",
+                value=None,
+                format="YYYY-MM-DD",
+                help=(
+                    "When the event happened — not when it was uploaded. "
+                    "Leave empty if unknown."
+                )
+            )
 
         ingest_text = st.text_area(
             "Paste transcript or document text here",
@@ -499,13 +538,25 @@ def main():
         if st.button(
             "Extract and Store Memories", type="primary"
         ):
-            if ingest_text and source_name:
+            missing = []
+            if not source_name:
+                missing.append("Source Name")
+            if not matter_id:
+                missing.append("Matter ID")
+            if not ingest_text:
+                missing.append("document text")
+
+            if not missing:
+                date_of_event = (
+                    event_date.isoformat() if event_date else None
+                )
                 with st.spinner(
                     "Extracting legal intelligence from document..."
                 ):
                     candidates = (
                         st.session_state.extractor.extract(
-                            ingest_text
+                            ingest_text,
+                            source_type=source_type
                         )
                     )
 
@@ -514,7 +565,10 @@ def main():
                             st.session_state.structurer
                             .structure_batch(
                                 candidates=candidates,
-                                source=source_name
+                                source=source_name,
+                                source_type=source_type,
+                                matter_id=matter_id,
+                                date_of_event=date_of_event
                             )
                         )
 
@@ -604,8 +658,9 @@ def main():
                         )
             else:
                 st.warning(
-                    "Please enter both a source name "
-                    "and document text."
+                    "Missing required field(s): "
+                    + ", ".join(missing)
+                    + "."
                 )
 
     # TAB 3 — MEMORY BROWSER
@@ -660,13 +715,19 @@ def main():
                                 f"ID: {memory.get('id')}"
                             )
                             st.caption(
+                                f"Matter: {memory.get('matter_id') or '—'}"
+                            )
+                            st.caption(
+                                f"Source: {memory.get('source') or '—'}"
+                            )
+                            st.caption(
+                                f"Source Type: {memory.get('source_type') or '—'}"
+                            )
+                            st.caption(
                                 f"Type: {memory.get('memory_type')}"
                             )
                             st.caption(
                                 f"Category: {memory.get('extraction_category')}"
-                            )
-                            st.caption(
-                                f"Importance: {memory.get('importance')}"
                             )
                         with col2:
                             st.caption(

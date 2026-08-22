@@ -3,6 +3,28 @@ import json
 
 class Extractor:
 
+    # Extraction branches. Each source type gets its own prompt builder,
+    # chunk size, and default confidence, because different source types
+    # contain fundamentally different intelligence — a transcript has
+    # rulings and objections, an attorney debrief has judgment and
+    # reasoning. Only the court-transcript branch is built so far; adding
+    # another means adding an entry here and its prompt builder, not
+    # editing the extraction flow.
+    #
+    # 'prompt' names a method on this class. Keep the output JSON contract
+    # identical across branches — storage, retrieval and clustering all
+    # depend on it. See docs/ARCHITECTURE.md sections 1 and 6.
+    BRANCHES = {
+        'court_transcript': {
+            'label': 'Court transcript / deposition',
+            'prompt': '_court_transcript_prompt',
+            'chunk_word_limit': 1500,
+            'default_confidence': 'probable',
+        },
+    }
+
+    DEFAULT_BRANCH = 'court_transcript'
+
     def __init__(self, api_key: str, model: str,
                  ingestion_model: str = None):
         self.client = anthropic.Anthropic(api_key=api_key)
@@ -10,20 +32,41 @@ class Extractor:
         self.ingestion_model = ingestion_model or model
         self.chunk_word_limit = 1500
 
-    def extract(self, raw_input: str) -> list:
+    def get_branch(self, source_type: str = None) -> dict:
+        return self.BRANCHES.get(
+            source_type or self.DEFAULT_BRANCH,
+            self.BRANCHES[self.DEFAULT_BRANCH]
+        )
+
+    def extract(self, raw_input: str, source_type: str = None) -> list:
+
+        branch = self.get_branch(source_type)
+        chunk_limit = branch.get(
+            'chunk_word_limit', self.chunk_word_limit
+        )
 
         word_count = len(raw_input.split())
 
-        if word_count > self.chunk_word_limit:
+        if word_count > chunk_limit:
             print(
-                f"Transcript is {word_count} words. "
+                f"Input is {word_count} words. "
                 f"Splitting into chunks for extraction."
             )
-            return self.chunk_and_extract(raw_input)
+            return self.chunk_and_extract(
+                raw_input, source_type=source_type
+            )
 
-        return self._extract_single(raw_input)
+        return self._extract_single(raw_input, source_type=source_type)
 
-    def _extract_single(self, raw_input: str) -> list:
+    def _extract_single(self, raw_input: str,
+                        source_type: str = None) -> list:
+
+        branch = self.get_branch(source_type)
+        prompt = getattr(self, branch['prompt'])(raw_input)
+
+        return self._call_model(prompt)
+
+    def _court_transcript_prompt(self, raw_input: str) -> str:
 
         prompt = f"""You are a legal memory extraction engine for a law firm's cognitive operating system.
 
@@ -233,6 +276,10 @@ Format:
 Input to extract from:
 {raw_input}"""
 
+        return prompt
+
+    def _call_model(self, prompt: str) -> list:
+
         response = self.client.messages.create(
             model=self.ingestion_model,
             max_tokens=7000,
@@ -258,11 +305,16 @@ Input to extract from:
             print(f"Raw response: {response_text[:500]}")
             return []
 
-    def chunk_and_extract(self, raw_input: str) -> list:
+    def chunk_and_extract(self, raw_input: str,
+                          source_type: str = None) -> list:
+
+        branch = self.get_branch(source_type)
 
         words = raw_input.split()
         total_words = len(words)
-        chunk_size = self.chunk_word_limit
+        chunk_size = branch.get(
+            'chunk_word_limit', self.chunk_word_limit
+        )
         overlap = 150
 
         chunks = []
@@ -289,7 +341,9 @@ Input to extract from:
                 f"Extracting chunk {i + 1} "
                 f"of {len(chunks)}..."
             )
-            candidates = self._extract_single(chunk)
+            candidates = self._extract_single(
+                chunk, source_type=source_type
+            )
             print(
                 f"Chunk {i + 1} returned "
                 f"{len(candidates)} memories."

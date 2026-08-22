@@ -82,12 +82,18 @@ Setting `confidence` defaults at the branch level is more honest than asking the
 
 ## 8. Fields that must be captured at ingest, not inferred
 
-None of these can be reliably derived from document text. The ingest form is the correct place for all of them:
+None of these can be reliably derived from document text, so the ingest form collects all four and they take precedence over anything the model emits:
 
 - **`source_type`** — which extraction branch to route to
 - **`matter_id`** — the lifecycle thread (§3)
 - **`source`** — which specific document this came from
 - **`date_of_event`** — when it happened, not when it was ingested
+
+`source_name`, `matter_id`, and document text are **required**; `date_of_event` is optional and falls back to ingestion time when unknown.
+
+The Source Type dropdown is generated from `Extractor.BRANCHES`, not from a config list, so it can never offer a source type that has no extraction prompt behind it.
+
+**Schema changes are safe to make.** `MemoryDB.migrate_schema()` adds any missing column to an existing database on startup, so introducing a field no longer requires a database reset. Column order is defined once in `MemoryDB.EXPECTED_COLUMNS` and both the migration and `row_to_dict()` derive from it — append new columns to the end of that list rather than inserting mid-list.
 
 ## 9. Pattern confidence has a scope limit
 
@@ -113,9 +119,9 @@ Places where infrastructure exists but nothing feeds it. Verify before assuming 
 
 | What | Status |
 |---|---|
-| `matter_id` | Column, lookup, and filters all exist. Extraction prompt never requests it, so it is always `None`. |
-| `source` / `project` | Accepted as parameters by `structurer.structure()` and `structure_batch()`, then never written to the memory dict or database. |
 | `llm_interface/providers/` | Empty directory. Both `extractor.py` and `interface.py` instantiate `anthropic.Anthropic` directly. |
+
+**Resolved:** `matter_id`, `source`, and `source_type` are now captured by the ingest form and persisted (see §8). `project` was removed rather than wired up — it was unused and speculative. `MemoryDB.get_by_matter()` returns results for the first time.
 
 ## Features that were planned but deliberately dropped
 

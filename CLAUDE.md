@@ -10,7 +10,9 @@ Prototype that turns legal transcripts into a structured, queryable institutiona
 ## Gotchas that will waste your time
 
 - **`config.json` is loaded by relative path.** The app must be run from the project root or it won't find it. The file is gitignored (contains a live API key); `config.example.json` is the template.
-- **Three pipes are built but disconnected.** `matter_id` is never requested from the extraction prompt (always `None`, so `get_by_matter()` always returns nothing). `source` and `project` are accepted by `structurer.structure()` and silently discarded. `llm_interface/providers/` is empty — the code calls Anthropic directly. Don't assume these work because the plumbing is there.
+- **`llm_interface/providers/` is empty** — the provider-swap layer is planned, not built. Both `extractor.py` and `interface.py` call `anthropic.Anthropic` directly. Don't describe it as implemented.
+- **Ingest labels come from the form, not the model.** `source_type`, `matter_id`, `source`, and `date_of_event` are captured in the UI and passed through `structure_batch()`; they override anything the extractor emits. Don't add them to the extraction prompt.
+- **Adding a database column is safe.** Append it to `MemoryDB.EXPECTED_COLUMNS` and add it to the `CREATE TABLE` and `save()` — `migrate_schema()` upgrades existing databases on startup. Append to the end of the list; `row_to_dict()` zips it against `SELECT *`.
 - **The controlled tag vocabulary is duplicated** in `ingestion/structurer.py` and `retrieval/search_engine.py`. Adding a tag to one and not the other breaks clustering with no error.
 - **Entity field names (`judge`, `opposing_counsel`, `source_attorney`) are join keys.** Renaming or aliasing one silently kills cross-source pattern detection.
 - **`Archive Files/`** holds dead one-off debugging scripts. Nothing imports them. Ignore unless asked.

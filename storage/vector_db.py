@@ -49,7 +49,9 @@ class VectorDB:
             "opposing_counsel": memory.get('opposing_counsel') or "none",
             "judge": memory.get('judge') or "none",
             "outcome": memory.get('outcome') or "none",
-            "extraction_category": memory.get('extraction_category') or "general"
+            "extraction_category": memory.get('extraction_category') or "general",
+            "source_type": memory.get('source_type') or "unspecified",
+            "source": memory.get('source') or "unknown"
         }
 
         existing = self.collection.get(ids=[memory_id])
