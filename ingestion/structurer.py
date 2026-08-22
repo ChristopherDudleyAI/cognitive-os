@@ -1,67 +1,32 @@
 import uuid
 from datetime import datetime
 import re
+import os
+import sys
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+import vocabulary
 
 class Structurer:
 
     def __init__(self, default_project: str = "Legal Cognitive OS"):
         self.default_project = default_project
 
-        # Controlled fact_pattern_tag vocabulary — MUST stay in sync
-        # with the same sets in retrieval/search_engine.py. Clustering
-        # and deviation detection only work on tags from this vocabulary.
-        self.ruling_type_tags = {
-            'objection_sustained', 'objection_overruled',
-            'motion_granted', 'motion_denied',
-            'evidence_admitted', 'evidence_excluded',
-            'sanctions_issued', 'discovery_ordered'
-        }
-        self.legal_basis_tags = {
-            'foundation_objection', 'speculation_objection',
-            'hearsay_objection', 'assumes_facts_objection',
-            'mischaracterization_objection', 'relevance_objection',
-            'daubert_standard', 'spoliation', 'privilege_claim',
-            'deadline_violation', 'standard_of_care', 'causation'
-        }
-        self.proceeding_tags = {
-            'deposition_proceeding', 'motion_hearing',
-            'trial_proceeding', 'summary_judgment',
-            'motion_in_limine', 'discovery_hearing'
-        }
-        self.strategy_tags = {
-            'examination_technique', 'objection_strategy',
-            'motion_strategy', 'argument_framing',
-            'witness_impeachment', 'document_strategy',
-            'deadline_management'
-        }
-        self.outcome_tags = {
-            'strategy_succeeded', 'strategy_failed', 'strategy_partial',
-            'tactic_succeeded', 'tactic_failed'
-        }
+        # Controlled fact_pattern_tag vocabulary. Defined once in
+        # vocabulary.py and shared with retrieval/search_engine.py —
+        # these were previously duplicated in both files and drifted.
+        # Aliased onto the instance so existing attribute access keeps
+        # working; vocabulary.py is the place to edit.
+        self.ruling_type_tags = vocabulary.RULING_TYPE_TAGS
+        self.legal_basis_tags = vocabulary.LEGAL_BASIS_TAGS
+        self.proceeding_tags = vocabulary.PROCEEDING_TAGS
+        self.strategy_tags = vocabulary.STRATEGY_TAGS
+        self.outcome_tags = vocabulary.OUTCOME_TAGS
+        self.posture_tags = vocabulary.POSTURE_TAGS
 
-        # Ruling posture — which party a ruling actually benefited.
-        # Fixes audit finding #3. MUST stay in sync with search_engine.py.
-        self.posture_tags = {
-            'favored_plaintiff', 'favored_defendant', 'favored_neither'
-        }
-
-        self.controlled_vocabulary = (
-            self.ruling_type_tags
-            | self.legal_basis_tags
-            | self.proceeding_tags
-            | self.strategy_tags
-            | self.outcome_tags
-            | self.posture_tags
-        )
-
-        # Categories whose memories the clustering engine relies on —
-        # unrecognized tags in these are worth warning about.
-        self.tag_checked_categories = {
-            'judge_intelligence',
-            'attorney_strategy',
-            'opposing_counsel',
-            'procedural'
-        }
+        self.controlled_vocabulary = vocabulary.CONTROLLED_VOCABULARY
+        self.tag_checked_categories = vocabulary.TAG_CHECKED_CATEGORIES
 
     def _normalize_tag(self, tag) -> str:
         if not isinstance(tag, str):

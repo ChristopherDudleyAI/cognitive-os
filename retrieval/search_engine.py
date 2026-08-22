@@ -1,5 +1,11 @@
 import json
 from datetime import datetime
+import os
+import sys
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+import vocabulary
 
 class SearchEngine:
 
@@ -26,60 +32,17 @@ class SearchEngine:
         )
         self.minimum_relevance_threshold = 40
 
-        # Ruling context tag clusters for
-        # intelligent deviation detection
-        self.ruling_type_tags = {
-            'objection_sustained',
-            'objection_overruled',
-            'motion_granted',
-            'motion_denied',
-            'evidence_admitted',
-            'evidence_excluded',
-            'sanctions_issued',
-            'discovery_ordered'
-        }
-
-        self.legal_basis_tags = {
-            'foundation_objection',
-            'speculation_objection',
-            'hearsay_objection',
-            'assumes_facts_objection',
-            'mischaracterization_objection',
-            'relevance_objection',
-            'daubert_standard',
-            'spoliation',
-            'privilege_claim',
-            'deadline_violation',
-            'standard_of_care',
-            'causation'
-        }
-
-        self.proceeding_tags = {
-            'deposition_proceeding',
-            'motion_hearing',
-            'trial_proceeding',
-            'summary_judgment',
-            'motion_in_limine',
-            'discovery_hearing'
-        }
-
-        self.strategy_tags = {
-            'examination_technique',
-            'objection_strategy',
-            'motion_strategy',
-            'argument_framing',
-            'witness_impeachment',
-            'document_strategy',
-            'deadline_management'
-        }
-
-        # Ruling posture — which party a ruling actually benefited.
-        # Fixes audit finding #3. MUST stay in sync with structurer.py.
-        self.posture_tags = {
-            'favored_plaintiff',
-            'favored_defendant',
-            'favored_neither'
-        }
+        # Controlled fact_pattern_tag vocabulary. Defined once in
+        # vocabulary.py and shared with ingestion/structurer.py — these
+        # were previously duplicated in both files and drifted.
+        # Aliased onto the instance so existing attribute access keeps
+        # working; vocabulary.py is the place to edit.
+        self.ruling_type_tags = vocabulary.RULING_TYPE_TAGS
+        self.legal_basis_tags = vocabulary.LEGAL_BASIS_TAGS
+        self.proceeding_tags = vocabulary.PROCEEDING_TAGS
+        self.strategy_tags = vocabulary.STRATEGY_TAGS
+        self.outcome_tags = vocabulary.OUTCOME_TAGS
+        self.posture_tags = vocabulary.POSTURE_TAGS
 
     def retrieve(self, prompt: str,
                  practice_area: str = None,
@@ -224,13 +187,18 @@ class SearchEngine:
 
     def get_context_cluster(self,
                              memory: dict) -> str:
+        # Groups memories by shared CONTEXT so that ruling direction can
+        # then be compared within a cluster. Deliberately excludes ruling
+        # type, outcome and posture — clustering on those would group
+        # memories by their result and make every cluster look internally
+        # consistent by construction. See vocabulary.CLUSTERING_TAGS.
         tags = set(
             memory.get('fact_pattern_tags', [])
         )
 
-        legal_basis = tags & self.legal_basis_tags
-        proceeding = tags & self.proceeding_tags
-        strategy = tags & self.strategy_tags
+        legal_basis = tags & vocabulary.LEGAL_BASIS_TAGS
+        proceeding = tags & vocabulary.PROCEEDING_TAGS
+        strategy = tags & vocabulary.STRATEGY_TAGS
 
         cluster_parts = []
 
@@ -257,27 +225,40 @@ class SearchEngine:
 
     def get_ruling_direction(self,
                               memory: dict) -> str:
+        # Prefer the posture tag. It records which party a ruling actually
+        # benefited, judged by effect rather than by verb — which is the
+        # whole point of audit finding #3. Without it, "plaintiff's motion
+        # granted" and "defendant's motion denied" read as opposite
+        # directions despite both favoring the plaintiff, so a judge ruling
+        # consistently for one side is flagged as deviating from himself.
+        #
+        # The verb-based fallback below is retained for memories that carry
+        # a ruling tag but no posture tag. Its return values are deliberately
+        # from a different vocabulary ('favorable' vs 'favored_plaintiff'),
+        # so an un-postured memory never compares equal to a postured one.
+        # In a mixed cluster that surfaces as a deviation, which is the safe
+        # direction to fail in — it lowers confidence rather than inflating it.
         tags = set(
             memory.get('fact_pattern_tags', [])
         )
-        ruling_tags = tags & self.ruling_type_tags
 
-        favorable = {
-            'objection_sustained',
-            'motion_granted',
-            'evidence_excluded',
-            'sanctions_issued',
-            'discovery_ordered'
-        }
-        unfavorable = {
-            'objection_overruled',
-            'motion_denied',
-            'evidence_admitted'
-        }
+        posture = tags & vocabulary.POSTURE_TAGS
+        if posture:
+            direction = sorted(posture)[0]
+            # 'favored_neither' marks a purely procedural or administrative
+            # ruling. It carries no directional signal, so it maps onto the
+            # same 'neutral' that build_pattern_evidence already treats as
+            # non-deviating rather than becoming a third direction that
+            # everything else deviates from.
+            if direction == 'favored_neither':
+                return 'neutral'
+            return direction
 
-        if ruling_tags & favorable:
+        ruling_tags = tags & vocabulary.RULING_TYPE_TAGS
+
+        if ruling_tags & vocabulary.FAVORABLE_RULING_TAGS:
             return 'favorable'
-        elif ruling_tags & unfavorable:
+        elif ruling_tags & vocabulary.UNFAVORABLE_RULING_TAGS:
             return 'unfavorable'
 
         return 'neutral'
@@ -740,16 +721,14 @@ class SearchEngine:
            memory['opposing_counsel'].lower() in prompt_lower:
             score += 25
 
-        # Bonus for structured tags present
+        # Bonus for structured tags present. Uses the full controlled
+        # vocabulary — this union was previously built inline and omitted
+        # outcome and posture tags, so a memory tagged 'strategy_succeeded'
+        # or 'favored_plaintiff' earned nothing here despite the extraction
+        # prompt requiring those tags.
         if memory.get('fact_pattern_tags'):
             tag_set = set(memory['fact_pattern_tags'])
-            structured_tags = (
-                self.ruling_type_tags |
-                self.legal_basis_tags |
-                self.proceeding_tags |
-                self.strategy_tags
-            )
-            structured_match = tag_set & structured_tags
+            structured_match = tag_set & vocabulary.SCORING_TAGS
             if structured_match:
                 score += min(len(structured_match) * 3, 15)
 
