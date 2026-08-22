@@ -22,4 +22,6 @@ The design decisions in `docs/ARCHITECTURE.md` come out of conversation, not out
 
 Discrete work goes in GitHub Issues. Write each one self-contained — file paths, what's broken, what the fix looks like — so a session opening it cold with no memory of the discussion can act on it correctly.
 
-`decision_log.md` at the project root records *why* past decisions were made. It's gitignored — it holds business and positioning material kept out of the public repo — but it's the first thing to read when you need the reasoning behind an existing design. Append to it during the session, following the instructions block at the top of that file. Where it disagrees with the code, **the code is correct**: it has drifted before.
+`decision_log.md` at the project root records *why* past decisions were made — read it before asking why something was built a certain way, and append to it during the session following the instructions block at its top. Where it disagrees with the code, **the code is correct**: it has drifted before.
+
+Only secrets stay out of the repo: `config.json` (live API key) and `data/` (local databases). Everything else is public.
