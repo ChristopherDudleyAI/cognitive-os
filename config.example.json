@@ -1,0 +1,50 @@
+{
+  "anthropic_api_key": "YOUR_API_KEY_HERE",
+  "model": "claude-sonnet-4-6",
+  "ingestion_model": "claude-sonnet-4-6",
+  "query_model": "claude-sonnet-4-6",
+  "app_name": "Cognitive OS — Legal Intelligence Platform",
+  "version": "2.0",
+  "default_project": "Legal Cognitive OS",
+  "db_path": "data/memories.db",
+  "chroma_path": "data/chroma.db",
+  "max_tokens": 4000,
+  "retrieval_candidates": 20,
+  "relevance_threshold": 60,
+  "memory_token_budget": 3000,
+  "memory_type_thresholds": {
+    "precedent": 50,
+    "partner_judgment": 50,
+    "matter": 65,
+    "client": 80,
+    "operational": 85
+  },
+  "practice_areas": [
+    "litigation",
+    "transactional",
+    "family",
+    "criminal",
+    "estate",
+    "employment",
+    "real_estate",
+    "general"
+  ],
+  "memory_types": [
+    "matter",
+    "client",
+    "precedent",
+    "partner_judgment",
+    "operational"
+  ],
+  "extraction_categories": [
+    "case_intelligence",
+    "attorney_strategy",
+    "judge_intelligence",
+    "opposing_counsel",
+    "witness_intelligence",
+    "client_intelligence",
+    "fact_pattern",
+    "procedural",
+    "general"
+  ]
+}
