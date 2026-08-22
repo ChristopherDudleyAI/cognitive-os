@@ -11,3 +11,6 @@ venv/
 
 # Claude Code local settings
 .claude/settings.local.json
+
+# Decision log — contains business/positioning material, kept out of the public repo
+decision_log.md
