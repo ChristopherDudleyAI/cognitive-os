@@ -135,7 +135,7 @@ class LLMInterface:
             "Add the connective insight that ties them together.]\n\n"
 
             "---\n"
-            "### 📊 Confidence Note: [HIGH/MEDIUM/LOW]\n\n"
+            "### Confidence Note: [HIGH/MEDIUM/LOW]\n\n"
             "[ALWAYS INCLUDE. State overall confidence level in the "
             "header — replace [HIGH/MEDIUM/LOW] with the actual level. "
             "Body: state corroborating and deviating counts, note "

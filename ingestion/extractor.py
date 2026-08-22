@@ -192,19 +192,34 @@ Proceeding context (use exact tag):
 - "motion_in_limine"
 - "discovery_hearing"
 
-RULING POSTURE — REQUIRED on any memory describing a judicial ruling.
-Add exactly ONE of these tags to fact_pattern_tags, indicating which party
-the ruling actually benefited. Determine this by EFFECT, not by the verb —
-combine WHO sought or objected with HOW the judge ruled:
+RULING POSTURE — MECHANICAL RULE, NO JUDGMENT REQUIRED ABOUT WHETHER IT APPLIES.
+
+The trigger is the tag list, not your reading of the memory. Apply it this way:
+
+  IF fact_pattern_tags contains ANY tag from the Ruling type list above
+     (objection_sustained, objection_overruled, motion_granted, motion_denied,
+      evidence_admitted, evidence_excluded, sanctions_issued, discovery_ordered)
+  THEN fact_pattern_tags MUST ALSO contain exactly ONE of:
 
 - "favored_plaintiff"  (plaintiff's motion granted, OR defendant's objection/motion denied)
 - "favored_defendant"  (defendant's motion granted, OR plaintiff's objection/motion denied)
 - "favored_neither"    (purely procedural/administrative/neutral ruling)
 
-"Objection sustained" favors whoever raised the objection. "Objection overruled"
-favors the opposing party. Always reason: who benefited from this outcome?
-If the parties are labeled differently (petitioner/respondent), treat the
-initiating/claiming party as plaintiff and the responding party as defendant.
+This holds regardless of how the memory is phrased. It applies just as much to
+a memory written as a general lesson, a practice takeaway, a procedural
+observation, or an operational note as it does to one written as a direct
+description of what the judge did. If you tagged it as a ruling, it gets a
+posture tag. There is no category of ruling-tagged memory that is exempt.
+
+Determine posture by EFFECT, not by the verb — combine WHO sought or objected
+with HOW the judge ruled. "Objection sustained" favors whoever raised the
+objection. "Objection overruled" favors the opposing party. Always reason: who
+benefited from this outcome? If the parties are labeled differently
+(petitioner/respondent), treat the initiating/claiming party as plaintiff and
+the responding party as defendant.
+
+If a memory genuinely does not concern a ruling, do not give it a ruling-type
+tag in the first place — and then no posture tag is needed.
 
 For ATTORNEY STRATEGY memories, fact_pattern_tags MUST include:
 
