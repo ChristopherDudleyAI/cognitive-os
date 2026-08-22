@@ -3,6 +3,8 @@
   "model": "claude-sonnet-4-6",
   "ingestion_model": "claude-sonnet-4-6",
   "query_model": "claude-sonnet-4-6",
+  "extraction_max_tokens": 16000,
+  "extraction_effort": null,
   "app_name": "Cognitive OS — Legal Intelligence Platform",
   "version": "2.0",
   "default_project": "Legal Cognitive OS",
