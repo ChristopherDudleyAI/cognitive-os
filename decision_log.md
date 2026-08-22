@@ -1266,4 +1266,30 @@ If the project later moves toward fundraising or a client-facing commercial phas
 
 ---
 
+### CORRECTION: details recovered from a superseded log copy before it was deleted
+DATE: August 22, 2026
+STATUS: confirmed — **clarifies** two Phase 3 entries: "Memory type relevance thresholds (50/65/80/85) — origin and status" and "Reduce extraction chunk size from 2500 to 1500 words and increase max_tokens from 4000 to 7000"
+
+WHAT WAS DECIDED:
+Recorded as recovered detail, not a new decision. Before deleting the three stale decision-log copies from `Downloads/`, each was diffed against the master. `CognitiveOS_Decision_Log.md` (24 entries, June 17 11:42) held two entries whose *titles* differed from the master's but whose *bodies* contained material the master's versions had dropped. Both details are preserved here.
+
+**1. The threshold numbers — the config/conversation mismatch was accidental, not deliberate.**
+The master's entry states that an earlier proposed table (judge intelligence 50, attorney strategy 65, matter 75, client 85, operational 90) was "rounded/remapped onto memory_type categories in the actual config.json," which reads as an intentional design step. The superseded copy is explicit that it was not: *"the discrepancy itself was not deliberate, just inconsistent transcription from concept to code."* The values in `config.json` (precedent/partner_judgment 50, matter 65, client 80, operational 85) therefore differ from the reasoning that produced them **by accident**, and no one has since checked whether the transcribed numbers or the originally-reasoned ones are the better choice.
+
+The same entry also preserved a direct acknowledgment that the master paraphrases more softly: *"The thresholds aren't based on testing or data — they were my initial estimate... a design assumption, not a tested conclusion."*
+
+**2. The JSON truncation bug — the literal error text.**
+The master says a parse error confirmed truncation. The superseded copy records the actual console message: `"Expecting property name enclosed in double quotes"` at a specific line and column. Useful for recognizing the failure if it recurs.
+
+WHY:
+Both details were nearly lost to routine cleanup. The threshold one matters most: it means the live config values are the product of a transcription slip rather than a decision, which is a materially different thing to inherit — and it makes the open threshold-tuning work (GitHub issue) more urgent, since the starting point is not even the number that was reasoned for. This is a concrete instance of the log's own rule that an entry must never sound more certain, or more deliberate, than the thing it describes.
+
+ALTERNATIVES CONSIDERED (if known):
+Deleting the stale copies without diffing them, on the basis that the master had more entries — this was the initial plan and would have silently discarded both details. The entry-title comparison flagged two apparent mismatches, and inspecting the bodies rather than assuming they were harmless title variants is what surfaced this.
+
+STILL OPEN / NEEDS REVISITING:
+Whether the config's transcribed thresholds or the originally-reasoned ones are correct is unresolved and should be settled during the threshold-tuning pass. All four `Downloads/` copies have now been deleted; the project copy is the only one.
+
+---
+
 *(Append new entries below this line, oldest first, using the template above.)*
