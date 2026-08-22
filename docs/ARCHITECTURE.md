@@ -1,0 +1,122 @@
+# Architecture — Durable Design Constraints
+
+This file holds design decisions that **shape all future work** on this project. It is not a task list (those live in GitHub Issues) and not a history of why choices were made (that lives in the decision log).
+
+Read this before writing code. If a change would violate something here, that's a deliberate architectural decision and should be discussed, not made silently.
+
+---
+
+## 1. The memory schema is a shared contract
+
+Every extraction path — no matter what kind of document it reads — must emit the same JSON shape. Storage, retrieval, scoring, and clustering all depend on it.
+
+Fields that must be present and identically named on every memory:
+
+| Field | Why it's load-bearing |
+|---|---|
+| `memory_type` | Drives per-type relevance thresholds in retrieval |
+| `extraction_category` | Selects which memories participate in pattern clustering |
+| `practice_area`, `matter_type` | Filtering and scoring |
+| `importance`, `confidence` | Retrieval scoring weights |
+| `outcome` | Scoring, and the label that gives other memories meaning |
+| `status`, `permission_level` | Gate what reaches the LLM at all |
+| `fact_pattern_tags` | The clustering key — see §4 |
+| `judge`, `opposing_counsel`, `source_attorney` | Entity join keys — see §2 |
+| `matter_id` | Case-lifecycle linkage — see §3 |
+
+## 2. Entity field names are join keys — never rename or alias them
+
+`judge`, `opposing_counsel`, and `source_attorney` are how `build_pattern_evidence()` groups memories to detect corroboration and deviation. If one extraction branch emits `judge` and another emits `judge_name`, cross-source pattern recognition silently produces nothing — no error, no warning, just missing patterns.
+
+Entity values are whitespace-normalized in `structurer.validate()`. That fixes formatting drift only; it cannot merge `"Hon. Marcus T. Caldwell"` with `"Caldwell"`. **Canonical naming discipline at the source is still required.**
+
+## 3. `matter_id` is the case-lifecycle thread
+
+The entire ambition of tracing a matter from intake through to outcome depends on `matter_id` being populated consistently. The database column, `get_by_matter()`, the ChromaDB metadata filter, and the search-engine parameter all exist and work.
+
+**It cannot be inferred from document text.** An LLM has no way to know a firm's matter numbering. It must be supplied by the human at ingest time.
+
+Retrofitting `matter_id` onto already-ingested memories requires re-ingesting them. Capture it at the door.
+
+## 4. Controlled vocabulary must live in exactly one module
+
+Clustering and deviation detection work by set intersection against fixed tag vocabularies (`ruling_type_tags`, `legal_basis_tags`, `proceeding_tags`, `strategy_tags`, `outcome_tags`, `posture_tags`).
+
+These lists are currently duplicated in `ingestion/structurer.py` and `retrieval/search_engine.py`. **Any tag added to one and not the other causes validation and clustering to disagree, silently.**
+
+This is tolerable at one extraction branch. At eight branches with their own vocabularies it becomes sixteen copies. Consolidating into a single shared module is a prerequisite for the branch architecture in §6, not an optional cleanup.
+
+## 5. `source_type` and `extraction_category` are different axes
+
+- `extraction_category` = what a memory is **about** (`judge_intelligence`, `attorney_strategy`)
+- `source_type` = where it **came from** (court transcript, written order, attorney debrief, email)
+
+Conflating them loses real capability. A `judge_intelligence` memory sourced from a written order is the judge's own stated reasoning; the same category sourced from an attorney debrief is one person's read of a mood. Those should not carry equal weight in retrieval, and they should not be clustered against each other as if directly comparable.
+
+Keeping `source_type` as its own field also produces the labeled dataset a future source-type auto-classifier would need to train on.
+
+## 6. Extraction branches: shared spine, branching taxonomy
+
+Different source types contain fundamentally different intelligence. A court transcript has rulings and objections; an intake call has emotional state and risk tolerance. One universal extraction prompt cannot serve both.
+
+The split:
+
+**Shared across every branch**
+- The output JSON contract (§1)
+- Entity field names (§2)
+- `matter_id` (§3)
+- Core extraction rules ("one memory equals one discrete piece", "if a name is mentioned capture it", "be specific and factual, not general")
+
+**Varies per branch**
+- The extraction taxonomy — what to look for
+- The controlled `fact_pattern_tags` vocabulary for that source type
+- Chunk size — an email thread and a 200-page transcript do not chunk alike
+- Model selection — dense human judgment deserves a stronger model than mechanical records
+- Default `confidence` — see §7
+
+## 7. Confidence should reflect source reliability, not model self-assessment
+
+A court order is `verified` by construction; it is the primary document. An attorney's impression of whether a judge seemed sympathetic is `uncertain` no matter how confidently it is phrased.
+
+Setting `confidence` defaults at the branch level is more honest than asking the model to self-assess, and it costs nothing.
+
+## 8. Fields that must be captured at ingest, not inferred
+
+None of these can be reliably derived from document text. The ingest form is the correct place for all of them:
+
+- **`source_type`** — which extraction branch to route to
+- **`matter_id`** — the lifecycle thread (§3)
+- **`source`** — which specific document this came from
+- **`date_of_event`** — when it happened, not when it was ingested
+
+## 9. Pattern confidence has a scope limit
+
+The corroboration/deviation engine is sound for **observed behavioral patterns** where the causal link is tight and observations are directly comparable — "this judge sustains foundation objections in depositions."
+
+It is **not** a basis for cross-lifecycle predictive claims — "clients who present as financially pressured settle for less." Those involve many intervening variables and require far more data than a boutique firm generates. Fourteen corroborating observations is strong evidence about a judge's habits and near-meaningless as a predictive claim about client psychology.
+
+If both kinds of claim are ever rendered in the same confidence UI, they must be visually distinguished, or the system will present a small-sample coincidence with the same authority as a well-established pattern.
+
+## 10. Local-first, model-agnostic
+
+Memories are stored as structured data in a local database, not as text baked into a model's context window. The reasoning engine on top should be swappable without rebuilding the knowledge base.
+
+Current state: the code calls the Anthropic API directly. `llm_interface/providers/` exists but is empty. This is a planned direction, not a built feature — do not describe it as implemented.
+
+Note the real gap in the local-first claim: everything stays on the machine except the extraction/query API call itself. For any deployment where document contents genuinely cannot leave the premises, that call is the constraint that matters.
+
+---
+
+## Known disconnected plumbing
+
+Places where infrastructure exists but nothing feeds it. Verify before assuming a feature works:
+
+| What | Status |
+|---|---|
+| `matter_id` | Column, lookup, and filters all exist. Extraction prompt never requests it, so it is always `None`. |
+| `source` / `project` | Accepted as parameters by `structurer.structure()` and `structure_batch()`, then never written to the memory dict or database. |
+| `llm_interface/providers/` | Empty directory. Both `extractor.py` and `interface.py` instantiate `anthropic.Anthropic` directly. |
+
+## Features that were planned but deliberately dropped
+
+- **`bare_query` / Compare mode** — a "with memory vs. without memory" demo path. Discussed in early design notes and referenced in the decision log, but never implemented and no longer wanted. Do not build it.
