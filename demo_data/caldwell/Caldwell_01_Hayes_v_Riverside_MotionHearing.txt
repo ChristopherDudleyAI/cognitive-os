@@ -1,0 +1,61 @@
+IN THE SUPERIOR COURT OF FULTON COUNTY
+STATE OF GEORGIA
+
+SARAH HAYES, as Administrator of the Estate of THOMAS HAYES,
+                              Plaintiff,
+v.
+RIVERSIDE MEDICAL CENTER, INC., and AARON PRENTICE, M.D.,
+                              Defendants.
+
+Civil Action No. 2025-CV-04417
+
+TRANSCRIPT OF MOTIONS HEARING
+BEFORE THE HONORABLE MARCUS T. CALDWELL
+
+APPEARANCES:
+For the Plaintiff:   DIANE OKAFOR, ESQ.
+For the Defendants:  FRANK DeLUCA, ESQ.
+
+---
+
+THE COURT: We're on the record in Hayes v. Riverside Medical Center, case number 2025-CV-04417. We have four matters set this morning. I've read the briefs, the expert reports, and the exhibits, so let's not re-argue what's already on the page. Ms. Okafor, Mr. DeLuca, I'll tell you what I've decided and where I want to hear from you.
+
+We'll take them in order. First, the defense Daubert motion to exclude Dr. Helen Marsh, the plaintiff's standard-of-care expert. Mr. DeLuca, your motion says Dr. Marsh's opinion rests on nothing but her say-so. I've read her report. She cites the American College of Emergency Physicians clinical policy on chest-pain workup, 2021 edition, and she ties it to her own twenty-two years running an emergency department. That is clinical experience plus a published standard. That is dual foundation. What is your methodology argument, specifically, that isn't just disagreement with her conclusion?
+
+MR. DeLUCA: Your Honor, our position is that she extrapolates from the guideline beyond what it says—
+
+THE COURT: That's cross-examination, counsel. That's not a Daubert gap. A jury weighs extrapolation. A gatekeeper asks whether the foundation exists, and it does. The motion to exclude Dr. Marsh is DENIED. She testifies.
+
+MR. DeLUCA: Understood, Your Honor.
+
+THE COURT: Second matter. Plaintiff's motion for spoliation sanctions regarding the nursing flow sheets from the night of March 4th. Ms. Okafor, walk me through the timeline, and Mr. DeLuca, I'll want you on the retention policy.
+
+MS. OKAFOR: Thank you, Your Honor. Riverside's risk department generated an internal incident report on March 5th, the morning after Mr. Hayes coded. That report references the night-shift nursing flow sheets by name. Those flow sheets were then destroyed on June 12th, ninety days later, under what the hospital calls its routine paper-purge schedule. By then the incident report existed, counsel had sent a preservation letter on April 2nd, and the hospital knew exactly what those sheets would show.
+
+THE COURT: Mr. DeLuca, the incident report names the documents. Your client generated that report. When did the litigation-hold obligation attach?
+
+MR. DeLUCA: Your Honor, the purge was automated. No one made a decision to destroy anything specific—
+
+THE COURT: That's not the question I asked. The incident report was created March 5th. That is notice. An incident report that identifies records by name triggers a duty to preserve those records, suit or no suit. "Routine retention policy" is not a defense to destroying documents you have already flagged as relevant to a patient injury. The motion for spoliation sanctions is GRANTED. The jury will receive an adverse inference instruction in the standard form: the records existed, the defendant had notice when they were destroyed, and the jury may infer the contents were unfavorable to the defense. I'm not striking the answer—that's disproportionate—but the inference instruction issues.
+
+MR. DeLUCA: Note our exception, Your Honor.
+
+THE COURT: Noted. Third matter, and this one cuts the other way, Ms. Okafor, so listen closely. The defense motion in limine to exclude the pending Georgia Composite Medical Board complaint against Dr. Prentice. You want it in. Tell me why a pending, un-adjudicated complaint is admissible.
+
+MS. OKAFOR: Your Honor, it goes to notice. The Board received a similar complaint about Dr. Prentice's chest-pain workups eight months before Mr. Hayes—
+
+THE COURT: A pending complaint is an allegation. It has been adjudicated by no one. In my courtroom, adjudicated Board findings come in on the issue of notice, and pending or dismissed complaints stay out, because they prove nothing at this stage. That rule applies the same way every time, including when it helps the plaintiff and including when it doesn't. Today it doesn't. The defense motion in limine is GRANTED. The pending complaint is EXCLUDED. If the Board adjudicates it before trial, you may renew.
+
+MS. OKAFOR: Understood, Your Honor.
+
+THE COURT: Fourth matter. The defense disclosed a rebuttal expert, Dr. Collins, on April 28th. The expert disclosure deadline in my scheduling order was April 14th. Mr. DeLuca, did you seek leave before the deadline, or notify Ms. Okafor and the clerk that the disclosure would be late?
+
+MR. DeLUCA: Your Honor, Dr. Collins had a scheduling conflict and we got the report as soon as—
+
+THE COURT: Did you contact opposing counsel and the clerk before April 14th. Yes or no.
+
+MR. DeLUCA: No, Your Honor. We did not.
+
+THE COURT: Then Dr. Collins is excluded. The deadline in my order is not a suggestion. If a disclosure is going to be late, counsel contacts opposing counsel and the clerk before the deadline passes, not two weeks after. There is no notice here and no motion for leave, so there is no cure. The rebuttal expert Dr. Collins is EXCLUDED. We are adjourned. Mr. DeLuca, Ms. Okafor, the written order issues this afternoon.
+
+(Proceedings concluded.)
