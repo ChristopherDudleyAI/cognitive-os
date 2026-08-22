@@ -1,0 +1,59 @@
+IN THE CHANCERY COURT FOR DAVIDSON COUNTY
+STATE OF TENNESSEE
+
+ASHFIELD MILLWORK COMPANY,
+                              Plaintiff,
+v.
+CALLOWAY DEVELOPMENT GROUP, LLC,
+                              Defendant.
+
+Civil Action No. 2025-CH-00934
+
+TRANSCRIPT OF MOTIONS HEARING
+BEFORE THE HONORABLE PATRICIA A. REYNOLDS
+
+APPEARANCES:
+For the Plaintiff:   DIANE OKAFOR, ESQ.
+For the Defendant:   THEODORE LANGE, ESQ.
+
+---
+
+THE COURT: On the record in Ashfield Millwork against Calloway Development, 2025-CH-00934. Two motions and a scheduling matter. Mr. Lange, I'll start with yours, and I want to tell you at the outset that I've read your brief twice, because the first time through I couldn't find the part that was about this case.
+
+MR. LANGE: Your Honor?
+
+THE COURT: Your motion to exclude Mr. Ferris, the plaintiff's damages expert, runs nineteen pages. Fourteen of them are a general recitation of the standard for expert damages testimony in commercial cases. The section that actually addresses Mr. Ferris is three paragraphs, and it argues that his lost-profits model is "speculative and unsupported by any reliable methodology." Which methodology of his is unreliable, specifically?
+
+MR. LANGE: The model projects profits over the remaining contract term based on historical margins, Your Honor. Lost profits on an unperformed contract are inherently speculative—
+
+THE COURT: They are sometimes speculative. That's why we look at the model. Mr. Ferris took your client's actual purchase orders for the first eleven months, applied Ashfield's actual realized margin on those same orders — not an industry average, their own realized margin — and projected the remaining nine months at the order volume your client's own forecasts projected. That is tied to this deal and this loss. It may be wrong. You may show a jury it's wrong. But it is not a generic formula and I'm not excluding it as methodologically empty. The motion to exclude Mr. Ferris is DENIED.
+
+MR. LANGE: Note our objection, Your Honor.
+
+THE COURT: Noted. Now, Ms. Okafor, don't get comfortable, because the same rule is about to land on your side of the table. Your motion in limine seeks to exclude Calloway's mitigation evidence. But your own supplemental damages disclosure includes a consequential-damages figure — the reputational harm number, eight hundred and forty thousand dollars. Where does that come from?
+
+MS. OKAFOR: Your Honor, that figure reflects the industry-standard multiplier applied to—
+
+THE COURT: An industry-standard multiplier. Applied to what, and derived from what data about Ashfield?
+
+MS. OKAFOR: It's a benchmark figure, Your Honor, drawn from comparable millwork suppliers.
+
+THE COURT: Then it is exactly the thing I just declined to let Mr. Lange call your lost-profits model, and here it actually fits. A benchmark multiplier from comparable companies is not evidence of what happened to your client. I hold both sides to the same standard, and the standard is that a damages number has to be tied to this deal and this loss. The reputational-harm figure is EXCLUDED. If you can produce a model built on Ashfield's own customer attrition, its own lost bids, its own numbers, I'll hear it on a renewed motion. Your motion in limine as to the mitigation evidence is DENIED — that evidence comes in.
+
+MS. OKAFOR: Understood, Your Honor.
+
+THE COURT: Third, the contract-interpretation question the parties flagged in the joint statement. Section 4.2 of the supply agreement says deliveries shall be made "in accordance with the project schedule as reasonably adjusted." Mr. Lange, your position is that "reasonably adjusted" gives Calloway unilateral discretion to move delivery dates. Ms. Okafor says adjustments required mutual agreement. The words don't answer it, so I'm going to look at what the parties actually did.
+
+MR. LANGE: Your Honor, the four corners of the agreement—
+
+THE COURT: The four corners of the agreement produced this hearing, counsel. When the language is genuinely ambiguous I look at course of dealing and commercial context, because that's the best evidence of what these parties meant. And for the first eleven months, every single schedule adjustment in this record — there are nine of them — was made by a written exchange in which Calloway proposed a date and Ashfield confirmed it. Nine for nine. Then in month twelve Calloway moved three deliveries without asking. The course of dealing establishes mutual adjustment. I'm construing Section 4.2 to require agreement, and the parties should proceed on that understanding. That ruling favors the plaintiff and it comes from the parties' own conduct, not from any preference of mine about who ought to win a construction supply case.
+
+MR. LANGE: Understood, Your Honor.
+
+THE COURT: Ms. Okafor, one housekeeping item. Your response brief came in a day past the deadline. Mr. Lange, do you claim any prejudice from the delay?
+
+MR. LANGE: No, Your Honor.
+
+THE COURT: Then I don't care about it, and it's not going in an order. Late filings that hurt nobody and are explained are not worth anyone's time. We're adjourned.
+
+(Proceedings concluded.)

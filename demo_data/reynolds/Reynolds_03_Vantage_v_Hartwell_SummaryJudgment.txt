@@ -1,0 +1,69 @@
+IN THE CHANCERY COURT FOR DAVIDSON COUNTY
+STATE OF TENNESSEE
+
+VANTAGE POINT ANALYTICS, INC.,
+                              Plaintiff,
+v.
+HARTWELL CAPITAL PARTNERS, LP,
+                              Defendant.
+
+Civil Action No. 2025-CH-00602
+
+TRANSCRIPT OF HEARING ON MOTION FOR SUMMARY JUDGMENT
+BEFORE THE HONORABLE PATRICIA A. REYNOLDS
+
+APPEARANCES:
+For the Plaintiff:   LILLIAN PACE, ESQ.
+For the Defendant:   PRIYA ANAND, ESQ.
+
+---
+
+THE COURT: We're on the record in Vantage Point Analytics against Hartwell Capital Partners, 2025-CH-00602. Defendant's motion for partial summary judgment on the exclusivity covenant. Ms. Anand, this is a well-written brief. It's the clearest statement of the four-corners position I've read this term. I have questions that go past it.
+
+MS. ANAND: Thank you, Your Honor. We'd rest on the papers as to the covenant's plain language.
+
+THE COURT: You may rest on them, but I'm going to ask anyway, because Ms. Pace raised something in her response that your brief doesn't reach and I'd rather hear your answer than guess at it. Your brief argues Section 9 barred Vantage from licensing the analytics platform to any competing fund, full stop. Ms. Pace says Hartwell's own investment committee approved two such licenses in 2023 and took a fee on both. If that's accurate, how is the covenant not waived as to that conduct?
+
+MS. ANAND: Your Honor, our brief addresses waiver at page fourteen—
+
+THE COURT: Page fourteen addresses waiver as a general doctrine. It doesn't address these two licenses, because your brief takes the position that they didn't happen. Ms. Pace has put in the committee minutes. Assume for the moment they're authentic. What's your answer?
+
+MS. ANAND: I'd want to review the minutes before responding substantively, Your Honor.
+
+THE COURT: They were attached to the response you replied to. Ms. Anand, I'll say this for the benefit of everyone who appears in front of me: I do not confine argument to the four corners of the moving papers. If opposing counsel raises something responsive, I will ask you about it, and "it's not in my brief" is not an answer. Some judges run it the other way. I don't. Plan for that.
+
+MS. ANAND: Understood, Your Honor.
+
+THE COURT: On the exclusivity covenant as applied to the 2023 licenses, the committee minutes create a genuine dispute about whether Hartwell approved the very conduct it now says breached the agreement. Summary judgment on that portion is DENIED.
+
+Now. Ms. Pace, your turn, and this part goes the other way. Ms. Anand's brief also seeks judgment on the tortious-interference count, and on that one her papers are right. What is your evidence that Hartwell induced Meridian to terminate?
+
+MS. PACE: Your Honor, the timing is compelling. Meridian terminated eleven days after the Hartwell principals met with Meridian's CIO.
+
+THE COURT: Timing and a meeting. Is there anything in the record about what was said in that meeting, or any communication from Hartwell to Meridian about the Vantage relationship?
+
+MS. PACE: We have the calendar entry and the termination letter, Your Honor. Discovery on the substance of the meeting was—
+
+THE COURT: Did you move to compel it?
+
+MS. PACE: We did not, Your Honor.
+
+THE COURT: Then I'm deciding on the record you built. Two parties met and a third thing happened afterward is not evidence of inducement; it's a sequence. Ms. Anand's brief makes that point cleanly and it's correct. Summary judgment on the tortious-interference count is GRANTED and that count is dismissed.
+
+MS. PACE: Understood, Your Honor.
+
+THE COURT: One more matter — defendant's motion to exclude the settlement correspondence. Ms. Anand, you've moved to keep out a March 14th letter from Hartwell's prior counsel. I've read it. Your predecessor's letter states that unless Vantage accepted the offer within seventy-two hours, Hartwell would, quote, "make sure the licensing dispute becomes a matter of public record in a way that will affect Vantage's Series C." Is that letter what it appears to be?
+
+MS. ANAND: Your Honor, that letter was sent by prior counsel before our firm was engaged.
+
+THE COURT: I understand who sent it. My question is whether the parties dispute its content.
+
+MS. ANAND: We do not dispute the content.
+
+THE COURT: A settlement communication that threatens to damage a party's financing round unless it capitulates in seventy-two hours is not a settlement communication I'm going to protect from view. It is not offered to prove the value of the claim; it's offered on Hartwell's conduct, and conduct like that is squarely relevant to how I read this defendant's other positions in this case. The motion to exclude the March 14th letter is DENIED. It comes in.
+
+MS. ANAND: Note our exception, Your Honor.
+
+THE COURT: Noted. Counsel, we have a genuine dispute on the covenant, the interference count is out, and we'll set trial at the next case management conference. We're adjourned.
+
+(Proceedings concluded.)

@@ -1398,4 +1398,55 @@ Scores now rise for memories carrying outcome or posture tags, which interacts w
 
 ---
 
+### DECISION: Demo source material moves into the repository and is versioned
+DATE: August 22, 2026
+STATUS: confirmed
+
+WHAT WAS DECIDED:
+The Character Bible and all demo transcripts now live in the repository — `docs/CHARACTER_BIBLE.md` and `demo_data/<judge>/`. A `demo_data/README.md` records the structure and the three rules that cause the most damage when broken (canonical naming, attorney isolation, honest posture mix).
+
+WHY:
+A search of the filesystem turned up the Character Bible and exactly **one** Caldwell transcript, both in `Downloads/`. The bible existed in two copies, though unlike the decision log they were byte-identical. This is the third critical project artifact found living in `Downloads/` in a single session.
+
+The transcript loss is the concrete cost. The decision log records three Caldwell cases written and roughly 101 memories ingested; only `Hayes v. Riverside` survives on disk. The database was reset, so the extracted memories are gone too — meaning two cases' worth of source material no longer exists in any form and would have to be rewritten from scratch, with no way to keep the new versions consistent with what the originals established.
+
+**Unresolved discrepancy, recorded rather than guessed at:** the Character Bible's "Cases already written" section lists **one** Caldwell case; the decision log says **three** were written and loaded. The bible is dated June 17 23:01. Either cases 2 and 3 were written afterward and the bible was never updated, or the log's count was imprecise. The available evidence does not settle it. What is certain is that one transcript exists on disk today.
+
+ALTERNATIVES CONSIDERED (if known):
+Leaving demo data out of the repo as disposable test fixtures — rejected on the evidence: it was treated as disposable and two files were lost. Transcripts are not fixtures, they are the source material the demo rests on, and internal consistency across them is the thing that makes the pattern engine demonstrable.
+
+STILL OPEN / NEEDS REVISITING:
+Caldwell's docket needs eight or nine more cases and Kimball's needs ten; only Reynolds has moved. Whether to rewrite the two lost Caldwell cases or simply write forward from case 2 is unresolved — nothing depends on reproducing the originals, since the memories are gone either way.
+
+---
+
+### DECISION: Reynolds docket opened with three transcripts
+DATE: August 22, 2026
+STATUS: confirmed — written and audited, not yet ingested
+
+WHAT WAS DECIDED:
+Wrote the first three Reynolds cases, following the Character Bible's specification for her without deviation:
+- **Brightwater Logistics v. Sumner Freight** (Discovery Hearing) — Soto v. Kowalski. Establishes the stonewalling trigger and the remedy-matches-harm rule.
+- **Ashfield Millwork v. Calloway Development** (Motion Hearing) — Okafor v. Lange. Anti-boilerplate rule applied to **both** parties in the same hearing.
+- **Vantage Point Analytics v. Hartwell Capital** (Summary Judgment) — Pace v. Anand. Establishes oral-argument expansion past the briefs, and her disfavor for settlement strong-arming.
+
+WHY:
+Timing: everything cheaper to do on an empty database was finished — labels captured at ingest, schema migration in place, vocabulary unified, and the deviation engine actually reading posture tags. Christopher had delegated the timing decision ("ill let you decide when you think we are at a point to write transcripts"), so this was the point.
+
+Reynolds first rather than more Caldwell, because she is the designed contrast: a **conduct** lean rather than a **party** lean. If the engine can learn "this judge favors whoever acted in good faith" as distinct from "this judge favors plaintiffs," that is the strongest available evidence it is detecting real per-judge patterns rather than a generic prior.
+
+The Ashfield case is the deliberate centerpiece: her anti-boilerplate rule strikes the defense's templated Daubert challenge **and** the plaintiff's benchmark-multiplier damages figure, in the same hearing, on the same reasoning. A party-lean judge cannot produce that transcript.
+
+Audited before committing rather than after: attorney isolation verified with word-boundary matching against both other dockets (an initial substring check produced a false "William Tate" leak — it was matching inside "STATE OF TENNESSEE"), canonical judge name present in all three, and posture mix hand-classified by effect at 6 plaintiff / 5 defendant / 1 neither, against the bible's ~45/45/10 target.
+
+ALTERNATIVES CONSIDERED (if known):
+Writing all ten Reynolds cases at once — rejected; three establishes the pattern and can be ingested and checked before committing to the shape. Starting with Kimball — rejected; Reynolds is the sharper contrast to the docket that already exists.
+
+STILL OPEN / NEEDS REVISITING:
+**Not yet ingested.** These have never been run through extraction, so the tag vocabulary landing cleanly, the posture tags being applied correctly by effect rather than verb, and the deviation engine reading them as intended are all still unverified against real data. That run is the first genuine end-to-end test of everything built today.
+
+Two of the five Reynolds defense counsel are unused so far — Helena Cross and Gregory Whitfield. The bible wants each in 2–4 cases, so they need to feature in the next batch, and Kowalski, Lange, and Anand each need at least one more appearance.
+
+---
+
 *(Append new entries below this line, oldest first, using the template above.)*

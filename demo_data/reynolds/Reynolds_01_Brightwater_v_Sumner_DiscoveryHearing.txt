@@ -1,0 +1,59 @@
+IN THE CHANCERY COURT FOR DAVIDSON COUNTY
+STATE OF TENNESSEE
+
+BRIGHTWATER LOGISTICS, LLC,
+                              Plaintiff,
+v.
+SUMNER FREIGHT SYSTEMS, INC.,
+                              Defendant.
+
+Civil Action No. 2025-CH-01188
+
+TRANSCRIPT OF DISCOVERY HEARING
+BEFORE THE HONORABLE PATRICIA A. REYNOLDS
+
+APPEARANCES:
+For the Plaintiff:   RAYMOND SOTO, ESQ.
+For the Defendant:   BRETT KOWALSKI, ESQ.
+
+---
+
+THE COURT: We're on the record in Brightwater Logistics against Sumner Freight Systems, 2025-CH-01188. Three discovery matters this afternoon, and Mr. Kowalski, I'll tell you now that I've read the correspondence exhibits in full, not just the motion. Mr. Soto, start with the compel.
+
+MR. SOTO: Thank you, Your Honor. We served requests for production on January 9th directed at the dispatch records and the internal routing logs for the sixteen-month term of the master services agreement. Defendant responded on February 12th with objections to every request and produced four hundred pages of publicly available marketing material. We conferred on February 20th, February 27th, and March 6th. On each occasion Mr. Kowalski represented that a supplemental production was, in his words, "being processed." Nothing has been produced. We are now six weeks past the close of document discovery.
+
+THE COURT: Mr. Kowalski, three meet-and-confers, three representations that production was coming, and nothing came. Was there a supplemental production being processed on February 20th?
+
+MR. KOWALSKI: Your Honor, we had begun scoping the collection with our vendor—
+
+THE COURT: That is not what I asked. On February 20th, when you told Mr. Soto a supplemental production was being processed, had a collection been initiated?
+
+MR. KOWALSKI: Not as of that date, Your Honor. The engagement letter with the vendor was signed in April.
+
+THE COURT: April. So on three separate occasions counsel represented to opposing counsel that documents were in process when no collection existed. Mr. Kowalski, I want to be very clear about something, because it will save you difficulty in front of me later. I am not a stickler about form. If you file a brief two days late and tell me why, I will almost certainly let it in. If you miss a page limit, I am not going to strike your paper. What I will not tolerate — and this is the thing that gets my attention every single time — is a party using the discovery process as a delay mechanism and telling the other side something that is not accurate to buy time. The motion to compel is GRANTED. Defendant will produce all responsive dispatch records and routing logs within fourteen days. Not "substantially complete." Complete.
+
+MR. KOWALSKI: Your Honor, the volume—
+
+THE COURT: You have had since January. The second matter is plaintiff's motion for sanctions under Rule 37. Mr. Soto, what are you asking for?
+
+MR. SOTO: We're asking for our fees on the three conferrals and this motion, Your Honor, and for an order deeming the routing-log authenticity requests admitted.
+
+THE COURT: You get the fees. Mr. Kowalski, the delay here was not a resource problem, it was a representation problem, and your opposing counsel spent three conferences and a motion getting to something he was entitled to in February. Fees on the conferrals and the motion are AWARDED to plaintiff, amount to be submitted by affidavit within ten days. On the deemed admissions, no. That is a merits sanction for a discovery failure, and the prejudice here is delay and expense, which fees address. I match the remedy to the actual harm. The request to deem the authenticity requests admitted is DENIED.
+
+MR. SOTO: Understood, Your Honor.
+
+THE COURT: Third matter, and Mr. Soto, this one goes against you. Defendant moves to quash plaintiff's subpoena to Coleman Terminal Services, a non-party. Mr. Kowalski, briefly.
+
+MR. KOWALSKI: Your Honor, Coleman is a competitor of Sumner. The subpoena seeks their complete customer pricing files for a three-year period. Plaintiff's claim concerns the routing obligations in our agreement. Coleman's pricing to unrelated customers has nothing to do with it, and it is competitively sensitive.
+
+THE COURT: Mr. Soto, what is the connection between a non-party competitor's pricing files and whether your client was routed the loads it was promised?
+
+MR. SOTO: Your Honor, it goes to market rate for the damages model—
+
+THE COURT: Three years of a non-party's complete customer pricing, to establish a market rate. That is a very large net for a fairly small fish, and it lands on someone who is not in this lawsuit. Narrow it or lose it. The motion to quash is GRANTED as to the subpoena as drafted. Mr. Soto, you may serve a revised subpoena limited to Coleman's rate quotations for lane traffic comparable to the lanes actually at issue in your agreement, for the sixteen-month contract term. Not three years, and not their whole book of business.
+
+MR. SOTO: We'll narrow it, Your Honor.
+
+THE COURT: Good. Mr. Kowalski, fourteen days on the production. I will say this plainly so there is no ambiguity in the record: if I have to hold another hearing on these same documents, we will be discussing something considerably more serious than fees. We are adjourned.
+
+(Proceedings concluded.)
