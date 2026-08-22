@@ -1449,4 +1449,44 @@ Two of the five Reynolds defense counsel are unused so far — Helena Cross and 
 
 ---
 
+### DECISION: First end-to-end ingestion run — what it verified and what it broke
+DATE: August 22, 2026
+STATUS: confirmed (measured against real ingested data)
+
+WHAT WAS DECIDED:
+Recorded as findings from the first genuine end-to-end run. Three Reynolds transcripts ingested, 62 memories stored, one query executed. Four API calls, roughly $0.23 at Sonnet list pricing. Christopher authorized key usage with a standing condition of asking before each use.
+
+**Verified working — all previously untested against real data:**
+- All four ingest labels populated on 62/62 memories. `get_by_matter()` returns 22 / 21 / 19 for the three matters. The labeling work is confirmed beyond the unit test.
+- Canonical judge name on 62/62 (`Patricia A. Reynolds`), so the name-normalization rule holds under real extraction.
+- 204 of 206 `fact_pattern_tags` inside the controlled vocabulary. The two outliers (`contract_dispute`, `routing_obligations`) sat on non-clustering categories, so the drift warning correctly stayed silent.
+- Pattern evidence assembled: Reynolds MEDIUM (26 corroborating / 9 deviating), plus three opposing-counsel profiles.
+
+**Broken, and the reason matters more than the count:**
+
+1. **Posture coverage is only 70%**, and that is enough to poison clustering. `get_ruling_direction()` returns from two vocabularies — posture-derived (`favored_plaintiff`) and verb-derived (`favorable`) — which deliberately never compare equal so an un-postured memory cannot silently agree with a postured one. That fail-safe was designed and documented this morning as "handled safely but not observed in practice." It has now been observed, and it fires constantly: the largest cluster held `{favorable: 4, favored_plaintiff: 3, favored_defendant: 1, neutral: 1}`, counting three memories as deviating from four memories that describe the same rulings favoring the same party. A meaningful share of the 9 reported deviations are artifacts.
+
+2. **Clusters fragment badly.** 19 clusters from 38 memories; 10 of them singletons, which `build_pattern_evidence()` skips entirely. The cluster key concatenates every matching strategy tag, so more thorough tagging produces narrower buckets — a direct incentive against good extraction.
+
+3. **Pattern evidence counts memories, not rulings.** Hand-classified by ruling, the three transcripts are 6 plaintiff / 5 defendant / 1 neither — balanced, as designed. Counted by memory, they are 13 / 7 / 5, or 52% plaintiff, which reads as exactly the party lean Reynolds was built *not* to have. Verbose rulings outvote terse ones.
+
+4. **One memory has `source_attorney` and `opposing_counsel` inverted** — Okafor recorded as opposing counsel, Lange as ours. 1 of 62, silent, and it pollutes two entity profiles at once.
+
+5. **The query response was lost to a console encoding crash** on the chart emoji in the Confidence Note header. The call completed and was billed; only the printing failed. Does not affect the dashboard.
+
+WHY:
+The run was worth doing precisely because it broke things that reading the code could not reveal. Every one of these findings required real extracted data — the posture coverage rate, the cluster size distribution, the memory-versus-ruling weighting, and the attribution inversion are all properties of what the model actually produces, not of what the code says it will do.
+
+Worth noting against this project's pattern of declared-but-unread plumbing: this time the defect is the opposite shape. The code works exactly as written. It is the *data* that does not meet the code's assumption, and the assumption was never checked because there was no data to check it against.
+
+ALTERNATIVES CONSIDERED (if known):
+Re-running the query to recover the lost response — declined for now. The confidence numbers it would summarize are distorted by findings 1 and 3, so a clean response would describe dirty inputs. Better to fix posture coverage first and re-query once the numbers mean something.
+
+STILL OPEN / NEEDS REVISITING:
+All five findings are open GitHub issues. The most consequential is posture coverage: it is upstream of the deviation noise, and fixing it may resolve much of the confidence distortion without touching the clustering code. Validation-time enforcement (warn when a ruling tag appears without a posture tag) is cheap and diagnostic regardless of which fix is chosen.
+
+The central demo question — whether the engine can learn a *conduct* lean as distinct from a *party* lean — remains **unanswered**. The data cannot currently show it either way.
+
+---
+
 *(Append new entries below this line, oldest first, using the template above.)*
