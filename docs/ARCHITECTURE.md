@@ -38,13 +38,24 @@ The entire ambition of tracing a matter from intake through to outcome depends o
 
 Retrofitting `matter_id` onto already-ingested memories requires re-ingesting them. Capture it at the door.
 
-## 4. Controlled vocabulary must live in exactly one module
+## 4. Controlled vocabulary lives in exactly one module
 
-Clustering and deviation detection work by set intersection against fixed tag vocabularies (`ruling_type_tags`, `legal_basis_tags`, `proceeding_tags`, `strategy_tags`, `outcome_tags`, `posture_tags`).
+Clustering, deviation detection, and relevance scoring all work by set intersection against fixed tag vocabularies. **All of them are defined in `vocabulary.py` and nowhere else.** `structurer.py` and `search_engine.py` import from it and alias onto instance attributes; edit the module, never the aliases.
 
-These lists are currently duplicated in `ingestion/structurer.py` and `retrieval/search_engine.py`. **Any tag added to one and not the other causes validation and clustering to disagree, silently.**
+The unions are named by **purpose**, not assembled inline at each use site:
 
-This is tolerable at one extraction branch. At eight branches with their own vocabularies it becomes sixteen copies. Consolidating into a single shared module is a prerequisite for the branch architecture in §6, not an optional cleanup.
+| Union | Used by | Contents |
+|---|---|---|
+| `CONTROLLED_VOCABULARY` | tag validation at ingest | everything |
+| `CLUSTERING_TAGS` | `get_context_cluster()` | legal basis + proceeding + strategy |
+| `SCORING_TAGS` | the structured-tag bonus in `score_memory()` | everything |
+| `FAVORABLE_/UNFAVORABLE_RULING_TAGS` | `get_ruling_direction()` fallback only | ruling-type partition |
+
+Building these inline is what caused the original drift: `POSTURE_TAGS` was added for audit finding #3 and never made it into the scoring union, and `OUTCOME_TAGS` was never defined in `search_engine.py` at all — so memories tagged `favored_plaintiff` or `strategy_succeeded` earned no structured-tag bonus despite the extraction prompt requiring those tags. Nothing errored. The signal was just missing.
+
+`CLUSTERING_TAGS` deliberately excludes ruling type, outcome, and posture. Clustering must group by shared *context* so that direction can then be compared within a cluster; folding outcome into the cluster key would group memories by their result and make every cluster internally consistent by construction.
+
+**Adding a tag** means adding it to `vocabulary.py` *and* to the extraction prompt in `ingestion/extractor.py`, which is what instructs the model to emit it. A tag defined here that the prompt never produces is dead weight; a tag the prompt emits that is missing here fails validation and will not cluster. Per-branch vocabularies belong alongside their branch (§6), not in this module.
 
 ## 5. `source_type` and `extraction_category` are different axes
 

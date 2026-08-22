@@ -1342,4 +1342,60 @@ The migration only adds columns. Renaming, dropping, or changing a column type i
 
 ---
 
+### CORRECTION: audit finding #3 was only half implemented — the posture tags were never read
+DATE: August 22, 2026
+STATUS: confirmed (demonstrated with a failing case, then fixed and re-tested) — **corrects the August 22, 2026 correction entry** "ruling posture fix (audit finding #3) is implemented — the log was stale"
+
+WHAT WAS DECIDED:
+Recorded as a correction to a correction. Earlier today an entry was written stating that the posture-tag fix for audit finding #3 was built, based on finding `posture_tags` defined in both `structurer.py` and `search_engine.py` with comments reading "Fixes audit finding #3." That entry flagged, correctly, that the code had never been exercised against data and its correctness was untested.
+
+Exercising it revealed the fix was **half built**:
+- The extraction prompt requires posture tags — built.
+- `structurer.py` validates them against the controlled vocabulary — built.
+- `search_engine.py` declared `self.posture_tags` — and **never read it anywhere**. `get_ruling_direction()`, the exact function the audit identified, still used its own hardcoded favorable/unfavorable partition of ruling verbs.
+
+The false-contradiction bug the posture tags were created to fix was therefore still live. Demonstrated concretely: a judge who grants the plaintiff's summary-judgment motion in one matter and denies the defendant's in another has ruled *for the plaintiff both times*, but the verb-based logic returned `'favorable'` for the first and `'unfavorable'` for the second, placing them in the same context cluster with opposing directions — counting the judge as deviating from himself.
+
+`get_ruling_direction()` now prefers the posture tag when present and falls back to the verb partition only when it is absent.
+
+WHY:
+Found while consolidating the tag vocabulary (the separate decision below). Grepping for tag literals outside the new shared module surfaced the hardcoded favorable/unfavorable sets, and checking what consumed `posture_tags` returned only the assignment line. This is the second time in one session that a feature's plumbing existed with nothing feeding it — the same shape as `matter_id` and `source`.
+
+Worth recording as a pattern: **a declared-but-unread attribute is this project's characteristic failure mode.** It produces no error and no visible symptom, so it survives until something specifically looks for consumers rather than definitions.
+
+ALTERNATIVES CONSIDERED (if known):
+Treating an un-postured ruling memory as `'neutral'` (never deviating) rather than keeping the verb fallback — rejected. It would fail toward over-confidence: if posture tagging degraded, deviation detection would go silent and the engine would report high confidence with no dissent, which is the more dangerous direction for an attorney relying on it. The verb fallback returns values from a deliberately different vocabulary (`'favorable'` vs `'favored_plaintiff'`), so an un-postured memory can never compare equal to a postured one; in a mixed cluster that surfaces as a deviation, which lowers confidence rather than inflating it.
+
+`favored_neither` maps to `'neutral'` rather than becoming its own direction, since it marks a procedural ruling with no directional signal and `build_pattern_evidence()` already treats `'neutral'` as non-deviating.
+
+STILL OPEN / NEEDS REVISITING:
+Still untested against ingested data — the tests were direct unit-level calls, not a full ingest-and-query cycle. Verify against Reynolds transcripts once written. The mixed-cluster case (some memories postured, some not) is handled safely but has not been observed in practice.
+
+---
+
+### DECISION: Consolidate the controlled tag vocabulary into vocabulary.py
+DATE: August 22, 2026
+STATUS: confirmed — implemented and tested (closes the vocabulary-consolidation issue)
+
+WHAT WAS DECIDED:
+All controlled tag vocabularies now live in a single top-level `vocabulary.py`. `structurer.py` and `search_engine.py` import from it and alias onto instance attributes so existing access keeps working. Purpose-named unions replace the ad-hoc ones that were previously assembled inline at each use site: `CONTROLLED_VOCABULARY` (validation), `CLUSTERING_TAGS` (context clustering), `SCORING_TAGS` (relevance bonus), and `FAVORABLE_/UNFAVORABLE_RULING_TAGS` (the direction fallback).
+
+WHY:
+The duplication had already drifted, which was verified rather than assumed before starting:
+- **Tag contents matched** across both files for all five shared sets.
+- **`OUTCOME_TAGS` existed only in `structurer.py`** — `search_engine.py` had no concept of it.
+- **The scoring union omitted both outcome and posture tags.** A memory tagged `strategy_succeeded` or `favored_plaintiff` earned **zero** structured-tag bonus, despite the extraction prompt *requiring* those tags on strategy and ruling memories. `ruling + posture` scored 3 instead of 6.
+
+The June 17 entry correctly identified the duplication as a maintenance hazard and scoped the fix as a future refactor. It had already caused a live scoring bug by then. The branch architecture made it urgent — two copies becomes sixteen at eight branches — but the drift did not wait for that.
+
+Consolidation is enforced by identity, not discipline: both consumers now reference the *same frozenset objects*, verified with an `is` check rather than equality. They cannot drift.
+
+ALTERNATIVES CONSIDERED (if known):
+Keeping the duplication and maintaining it by discipline — rejected; the failure is silent, so discipline has no feedback signal to correct against. Consolidating without fixing the scoring gap, to keep the refactor purely behavior-preserving — rejected: the gap was unambiguously unintended, the extraction prompt requires the tags that were being ignored, and leaving a known bug in place while performing the exact refactor that surfaced it would be strange. The change is noted as a behavior change in the pull request.
+
+STILL OPEN / NEEDS REVISITING:
+Scores now rise for memories carrying outcome or posture tags, which interacts with the untuned relevance thresholds — and those are themselves a transcription slip rather than a reasoned value. Both should be settled in the same threshold-tuning pass.
+
+---
+
 *(Append new entries below this line, oldest first, using the template above.)*
