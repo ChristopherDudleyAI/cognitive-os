@@ -1489,4 +1489,49 @@ The central demo question — whether the engine can learn a *conduct* lean as d
 
 ---
 
+### DECISION: Keep ingestion on Sonnet 4.6 — the posture gap was a prompt problem, not a capability problem
+DATE: August 22, 2026
+STATUS: confirmed (measured A/B, same transcripts, same prompt, model varied)
+
+WHAT WAS DECIDED:
+`ingestion_model` stays `claude-sonnet-4-6` for now. This **defers rather than reverses** the standing decision to route ingestion through a stronger model, and it narrows the reason: that decision assumed interpretation quality was the binding constraint. Measurement says the prompt was.
+
+Christopher raised the question directly — "if the extraction is the most ai intensive part should we be using opus 5 on high there too?" — which is the third time this session he re-derived a decision already in this log (see also the source-type dropdown). Rather than answer from the log, it was run as an experiment, because the log's reasoning had never been tested.
+
+**Results across three runs on the same three transcripts:**
+
+| metric | baseline (old prompt, Sonnet) | Sonnet 4.6 + new prompt | Opus 5 @ high + new prompt |
+|---|---:|---:|---:|
+| posture coverage | **70%** | **100%** | **100%** |
+| verb-derived directions | 7 | 0 | 0 |
+| cluster deviations | 9 | 4 | 6 |
+| attribution inversions | 1 | 0 | 0 |
+| memories extracted | 62 | 56 | 68 |
+| tags outside vocabulary | 2 | 2 | **68** |
+
+WHY:
+The question the experiment answered was whether the 70% posture gap was an instruction-following failure or a reasoning failure. A prompt fix can close the first; only capability closes the second.
+
+It was entirely the first. Making the posture rule mechanical — trigger on the presence of a ruling tag rather than on the model's judgment about whether a memory "describes a ruling" — took coverage from 70% to 100% **on the same model**. Opus 5 could not improve on that, because there was nothing left to improve.
+
+The downstream effects confirmed the diagnosis rather than merely correlating with it: verb-derived directions went to zero, which eliminated the mixed-vocabulary clusters that were counting memories describing the same ruling as deviating from each other. Deviations fell 9 → 4. The single attribution inversion also disappeared.
+
+**Opus 5's trade-off, measured:** it extracted 21% more memories (68 vs 56) and decomposed them more finely (mean 375 chars vs 516), with more precise descriptions. But 68 of its 219 tags fell outside the controlled vocabulary versus 2 of 148 — it follows the prompt's invitation to use "descriptive tags" far more enthusiastically. Those tags are invisible to the engine, since clustering and scoring both work by intersection with the controlled sets. It also fired 22 drift warnings against Sonnet's 2, which makes the drift detector useless: a real typo would be lost among conformant behavior. Logged separately as its own issue.
+
+Cost was not the deciding factor and should not be presented as one — roughly $0.18 versus $0.31 for three transcripts, or about $1.80 versus $3.10 for a full thirty-transcript demo. The decision is about output quality, and on the metric that mattered the two models are identical.
+
+ALTERNATIVES CONSIDERED (if known):
+Switching to Opus 5 and re-ingesting in one step — rejected as an experimental-design error. The prompt had just changed; changing the model simultaneously would have confounded the two and left the permanent per-document cost decided on an assumption. Running both cost about $0.50 total and produced a defensible answer.
+
+Sonnet 5 was noted as a middle option — currently at introductory pricing of $2/$10 per MTok through 2026-08-31, which makes it cheaper than the Sonnet 4.6 in use and more capable. Not tested; worth considering before the intro pricing expires.
+
+STILL OPEN / NEEDS REVISITING:
+Revisit when the descriptive-tag question is settled. Opus 5's finer decomposition may prove more valuable at scale, and its vocabulary behavior is a prompt-specification problem rather than a model defect — once `fact_pattern_tags` and `tags` have distinct, stated purposes, the comparison should be re-run.
+
+Cluster fragmentation was untouched by any of this, as expected: 19 clusters in all three runs, with 10–13 singletons that cannot form patterns. That is a clustering-key design problem, not an extraction problem.
+
+The posture mix is still plaintiff-leaning by memory count (10/6/2) against a design target of roughly balanced. Hand-classified by *ruling* the transcripts are 6/5/1, so this is the memory-count weighting distortion rather than a data problem.
+
+---
+
 *(Append new entries below this line, oldest first, using the template above.)*

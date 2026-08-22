@@ -48,7 +48,9 @@ def initialize_system():
         st.session_state.extractor = Extractor(
             api_key=config["anthropic_api_key"],
             model=config["model"],
-            ingestion_model=config["ingestion_model"]
+            ingestion_model=config["ingestion_model"],
+            max_tokens=config.get("extraction_max_tokens", 16000),
+            effort=config.get("extraction_effort")
         )
         st.session_state.structurer = Structurer(
             default_project=config["default_project"]

@@ -26,11 +26,26 @@ class Extractor:
     DEFAULT_BRANCH = 'court_transcript'
 
     def __init__(self, api_key: str, model: str,
-                 ingestion_model: str = None):
+                 ingestion_model: str = None,
+                 max_tokens: int = 16000,
+                 effort: str = None):
         self.client = anthropic.Anthropic(api_key=api_key)
         self.model = model
         self.ingestion_model = ingestion_model or model
         self.chunk_word_limit = 1500
+
+        # max_tokens caps thinking AND visible output together. Models
+        # that think by default (Opus 5 and later) spend part of this
+        # budget before emitting any JSON, so a ceiling tuned for a
+        # non-thinking model can truncate the array mid-object and
+        # reproduce the JSON parse errors this was already fixed for
+        # once. 16000 leaves headroom and stays under the threshold
+        # where non-streaming requests risk an SDK timeout.
+        self.max_tokens = max_tokens
+
+        # Optional. Sent as output_config.effort when set. Leave None to
+        # send nothing and take the model's own default.
+        self.effort = effort
 
     def get_branch(self, source_type: str = None) -> dict:
         return self.BRANCHES.get(
@@ -295,18 +310,52 @@ Input to extract from:
 
     def _call_model(self, prompt: str) -> list:
 
-        response = self.client.messages.create(
-            model=self.ingestion_model,
-            max_tokens=7000,
-            messages=[
+        params = {
+            "model": self.ingestion_model,
+            "max_tokens": self.max_tokens,
+            "messages": [
                 {
                     "role": "user",
                     "content": prompt
                 }
-            ]
-        )
+            ],
+        }
+        if self.effort:
+            params["output_config"] = {"effort": self.effort}
 
-        response_text = response.content[0].text
+        response = self.client.messages.create(**params)
+
+        # A refused request returns HTTP 200 with an empty content list,
+        # so indexing straight into content[0] raises IndexError rather
+        # than reporting what happened. Check the stop reason first.
+        if response.stop_reason == "refusal":
+            details = getattr(response, "stop_details", None)
+            category = getattr(details, "category", None) if details else None
+            print(
+                f"[EXTRACTION REFUSED] model={self.ingestion_model} "
+                f"category={category}. No memories extracted from this chunk."
+            )
+            return []
+
+        text_blocks = [
+            b.text for b in response.content
+            if getattr(b, "type", None) == "text"
+        ]
+        if not text_blocks:
+            print(
+                f"[EXTRACTION EMPTY] model={self.ingestion_model} "
+                f"stop_reason={response.stop_reason}. No text block returned."
+            )
+            return []
+
+        if response.stop_reason == "max_tokens":
+            print(
+                f"[EXTRACTION TRUNCATED] hit max_tokens="
+                f"{self.max_tokens}. The JSON array is probably cut off "
+                f"mid-object; raise max_tokens or lower chunk_word_limit."
+            )
+
+        response_text = "".join(text_blocks)
 
         try:
             cleaned = response_text.strip()
