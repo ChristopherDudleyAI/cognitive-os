@@ -1,0 +1,61 @@
+IN THE CIRCUIT COURT OF COOK COUNTY, ILLINOIS
+COUNTY DEPARTMENT, LAW DIVISION
+
+CLAIRE DELACROIX,
+                              Plaintiff,
+v.
+ASHMONT WEALTH ADVISORS, LLC, and PETER HALLORAN, CFP,
+                              Defendants.
+
+Case No. 2025-L-004510
+
+TRANSCRIPT OF MOTIONS HEARING
+BEFORE THE HONORABLE ROBERT D. KIMBALL
+
+APPEARANCES:
+For the Plaintiff:   LILLIAN PACE, ESQ.
+For the Defendants:  JANET WU, ESQ.
+
+---
+
+THE COURT: 2025-L-004510, Delacroix against Ashmont Wealth Advisors and Peter Halloran. Professional negligence. Three motions. Ms. Wu, yours first — the motion to bar the plaintiff's standard-of-care expert.
+
+MS. WU: Thank you, Your Honor. Ms. Pace offers Dr. Arun Bhatt, an academic finance professor. The standard of care at issue is that of a CERTIFIED FINANCIAL PLANNER advising a retail client on retirement allocation. Dr. Bhatt has never held a CFP certification, has never advised a retail client, and has never practiced in the field he proposes to set the standard for.
+
+THE COURT: Ms. Pace, has Dr. Bhatt practiced as a financial planner?
+
+MS. PACE: He has published extensively on retail portfolio construction, Your Honor, and he has consulted for institutional—
+
+THE COURT: That was not the question. Has he practiced as a certified financial planner advising retail clients.
+
+MS. PACE: He has not, Your Honor.
+
+THE COURT: Then he cannot testify to the standard of care of one. A standard-of-care opinion in a professional negligence case must come from someone qualified in the same field of practice. An economist may explain what a portfolio did. He may not tell a finder of fact what a reasonably careful CFP would have advised, because he has never been one and does not know. The motion to bar Dr. Bhatt as to standard of care is GRANTED. He may testify as to damages calculation, which is within his field.
+
+MS. PACE: Your Honor, that leaves us without a standard-of-care witness.
+
+THE COURT: It does. You have forty-five days under the scheduling order's disclosure provision to substitute one, and I will hear a motion for leave if you file it. What I will not do is admit an unqualified opinion because the alternative is inconvenient.
+
+Second motion. Ms. Wu, you also move for summary judgment on the entire claim, on the theory that without a standard-of-care expert the claim fails as a matter of law.
+
+MS. WU: Yes, Your Honor.
+
+THE COURT: Denied, and denied as premature. I have just told Ms. Pace she has forty-five days to substitute. Granting judgment today would make the disclosure provision meaningless, and a scheduling order that can be defeated by filing a motion the same morning is not a scheduling order. The motion for summary judgment is DENIED without prejudice. You may renew it if no qualified expert is disclosed within the period.
+
+MS. WU: Understood, Your Honor.
+
+THE COURT: Third motion. Ms. Pace moves to compel production of Mr. Halloran's disciplinary file from his prior employer. Ms. Wu objects on relevance and on the grounds that it concerns conduct predating the engagement.
+
+MS. PACE: Your Honor, the file reflects two prior complaints about unsuitable allocation recommendations. That is precisely the conduct at issue.
+
+THE COURT: Ms. Wu, were the prior complaints adjudicated?
+
+MS. WU: One was resolved with a letter of caution. The other was closed with no finding.
+
+THE COURT: The one closed with no finding proves nothing and stays out — a complaint that was investigated and not sustained is an allegation, and an allegation is not evidence of anything. The letter of caution is a disciplinary finding by the firm, on the same category of conduct, and it is relevant to notice. Produce the letter of caution and the documents underlying it within fourteen days. The closed complaint is not discoverable. The motion to compel is GRANTED IN PART.
+
+MS. WU: Understood, Your Honor.
+
+THE COURT: One observation before we adjourn, Ms. Pace, and it is meant usefully. Two of your three positions this morning asked me to weigh what would be fair to your client rather than what the rule requires. In front of me that will not work in either direction — Ms. Wu will get the same answer when she tries it. Bring me the text and the controlling authority and you will find me predictable. Adjourned.
+
+(Proceedings concluded.)

@@ -1,0 +1,61 @@
+IN THE CIRCUIT COURT OF COOK COUNTY, ILLINOIS
+COUNTY DEPARTMENT, LAW DIVISION
+
+DANIEL OSEI,
+                              Plaintiff,
+v.
+CRANMORE INDUSTRIAL GROUP, INC.,
+                              Defendant.
+
+Case No. 2025-L-004033
+
+TRANSCRIPT OF HEARING ON MOTION FOR SUMMARY JUDGMENT
+BEFORE THE HONORABLE ROBERT D. KIMBALL
+
+APPEARANCES:
+For the Plaintiff:   RAYMOND SOTO, ESQ.
+For the Defendant:   MARGARET STAHL, ESQ.
+
+---
+
+THE COURT: 2025-L-004033, Osei against Cranmore Industrial Group. Defendant moves for summary judgment on both counts — Title VII racial discrimination and hostile work environment. Ms. Stahl, take them in order.
+
+MS. STAHL: Thank you, Your Honor. On the discrimination count, the adverse action alleged is the denial of a promotion to shift supervisor in February. Cranmore's position is that Mr. Osei did not apply. The posting closed on the second; the applicant log is Exhibit 9; Mr. Osei's name does not appear on it, and he testified at deposition that he did not submit an application.
+
+THE COURT: Mr. Soto, did your client apply for the position?
+
+MR. SOTO: He did not formally apply, Your Honor, but he told his supervisor twice that he wanted it. In a facility of this size the posting process is a formality—
+
+THE COURT: There is a narrow exception where an employer's practice makes formal application futile, and it requires evidence that applications were not in fact how promotions were made. What is in the record on how the other four shift supervisors were selected?
+
+MR. SOTO: All four applied through the posting, Your Honor.
+
+THE COURT: Then the process was not a formality, and the exception does not reach this record. The failure-to-promote claim fails at the prima facie stage. Summary judgment on Count I is GRANTED.
+
+MR. SOTO: Your Honor, respectfully, the informal expressions of interest—
+
+THE COURT: Are evidence that he wanted the job. They are not evidence that he applied for it, and they are not evidence that applying was futile when four of four comparators did exactly that. Count I is dismissed.
+
+Count II, hostile work environment. Ms. Stahl.
+
+MS. STAHL: Three incidents over fourteen months, Your Honor, each investigated, each resulting in discipline of the employee involved. Two written warnings and one suspension. Cranmore's position is that the conduct was neither severe nor pervasive, and that the employer response defeats liability in any event.
+
+THE COURT: Mr. Soto, on severity and pervasiveness — three incidents in fourteen months, with documented employer response to each. What is your authority that this reaches the threshold?
+
+MR. SOTO: The totality of the circumstances, Your Honor, taken together with the environment—
+
+THE COURT: "Totality of the circumstances" is not an argument, counsel. It is a phrase that appears in the cases at the point where a court explains that it has examined specific facts. Give me the specific facts and the case that finds them sufficient.
+
+MR. SOTO: I would rely on the frequency, Your Honor.
+
+THE COURT: Three incidents in fourteen months, each addressed by the employer with discipline. On this record no reasonable finder of fact could conclude the conduct was severe or pervasive, and the prompt remedial action is independently dispositive. Summary judgment on Count II is GRANTED. Both counts are dismissed.
+
+Ms. Stahl, before you leave — plaintiff's motion to strike your fourth affirmative defense, after-acquired evidence. You pled it and you have disclosed no evidence supporting it.
+
+MS. STAHL: We reserved it pending completion of discovery, Your Honor.
+
+THE COURT: Discovery closed in June. An affirmative defense reserved indefinitely against evidence that has not been found is not a defense, it is a placeholder. The motion to strike the fourth affirmative defense is GRANTED. It is moot given today's rulings, but I am not leaving unsupported pleadings on a docket.
+
+Last item. Both sides have moved to extend the deadline for post-judgment briefing, jointly. Granted — twenty-one days, as agreed. That is a scheduling matter and I have no view on it beyond the calendar. Adjourned.
+
+(Proceedings concluded.)

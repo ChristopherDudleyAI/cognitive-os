@@ -152,7 +152,10 @@ The third distinct type. Kimball follows the text and the controlling precedent 
 5. **Carl Hoffman** — aggressive employer defense who leans on credibility and sympathy arguments Kimball ignores. → loses when the doctrine isn't on his side.
 
 ### Cases already written
-- None yet. Kimball docket not started.
+- **Radcliffe v. Nordwell Logistics** (Summary Judgment, 2025-L-004188) — Okafor v. Stahl. ADEA SJ granted at the pretext step (favored_defendant), plaintiff cross-motion on retaliation denied (favored_defendant), retaliation count expressly preserved because nobody moved on it (favored_plaintiff). Establishes step-by-step McDonnell Douglas and his "I decided no such thing" disclaimer about fairness.
+- **Ferraro v. Brightline Staffing** (Summary Judgment, 2025-L-003921) — Soto v. Reyes. FMLA interference and retaliation SJ both denied on a genuinely disputed record (favored_plaintiff), expert qualification challenge denied (favored_plaintiff), after-acquired evidence barred on liability but admitted on damages (split). Reyes over-reaching on SJ where facts are disputed — his designed profile.
+- **Delacroix v. Ashmont Wealth Advisors** (Motions Hearing, 2025-L-004510) — Pace v. Wu. Standard-of-care expert barred for lack of like-specialty qualification (favored_defendant), SJ denied as premature against the scheduling order (favored_plaintiff), disciplinary file compelled in part, sustained finding in and closed complaint out (split). Establishes strict expert qualification in professional liability.
+- **Osei v. Cranmore Industrial Group** (Summary Judgment, 2025-L-004033) — Soto v. Stahl. Both Title VII counts SJ granted (favored_defendant, twice), unsupported affirmative defense struck (favored_plaintiff), joint briefing extension granted (favored_neither). Stahl second appearance; establishes his rejection of "totality of the circumstances" as an argument.
 
 ---
 

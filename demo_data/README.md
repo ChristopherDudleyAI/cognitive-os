@@ -33,6 +33,6 @@ Three rules cause the most damage when broken:
 |---|---:|---:|
 | Caldwell | 1 | ~10 |
 | Reynolds | 6 | ~10 |
-| Kimball | 0 | ~10 |
+| Kimball | 4 | ~10 |
 
 Each judge's opposing counsel should each appear in 2–4 of that judge's cases, so every attorney accumulates enough rulings to form a confidence-backed pattern. A one-off attorney produces no usable per-attorney intelligence.
