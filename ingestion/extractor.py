@@ -1,5 +1,11 @@
 import anthropic
 import json
+import os
+import sys
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+import cost_tracker
 
 class Extractor:
 
@@ -47,14 +53,19 @@ class Extractor:
         # send nothing and take the model's own default.
         self.effort = effort
 
+        # Set by extract() so ledger rows identify the document.
+        self.last_source_label = ""
+
     def get_branch(self, source_type: str = None) -> dict:
         return self.BRANCHES.get(
             source_type or self.DEFAULT_BRANCH,
             self.BRANCHES[self.DEFAULT_BRANCH]
         )
 
-    def extract(self, raw_input: str, source_type: str = None) -> list:
+    def extract(self, raw_input: str, source_type: str = None,
+                label: str = "") -> list:
 
+        self.last_source_label = label
         branch = self.get_branch(source_type)
         chunk_limit = branch.get(
             'chunk_word_limit', self.chunk_word_limit
@@ -324,6 +335,18 @@ Input to extract from:
             params["output_config"] = {"effort": self.effort}
 
         response = self.client.messages.create(**params)
+
+        # Record actual usage before anything else can fail. A refusal or a
+        # parse error still costs money, so the ledger has to see it.
+        entry = cost_tracker.record_usage(
+            self.ingestion_model, getattr(response, "usage", None),
+            operation="extraction", detail=self.last_source_label
+        )
+        if entry.get("cost_usd") is not None:
+            print(
+                f"[API] extraction  ${entry['cost_usd']:.4f}  "
+                f"(running total ${cost_tracker.totals()['total_usd']:.4f})"
+            )
 
         # A refused request returns HTTP 200 with an empty content list,
         # so indexing straight into content[0] raises IndexError rather

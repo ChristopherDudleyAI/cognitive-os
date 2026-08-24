@@ -62,7 +62,8 @@ def initialize_system():
         )
         st.session_state.llm = LLMInterface(
             api_key=config["anthropic_api_key"],
-            model=config["model"]
+            model=config["model"],
+            max_tokens=config.get("query_max_tokens", 8000)
         )
         st.session_state.initialized = True
 

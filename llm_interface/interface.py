@@ -1,10 +1,25 @@
 import anthropic
+import os
+import sys
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+import cost_tracker
 
 class LLMInterface:
 
-    def __init__(self, api_key: str, model: str):
+    def __init__(self, api_key: str, model: str,
+                 max_tokens: int = 8000):
         self.client = anthropic.Anthropic(api_key=api_key)
         self.model = model
+
+        # The response skeleton is Title, Direct Answer, one section per
+        # pattern with no cap on how many, Strategic Synthesis, Confidence
+        # Note and Confidence Caveat. A seven-pattern answer ran past 2000
+        # tokens and was cut off mid-word, losing the Confidence Note the
+        # dashboard parses for and the Caveat entirely — with no error,
+        # because a truncated response is still a valid response.
+        self.max_tokens = max_tokens
         print(f"LLM Interface ready. Model: {self.model}")
 
     def format_evidence_block(self, pattern_evidence: dict) -> str:
@@ -241,14 +256,14 @@ class LLMInterface:
 
     def query(self, prompt: str,
               context_packet: dict,
-              max_tokens: int = 2000) -> str:
+              max_tokens: int = None) -> str:
 
         formatted = self.format_packet(context_packet, prompt)
 
         try:
             response = self.client.messages.create(
                 model=self.model,
-                max_tokens=max_tokens,
+                max_tokens=max_tokens or self.max_tokens,
                 messages=[
                     {
                         "role": "user",
@@ -257,7 +272,42 @@ class LLMInterface:
                 ]
             )
 
-            return response.content[0].text
+            entry = cost_tracker.record_usage(
+                self.model, getattr(response, "usage", None),
+                operation="query", detail=prompt[:60]
+            )
+            if entry.get("cost_usd") is not None:
+                print(
+                    f"[API] query       ${entry['cost_usd']:.4f}  "
+                    f"(running total "
+                    f"${cost_tracker.totals()['total_usd']:.4f})"
+                )
+
+            if response.stop_reason == "refusal":
+                return (
+                    "The model declined to answer this query. "
+                    "No response was generated."
+                )
+
+            if response.stop_reason == "max_tokens":
+                print(
+                    f"[TRUNCATED] response hit max_tokens="
+                    f"{max_tokens or self.max_tokens}. The Confidence Note "
+                    f"and Caveat are probably cut off — raise "
+                    f"query_max_tokens in config.json."
+                )
+
+            text_blocks = [
+                b.text for b in response.content
+                if getattr(b, "type", None) == "text"
+            ]
+            if not text_blocks:
+                return (
+                    f"No text returned (stop_reason="
+                    f"{response.stop_reason})."
+                )
+
+            return "".join(text_blocks)
 
         except Exception as e:
             return f"Error: {str(e)}"

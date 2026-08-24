@@ -1571,4 +1571,61 @@ Judge deviations fell from 9 to 5 and corroborating from 26 to 23 on the same qu
 
 ---
 
+### DECISION: Track API spend in an append-only ledger with real usage figures
+DATE: August 22, 2026
+STATUS: confirmed — implemented and verified against published rates
+
+WHAT WAS DECIDED:
+Added `cost_tracker.py`. Every paid call records its **actual** token usage from `response.usage` — input, output, cache-write and cache-read — prices it per model, and appends one line to `api_spend.jsonl`. Both spending paths are wired: extraction and query. Each call prints its own cost and the running total as it happens. Christopher's request: "each time you call the api have a running total that shows how much has been invested in the api calls."
+
+WHY:
+Estimates were already drifting from reality. Every spend figure quoted before this point was calculated from token *predictions*, and the API returns exact counts on every response, so there was no reason to guess.
+
+Three decisions inside the implementation worth recording:
+
+**The ledger lives at the repo root, not under `data/`.** `data/` is gitignored and gets wiped on database resets — which has already destroyed two demo transcripts. A spend record that disappears when the database is cleared is not a record. It holds token counts and dollar figures, no secrets.
+
+**Estimates are flagged and reported separately from measured figures.** Today's earlier calls were backfilled at roughly $0.72 across ten calls, marked `estimated: true`, and the report shows measured and estimated on separate lines. A number that cannot be traced to a usage object should never be presented as though it can.
+
+**Unknown models return `None` rather than zero.** A model missing from the pricing table produces no cost rather than a silent $0.00, and the report names how many calls were unpriced. A confidently wrong total is worse than an acknowledged gap.
+
+Verified against published rates before use: 1M input on Sonnet 4.6 = $3.00, 1M output = $15.00, 1M in+out on Opus 5 = $30.00, 1M cache reads = $0.30.
+
+ALTERNATIVES CONSIDERED (if known):
+Keeping the ledger under `data/` alongside the databases — rejected for the durability reason above. Estimating cost from token counts rather than reading `usage` — rejected; the exact numbers are already in the response.
+
+STILL OPEN / NEEDS REVISITING:
+The pricing table is hand-maintained and dated in a comment. A stale rate produces a confidently wrong total, which is the failure mode the design otherwise avoids. Worth re-checking whenever models change — Sonnet 5's introductory pricing expires 2026-08-31.
+
+---
+
+### DECISION: Reynolds query answered the demo question — the conduct lean is detectable
+DATE: August 22, 2026
+STATUS: confirmed (single query, 27 memories, three transcripts — demonstrated, not validated)
+
+WHAT WAS DECIDED:
+Recorded as the first evidence that the core product thesis works. Asked what drives Reynolds' rulings and whether she favours a party, the system answered:
+
+> "Reynolds doesn't favor parties — she favors **preparation, evidentiary discipline, and procedural honesty**."
+
+That is the Character Bible's design for her, stated as `CONDUCT LEAN (good-faith actor) — NO party lean`. The engine had no access to the bible. It inferred the lean from 27 extracted memories.
+
+WHY:
+This is the question the three-judge dataset exists to answer: can the engine learn a *conduct* lean as distinct from a *party* lean, rather than reporting a generic "judges do X" prior. Until now the data could not show it either way — posture coverage was 70%, clusters were fragmented, and counsel evidence was non-functional.
+
+Specific designed characteristics the engine recovered without being told them:
+- **The Ashfield symmetry** — it identified that Reynolds struck the defence's templated Daubert challenge *and* the plaintiff's benchmark-multiplier damages figure in the same hearing on the same reasoning, and named it as one standard applied symmetrically. That transcript was written specifically to be impossible for a party-lean judge to produce.
+- **The oral-argument expansion** — it quoted her refusal to confine argument to the moving papers, and connected it to Anand being caught flat-footed, which is exactly how Anand is written.
+- **The misrepresentation trigger** — it separated her tolerance for procedural informality from her hard line on false representations, which is her defining contrast with Caldwell.
+
+ALTERNATIVES CONSIDERED (if known):
+Not applicable — this records a result, not a choice.
+
+STILL OPEN / NEEDS REVISITING:
+**Demonstrated, not validated.** One query, 27 memories, three transcripts, one judge. The finding that matters is that the mechanism produces the right answer when the data is clean; it says nothing yet about whether it holds at volume, or whether Caldwell and Kimball produce visibly *different* profiles — which is the actual test of per-judge learning and needs their dockets written.
+
+Two flaws surfaced in the same response and are filed as issues: the answer was **truncated mid-word** by a hardcoded 2000-token ceiling, cutting off the Confidence Note the dashboard parses for and the Caveat entirely; and six of seven patterns cited an identical confidence line, because pattern evidence is computed per entity rather than per pattern.
+
+---
+
 *(Append new entries below this line, oldest first, using the template above.)*
