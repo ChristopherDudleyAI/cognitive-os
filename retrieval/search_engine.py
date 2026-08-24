@@ -248,222 +248,165 @@ class SearchEngine:
 
         return 'neutral'
 
+    def _cluster_evidence(self, memories: list, top_ids: list,
+                          prompt: str, practice_area: str = None):
+        """Cluster memories by context, then classify each cluster's
+        members as corroborating or deviating from that cluster's own
+        majority direction.
+
+        Returns (cluster_records, corroborating_ids, deviating_ids).
+
+        The per-cluster breakdown is returned, not just the totals. A
+        "pattern" in the response brief corresponds to a cluster, not to
+        the entity as a whole — reporting only entity totals meant every
+        pattern in a seven-pattern answer cited the same numbers, which
+        made per-pattern confidence decorative.
+        """
+        clusters = {}
+        for memory in memories:
+            clusters.setdefault(
+                self.get_context_cluster(memory), []
+            ).append(memory)
+
+        cluster_records = []
+        corroborating = []
+        deviating = []
+
+        for cluster_key, cluster_memories in clusters.items():
+            if len(cluster_memories) < 2:
+                # A single memory cannot deviate from itself. It still
+                # counts toward the entity total if it was retrieved, but
+                # it evidences no pattern — so it is recorded as
+                # uncompared rather than as agreement.
+                singles = [
+                    m['id'] for m in cluster_memories
+                    if m['id'] in top_ids
+                ]
+                corroborating.extend(singles)
+                if singles:
+                    cluster_records.append({
+                        "cluster": cluster_key,
+                        "compared": False,
+                        "reason": "only one memory in this context",
+                        "corroborating_count": len(singles),
+                        "deviating_count": 0,
+                        "corroborating_ids": singles,
+                        "deviating_ids": [],
+                    })
+                continue
+
+            scored = [
+                s for s in (
+                    self.score_memory(
+                        m.copy(), prompt, practice_area, None
+                    )
+                    for m in cluster_memories
+                )
+                if s.get('retrieval_score', 0)
+                >= self.minimum_relevance_threshold
+            ]
+            if not scored:
+                continue
+
+            direction_counts = {}
+            for m in scored:
+                d = self.get_ruling_direction(m)
+                direction_counts[d] = direction_counts.get(d, 0) + 1
+
+            majority = max(
+                direction_counts, key=direction_counts.get
+            )
+
+            c_ids = []
+            d_ids = []
+            for m in scored:
+                d = self.get_ruling_direction(m)
+                if d == majority or d == 'neutral':
+                    c_ids.append(m['id'])
+                else:
+                    d_ids.append(m['id'])
+
+            corroborating.extend(c_ids)
+            deviating.extend(d_ids)
+
+            cluster_records.append({
+                "cluster": cluster_key,
+                "compared": True,
+                "majority_direction": majority,
+                "direction_counts": direction_counts,
+                "corroborating_count": len(c_ids),
+                "deviating_count": len(d_ids),
+                "corroborating_ids": c_ids,
+                "deviating_ids": d_ids,
+                "confidence_level": self.calculate_confidence(
+                    len(c_ids), len(d_ids)
+                ),
+            })
+
+        cluster_records.sort(
+            key=lambda r: -(r['corroborating_count']
+                            + r['deviating_count'])
+        )
+        return cluster_records, corroborating, deviating
+
     def build_pattern_evidence(self,
                                 top_memories: list,
                                 prompt: str,
                                 practice_area: str = None
                                 ) -> dict:
 
-        evidence = {}
-
-        # Extract key entities from top memories
         judges = set()
         counsels = set()
-        practice_areas = set()
 
         for memory in top_memories:
-            if memory.get('judge') and \
-               memory['judge'] != 'none':
+            if memory.get('judge') and memory['judge'] != 'none':
                 judges.add(memory['judge'])
-            if memory.get('opposing_counsel') and \
-               memory['opposing_counsel'] != 'none':
+            if memory.get('opposing_counsel') and                memory['opposing_counsel'] != 'none':
                 counsels.add(memory['opposing_counsel'])
-            if memory.get('practice_area'):
-                practice_areas.add(
-                    memory.get('practice_area')
-                )
 
         all_memories = self.memory_db.get_all_active()
+        top_ids = [m['id'] for m in top_memories]
 
-        # Build evidence for each judge
-        for judge in judges:
-            key = f"judge_{judge.replace(' ', '_').lower()}"
-            judge_memories = [
-                m for m in all_memories
-                if judge.lower() in
-                (m.get('judge') or '').lower()
-                and m.get('extraction_category') in [
-                    'judge_intelligence',
-                    'attorney_strategy',
-                    'procedural'
+        # (key prefix, entity names, memory field, categories that count)
+        entity_specs = [
+            ('judge', judges, 'judge',
+             ['judge_intelligence', 'attorney_strategy', 'procedural']),
+            ('counsel', counsels, 'opposing_counsel',
+             ['opposing_counsel', 'attorney_strategy']),
+        ]
+
+        evidence = {}
+
+        for prefix, names, field, categories in entity_specs:
+            for name in names:
+                matched = [
+                    m for m in all_memories
+                    if name.lower() in (m.get(field) or '').lower()
+                    and m.get('extraction_category') in categories
                 ]
-            ]
-
-            if not judge_memories:
-                continue
-
-            # Cluster by ruling context
-            clusters = {}
-            for memory in judge_memories:
-                cluster = self.get_context_cluster(memory)
-                if cluster not in clusters:
-                    clusters[cluster] = []
-                clusters[cluster].append(memory)
-
-            # Within each cluster find
-            # corroborating and deviating
-            total_corroborating = []
-            total_deviating = []
-
-            top_ids = [m['id'] for m in top_memories]
-
-            for cluster_key, cluster_memories in clusters.items():
-                if len(cluster_memories) < 2:
-                    # Single memory in cluster
-                    # cannot deviate from itself
-                    for m in cluster_memories:
-                        if m['id'] in top_ids:
-                            total_corroborating.append(
-                                m['id']
-                            )
+                if not matched:
                     continue
 
-                # Score each memory in cluster
-                scored_cluster = []
-                for m in cluster_memories:
-                    scored = self.score_memory(
-                        m.copy(), prompt,
-                        practice_area, None
+                clusters, corroborating, deviating = (
+                    self._cluster_evidence(
+                        matched, top_ids, prompt, practice_area
                     )
-                    if scored.get(
-                        'retrieval_score', 0
-                    ) >= self.minimum_relevance_threshold:
-                        scored_cluster.append(scored)
-
-                if not scored_cluster:
-                    continue
-
-                # Find majority ruling direction
-                # in this cluster
-                directions = [
-                    self.get_ruling_direction(m)
-                    for m in scored_cluster
-                ]
-                direction_counts = {}
-                for d in directions:
-                    direction_counts[d] = \
-                        direction_counts.get(d, 0) + 1
-
-                majority_direction = max(
-                    direction_counts,
-                    key=direction_counts.get
                 )
-
-                # Classify each memory in cluster
-                for m in scored_cluster:
-                    direction = self.get_ruling_direction(m)
-                    if direction == majority_direction or \
-                       direction == 'neutral':
-                        total_corroborating.append(m['id'])
-                    else:
-                        total_deviating.append(m['id'])
-
-            if total_corroborating or total_deviating:
-                evidence[key] = {
-                    "entity": judge,
-                    "entity_type": "judge",
-                    "corroborating_count": len(
-                        total_corroborating
-                    ),
-                    "deviating_count": len(
-                        total_deviating
-                    ),
-                    "corroborating_ids": total_corroborating,
-                    "deviating_ids": total_deviating,
-                    "confidence_level": self.calculate_confidence(
-                        len(total_corroborating),
-                        len(total_deviating)
-                    )
-                }
-
-        # Build evidence for opposing counsel
-        for counsel in counsels:
-            key = f"counsel_{counsel.replace(' ', '_').lower()}"
-            counsel_memories = [
-                m for m in all_memories
-                if counsel.lower() in
-                (m.get('opposing_counsel') or '').lower()
-                and m.get('extraction_category') in [
-                    'opposing_counsel',
-                    'attorney_strategy'
-                ]
-            ]
-
-            if not counsel_memories:
-                continue
-
-            clusters = {}
-            for memory in counsel_memories:
-                cluster = self.get_context_cluster(memory)
-                if cluster not in clusters:
-                    clusters[cluster] = []
-                clusters[cluster].append(memory)
-
-            total_corroborating = []
-            total_deviating = []
-            top_ids = [m['id'] for m in top_memories]
-
-            for cluster_key, cluster_memories in clusters.items():
-                if len(cluster_memories) < 2:
-                    for m in cluster_memories:
-                        if m['id'] in top_ids:
-                            total_corroborating.append(
-                                m['id']
-                            )
+                if not (corroborating or deviating):
                     continue
 
-                scored_cluster = []
-                for m in cluster_memories:
-                    scored = self.score_memory(
-                        m.copy(), prompt,
-                        practice_area, None
-                    )
-                    if scored.get(
-                        'retrieval_score', 0
-                    ) >= self.minimum_relevance_threshold:
-                        scored_cluster.append(scored)
-
-                if not scored_cluster:
-                    continue
-
-                directions = [
-                    self.get_ruling_direction(m)
-                    for m in scored_cluster
-                ]
-                direction_counts = {}
-                for d in directions:
-                    direction_counts[d] = \
-                        direction_counts.get(d, 0) + 1
-
-                majority_direction = max(
-                    direction_counts,
-                    key=direction_counts.get
-                )
-
-                for m in scored_cluster:
-                    direction = self.get_ruling_direction(m)
-                    if direction == majority_direction or \
-                       direction == 'neutral':
-                        total_corroborating.append(m['id'])
-                    else:
-                        total_deviating.append(m['id'])
-
-            if total_corroborating or total_deviating:
+                key = f"{prefix}_{name.replace(' ', '_').lower()}"
                 evidence[key] = {
-                    "entity": counsel,
-                    "entity_type": "opposing_counsel",
-                    "corroborating_count": len(
-                        total_corroborating
-                    ),
-                    "deviating_count": len(
-                        total_deviating
-                    ),
-                    "corroborating_ids": total_corroborating,
-                    "deviating_ids": total_deviating,
+                    "entity": name,
+                    "entity_type": field,
+                    "corroborating_count": len(corroborating),
+                    "deviating_count": len(deviating),
+                    "corroborating_ids": corroborating,
+                    "deviating_ids": deviating,
                     "confidence_level": self.calculate_confidence(
-                        len(total_corroborating),
-                        len(total_deviating)
-                    )
+                        len(corroborating), len(deviating)
+                    ),
+                    "clusters": clusters,
                 }
 
         return evidence

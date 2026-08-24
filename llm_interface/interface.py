@@ -36,6 +36,15 @@ class LLMInterface:
             "Save any ID references for the Confidence Caveat section."
         )
         lines.append("")
+        lines.append(
+            "Each entity below lists an OVERALL figure and a breakdown BY "
+            "RULING CONTEXT. The overall figure is the sum across every "
+            "context. A single pattern is supported by ONE context, so "
+            "quoting the overall figure on an individual pattern overstates "
+            "how much evidence stands behind it. Use the per-context numbers "
+            "for per-pattern confidence lines."
+        )
+        lines.append("")
 
         confidence_order = {
             'high': 0,
@@ -75,17 +84,42 @@ class LLMInterface:
                 f"ENTITY: {entity} "
                 f"({entity_type.replace('_', ' ').title()})"
             )
-            lines.append(f"Confidence: {confidence_label}")
             lines.append(
-                f"Corroborating memories: {corroborating_count}"
+                f"OVERALL (all contexts combined): {confidence_label} — "
+                f"{corroborating_count} corroborating, "
+                f"{deviating_count} deviating"
             )
-            lines.append(
-                f"Deviating memories: {deviating_count}"
-            )
+
+            clusters = evidence.get('clusters') or []
+            compared = [c for c in clusters if c.get('compared')]
+            uncompared = [c for c in clusters if not c.get('compared')]
+
+            if compared:
+                lines.append(
+                    "  BY RULING CONTEXT "
+                    "(use these for per-pattern confidence):"
+                )
+                for c in compared:
+                    lines.append(
+                        f"    [{c['confidence_level'].upper()}] "
+                        f"{c['cluster']} — "
+                        f"{c['corroborating_count']} corroborating, "
+                        f"{c['deviating_count']} deviating"
+                    )
+            if uncompared:
+                total_single = sum(
+                    c['corroborating_count'] for c in uncompared
+                )
+                lines.append(
+                    f"  NOT COMPARED: {len(uncompared)} context(s) held a "
+                    f"single memory each ({total_single} total). These "
+                    f"count toward the overall figure but evidence no "
+                    f"pattern — do not build a pattern on them."
+                )
 
             if deviating_ids:
                 lines.append(
-                    f"Deviating IDs (for caveat section only): "
+                    f"  Deviating IDs (for caveat section only): "
                     f"{', '.join(deviating_ids)}"
                 )
 
@@ -125,7 +159,7 @@ class LLMInterface:
             "### Pattern 1: [Name — highest confidence first]\n\n"
             "**Confidence: [HIGH/MEDIUM/LOW] "
             "| [N] corroborating observations "
-            "| [N] deviations**\n\n"
+            "| [N] deviations | context: [ruling context name]**\n\n"
             "[Your analysis — direct and specific. "
             "Use bold for key terms and tactical points. "
             "Say it once well.]\n\n"
@@ -162,6 +196,22 @@ class LLMInterface:
             "List each pattern with deviations, counts, and "
             "deviating memory IDs. Warn attorney not to treat "
             "deviated patterns as settled conclusions.]\n\n"
+
+            "CONFIDENCE NUMBERS — MECHANICAL RULE:\n"
+            "A pattern's confidence line MUST quote the numbers from ONE "
+            "named ruling context in the PATTERN EVIDENCE DATABASE, and "
+            "name that context. Never quote an entity's OVERALL figure on "
+            "an individual pattern — the overall figure is the sum across "
+            "every context, so attaching it to one pattern claims evidence "
+            "that pattern does not have.\n"
+            "If a pattern genuinely spans several contexts, either split it "
+            "into one pattern per context, or state confidence in words, "
+            "name the contexts it spans, and give no counts at all.\n"
+            "If no context supports a claim, do not present it as a pattern "
+            "with a confidence line. Put it in the Strategic Synthesis "
+            "instead.\n"
+            "Contexts marked NOT COMPARED hold a single memory and evidence "
+            "no pattern. Never build a pattern on one.\n\n"
 
             "RULES THAT NEVER CHANGE:\n"
             "- Use --- dividers between every major section\n"
