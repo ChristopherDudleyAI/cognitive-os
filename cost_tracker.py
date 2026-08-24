@@ -4,9 +4,8 @@ Every paid call records its ACTUAL token usage from the API response
 rather than an estimate. The Anthropic API returns exact input, output,
 and cache token counts on every response, so there is no reason to guess.
 
-The ledger is an append-only JSONL file at the repo root, and it is
-tracked in git on purpose — see the note on LEDGER_PATH. Each line is one
-call. Nothing here ever deletes or rewrites
+The ledger is an append-only JSONL file at the repo root. It is NOT tracked
+in git — see the note on LEDGER_PATH. Each line is one call. Nothing here ever deletes or rewrites
 a line — a spend record that can be edited is not a spend record.
 
 Usage:
@@ -24,10 +23,16 @@ import json
 import os
 from datetime import datetime, timezone
 
-# Deliberately at the repo root, not under data/. data/ is gitignored and
-# gets wiped on database resets — which already destroyed two demo
-# transcripts. A spend record that disappears when you clear the database
-# is not a record. It contains no secrets: token counts and dollar amounts.
+# At the repo root, not under data/: data/ gets wiped on database resets,
+# which already destroyed two demo transcripts, and a spend record that
+# disappears when you clear the database is not a record.
+#
+# Gitignored despite containing no secrets. It was tracked briefly and that
+# was wrong: the file is append-only and every branch that makes a call
+# writes to it, so it forks with the branch and conflicts on every merge.
+# One query recorded on a feature branch vanished from the running total
+# the moment main was checked out. Local-only means no off-machine backup;
+# commit a snapshot deliberately if that matters.
 LEDGER_PATH = "api_spend.jsonl"
 
 # USD per million tokens, (input, output). Source: the model pricing table
