@@ -1628,4 +1628,34 @@ Two flaws surfaced in the same response and are filed as issues: the answer was 
 
 ---
 
+### DECISION: Pattern confidence is reported per ruling context, not per entity
+DATE: August 22, 2026
+STATUS: confirmed — implemented and reconciled; the model's compliance is not yet verified against a live call
+
+WHAT WAS DECIDED:
+`build_pattern_evidence()` now returns a per-cluster breakdown alongside the entity totals, the evidence block presented to the model separates OVERALL from BY RULING CONTEXT, and the prompt carries a mechanical rule: a pattern's confidence line must quote one named context's numbers and never the entity's overall figure.
+
+The judge and opposing-counsel loops — 221 lines of near-identical duplicated code — were collapsed into a single `_cluster_evidence()` helper driven by a spec table. That was not gold-plating: the per-cluster recording would otherwise have been written twice, in exactly the pattern that produced the duplicated tag vocabularies.
+
+WHY:
+The first full Reynolds query returned seven patterns, six of which carried an identical confidence line — `23 corroborating observations | 5 deviations`. The evidence was keyed by entity, so the only counts available were entity-wide, and the model attached the judge-level figure to every pattern about that judge.
+
+The effect was to inflate apparent support rather than qualify it, which is the opposite of what a confidence mechanism is for. An attorney reading that brief would reasonably conclude each of seven patterns rested on 23 observations.
+
+**What the per-context breakdown reveals is more uncomfortable than the bug it fixes.** Every individual context for Reynolds is LOW confidence — the largest holds 6 memories, most hold 2 to 4. The MEDIUM at entity level is produced entirely by summing many small low-confidence clusters. That is arguably correct as an aggregate statement about the judge, but it means no single pattern is well-evidenced yet, and the previous format concealed that completely.
+
+Cluster sums reconcile exactly with entity totals (23/5 for Reynolds, and for all four entities), so the refactor is behaviour-preserving on the numbers that already existed.
+
+ALTERNATIVES CONSIDERED (if known):
+Having the model cite memory IDs per pattern and deriving counts from what it cited — better, because the numbers would be auditable, but that is the source traceability layer and a larger piece of work. Dropping per-pattern confidence lines entirely and stating confidence once at entity level — honest, but discards the more useful signal now that per-context numbers exist.
+
+Singletons are recorded as `compared: false` with a reason rather than being silently folded into the corroborating total. They still count toward the entity figure, preserving prior behaviour, but the model is told explicitly not to build a pattern on one.
+
+STILL OPEN / NEEDS REVISITING:
+**The model has not yet been observed following the new rule.** The evidence block and prompt were verified by inspection, not by a live call. Whether a mechanical instruction fixes this the way it fixed posture tagging is an open question — that worked because the rule had a syntactic trigger, and this one requires the model to match a pattern it wrote to a context it was given.
+
+The per-context numbers make it plain that more transcripts are the binding constraint on confidence, not further engine work. Six memories is the largest evidence base behind any single Reynolds pattern.
+
+---
+
 *(Append new entries below this line, oldest first, using the template above.)*
