@@ -11,3 +11,9 @@ venv/
 
 # Claude Code local settings
 .claude/settings.local.json
+
+# API spend ledger — local only. It is append-only and every branch
+# that makes a call writes to it, so tracking it makes every branch
+# conflict on the same file. Lives at the repo root (not data/) so a
+# database reset does not destroy it.
+api_spend.jsonl
