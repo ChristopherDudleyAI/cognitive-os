@@ -1,0 +1,51 @@
+IN THE CHANCERY COURT FOR DAVIDSON COUNTY
+STATE OF TENNESSEE
+
+MERIDIAN TEXTILE GROUP, INC.,
+                              Plaintiff,
+v.
+CORBIN HOLDINGS, LLC,
+                              Defendant.
+
+Civil Action No. 2025-CH-01402
+
+TRANSCRIPT OF DISCOVERY AND MOTION HEARING
+BEFORE THE HONORABLE PATRICIA A. REYNOLDS
+
+APPEARANCES:
+For the Plaintiff:   DIANE OKAFOR, ESQ.
+For the Defendant:   HELENA CROSS, ESQ.
+
+---
+
+THE COURT: On the record in Meridian Textile Group against Corbin Holdings, 2025-CH-01402. Three matters. Ms. Cross, your motion first, and I'll say at the outset that it's a well-built motion — which is not something I say often about discovery papers.
+
+MS. CROSS: Thank you, Your Honor.
+
+THE COURT: Defendant moves for a protective order limiting plaintiff's Rule 30(b)(6) deposition notice. The notice lists thirty-one topics. Ms. Okafor, I've read them. Topics one through nine concern the supply agreement and its performance — those are squarely in issue. Topics ten through thirty-one cover Corbin's acquisition history, its lender relationships, its internal valuation methodology and its board's strategic planning going back six years. What is the connection to whether Corbin breached a textile supply contract?
+
+MS. OKAFOR: Your Honor, the acquisition history bears on Corbin's ability to perform—
+
+THE COURT: Ability to perform is not what you pled. You pled that they failed to perform. Ms. Cross is right that this notice reaches well past the claim, and a corporate designee deposition is expensive precisely because someone has to be educated on every topic listed. Preparing a witness on six years of board strategy to defend a supply contract case is not proportionate. The motion for a protective order is GRANTED as to topics ten through thirty-one. The deposition proceeds on topics one through nine.
+
+MS. OKAFOR: Understood, Your Honor.
+
+THE COURT: Second matter. Plaintiff's motion to compel Corbin's production of the internal quality-inspection reports for the four rejected shipments. Ms. Cross, your objection is work product.
+
+MS. CROSS: Yes, Your Honor. Those inspections were conducted at the direction of counsel after the dispute arose.
+
+THE COURT: Some of them were. The inspection reports for the January and February shipments are dated before your firm was retained, and Corbin's own quality manual requires an inspection report on every rejected shipment as a matter of routine business practice. A document a company creates because its own procedures require it does not become work product because litigation later happens. The January and February reports are ORDERED produced within ten days. The reports for the May and June shipments, prepared after your engagement and at your direction, are protected — those stay out.
+
+MS. CROSS: Understood, Your Honor.
+
+THE COURT: Third matter, and Ms. Cross, this one is going to go differently. Plaintiff moves to compel Corbin to respond to the requests for admission concerning the December delivery schedule. Your response to that motion asks me to strike the requests and, in the alternative, states — and I want the record to reflect this accurately — that if Meridian does not withdraw the requests and accept Corbin's settlement offer within ten days, Corbin will, quote, "pursue every available avenue to ensure Meridian's principals bear personal responsibility for the cost of this litigation."
+
+MS. CROSS: Your Honor, that reflects our position on fee-shifting under the agreement.
+
+THE COURT: The agreement has a prevailing-party fee clause. It has no provision reaching Meridian's principals personally, and you have not pled one. Ms. Cross, you are a capable litigator. Your discovery work in this case is better than most of what comes through this courtroom, and I granted your protective order this morning because you earned it. But a threat aimed at opposing parties personally, attached to a ten-day settlement deadline, in a brief responding to a routine discovery motion, is not advocacy. It is pressure, and it is the kind of pressure that makes me read everything else you file more carefully rather than less.
+
+MS. CROSS: That was not the intent, Your Honor.
+
+THE COURT: Then the record now reflects the clarification. The motion to strike the requests for admission is DENIED. Corbin will respond to the requests for admission within fourteen days. Ms. Okafor, I'm not awarding fees on this one — you got the relief, and the motion practice here was proportionate on both sides. We're adjourned.
+
+(Proceedings concluded.)

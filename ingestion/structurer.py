@@ -10,8 +10,20 @@ import vocabulary
 
 class Structurer:
 
-    def __init__(self, default_project: str = "Legal Cognitive OS"):
+    def __init__(self, default_project: str = "Legal Cognitive OS",
+                 firm_attorneys: list = None):
         self.default_project = default_project
+
+        # The firm's own attorneys. Extraction occasionally inverts
+        # source_attorney and opposing_counsel — measured at 2.7% of
+        # memories — which is silent and pollutes two entity profiles at
+        # once, crediting a defence attorney's rulings to our own record.
+        # The roster is something the code can simply know, so it does not
+        # have to rely on the model getting it right every time.
+        self.firm_attorneys = {
+            n.strip().lower() for n in (firm_attorneys or [])
+        }
+        self.swapped_attribution_count = 0
 
         # Controlled fact_pattern_tag vocabulary. Defined once in
         # vocabulary.py and shared with retrieval/search_engine.py —
@@ -191,6 +203,35 @@ class Structurer:
         memory['source_attorney'] = self._normalize_name(
             memory.get('source_attorney')
         )
+
+        # If one of the firm's own attorneys landed in opposing_counsel,
+        # the pair was inverted. Only correct it when the other side of
+        # the pair is NOT also one of ours — an unambiguous swap. Anything
+        # less clear is left alone and reported rather than guessed at.
+        if self.firm_attorneys:
+            oc = (memory.get('opposing_counsel') or '').strip().lower()
+            sa = (memory.get('source_attorney') or '').strip().lower()
+            if oc and oc in self.firm_attorneys:
+                if sa and sa not in self.firm_attorneys:
+                    memory['opposing_counsel'], memory['source_attorney'] = (
+                        memory['source_attorney'],
+                        memory['opposing_counsel'],
+                    )
+                    self.swapped_attribution_count += 1
+                    print(
+                        f"[ATTRIBUTION FIXED] {memory['id']}: "
+                        f"'{memory['source_attorney']}' was recorded as "
+                        f"opposing counsel and '{memory['opposing_counsel']}' "
+                        f"as ours — swapped."
+                    )
+                else:
+                    print(
+                        f"[ATTRIBUTION WARNING] {memory['id']}: firm "
+                        f"attorney '{memory['opposing_counsel']}' recorded "
+                        f"as opposing counsel, but source_attorney is "
+                        f"'{memory.get('source_attorney')}' — not an "
+                        f"unambiguous swap, left as extracted."
+                    )
 
         # --- FIX #1: normalize fact_pattern_tags to controlled
         # formatting, and warn on unrecognized tags for the memory

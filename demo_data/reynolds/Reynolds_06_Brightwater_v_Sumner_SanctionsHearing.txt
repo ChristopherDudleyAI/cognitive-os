@@ -1,0 +1,51 @@
+IN THE CHANCERY COURT FOR DAVIDSON COUNTY
+STATE OF TENNESSEE
+
+BRIGHTWATER LOGISTICS, LLC,
+                              Plaintiff,
+v.
+SUMNER FREIGHT SYSTEMS, INC.,
+                              Defendant.
+
+Civil Action No. 2025-CH-01188
+
+TRANSCRIPT OF SANCTIONS HEARING
+BEFORE THE HONORABLE PATRICIA A. REYNOLDS
+
+APPEARANCES:
+For the Plaintiff:   RAYMOND SOTO, ESQ.
+For the Defendant:   BRETT KOWALSKI, ESQ.
+
+---
+
+THE COURT: On the record again in Brightwater Logistics against Sumner Freight Systems, 2025-CH-01188. Mr. Kowalski, when we were last here I ordered complete production of the dispatch records and routing logs within fourteen days, and I told you on the record that if I had to hold another hearing on these same documents we would be discussing something considerably more serious than fees. We are here. Mr. Soto, what happened.
+
+MR. SOTO: Your Honor, on day fourteen Sumner produced eleven thousand pages. Of those, roughly nine thousand are duplicate copies of the marketing material already produced in February. The dispatch records were produced for four of the sixteen months. The routing logs were not produced at all. On day nineteen, defense counsel sent a letter stating the routing logs for months five through sixteen were, quote, "not retained in the ordinary course."
+
+THE COURT: Mr. Kowalski, is that accurate?
+
+MR. KOWALSKI: The production was substantially complete as to what exists, Your Honor.
+
+THE COURT: That is the second time in this case you have used the phrase "substantially complete" to describe a production that was not complete. Let me ask a narrower question. When were the routing logs for months five through sixteen destroyed?
+
+MR. KOWALSKI: I'd have to confirm the date, Your Honor.
+
+THE COURT: Mr. Soto attached your client's IT vendor invoice to his motion. It describes a data purge of the dispatch system archive, executed on the ninth of June. My order compelling production issued on the fifteenth of May. Mr. Kowalski, your client destroyed the records twenty-five days after I ordered them produced.
+
+MR. KOWALSKI: Your Honor, the purge was part of a scheduled migration—
+
+THE COURT: A scheduled migration executed after a court order to preserve and produce the very data being migrated. I heard "the purge was automated" from the other side of a case once before and it was not a defense then either. The motion for sanctions is GRANTED. Sumner will pay Brightwater's fees and costs for this motion and the prior compel motion in full, and the court will draw an adverse inference that the destroyed routing logs would have shown the load assignments Brightwater alleges it was denied. Mr. Kowalski, I am also referring the destruction to the Board of Professional Responsibility. That is not a comment on you personally; it is what a post-order destruction requires me to do.
+
+MR. KOWALSKI: Understood, Your Honor.
+
+THE COURT: Mr. Soto, your motion also asks me to strike Sumner's answer and enter default. No. An adverse inference and full fees address the harm here — Brightwater can prove its case on the assignments it was denied with the inference in hand. Striking a pleading ends a case on conduct rather than on merits, and I reserve that for a party that has made adjudication impossible. Sumner has not. The request to strike the answer is DENIED.
+
+MR. SOTO: Understood, Your Honor.
+
+THE COURT: One more matter. Mr. Kowalski moves to extend the expert disclosure deadline by thirty days, citing the disruption of this motion practice. Mr. Soto, any prejudice?
+
+MR. SOTO: Thirty days pushes us against the trial date, Your Honor. Fifteen would not.
+
+THE COURT: Fifteen days, then, and only because Mr. Soto can absorb it. Mr. Kowalski, I want to be clear about something, because I suspect it is not yet clear. Nothing that has happened in this case turned on the merits of your client's defense, which for all I know is a good one. All of it turned on how discovery was conducted. The extension is GRANTED in part — fifteen days, not thirty. We're adjourned.
+
+(Proceedings concluded.)

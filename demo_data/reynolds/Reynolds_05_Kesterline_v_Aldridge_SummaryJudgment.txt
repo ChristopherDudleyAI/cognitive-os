@@ -1,0 +1,61 @@
+IN THE CHANCERY COURT FOR DAVIDSON COUNTY
+STATE OF TENNESSEE
+
+KESTERLINE INDUSTRIAL SUPPLY, LLC,
+                              Plaintiff,
+v.
+ALDRIDGE MANUFACTURING COMPANY,
+                              Defendant.
+
+Civil Action No. 2025-CH-01055
+
+TRANSCRIPT OF HEARING ON MOTION FOR SUMMARY JUDGMENT
+BEFORE THE HONORABLE PATRICIA A. REYNOLDS
+
+APPEARANCES:
+For the Plaintiff:   RAYMOND SOTO, ESQ.
+For the Defendant:   GREGORY WHITFIELD, ESQ.
+
+---
+
+THE COURT: We're on the record in Kesterline Industrial Supply against Aldridge Manufacturing, 2025-CH-01055. Defendant's motion for summary judgment on the breach claim, plus two evidentiary matters. Mr. Whitfield, start with the motion.
+
+MR. WHITFIELD: Thank you, Your Honor. Kesterline's claim is that Aldridge breached by sourcing components from a third supplier during the exclusivity period. Section 6 of the agreement makes Aldridge's exclusivity obligation conditional on Kesterline maintaining a ninety-five percent on-time delivery rate measured quarterly. Kesterline's own delivery logs — produced by Kesterline, not by us — show on-time performance of eighty-one percent in Q2 and seventy-six percent in Q3. The condition failed before Aldridge sourced anywhere else.
+
+THE COURT: Mr. Soto, are those Kesterline's own logs?
+
+MR. SOTO: They are, Your Honor, but the delivery standard was never enforced. Aldridge accepted late deliveries for four consecutive quarters without complaint—
+
+THE COURT: That's a waiver argument, and it may be a good one, but it isn't a dispute about the numbers. Do you dispute that Q2 was eighty-one percent and Q3 was seventy-six percent?
+
+MR. SOTO: We do not dispute the figures, Your Honor.
+
+THE COURT: Then on this record the condition in Section 6 failed, and Mr. Whitfield's motion is right on the merits. It's a clean argument, properly supported by the other side's own documents, and I'm granting it. Summary judgment on the breach-of-exclusivity claim is GRANTED. That claim is dismissed.
+
+Mr. Soto, your waiver theory survives as to the separate course-of-dealing count, which was not moved on. I'd take a hard look at it, because acceptance of nonconforming performance over four quarters is exactly the kind of conduct I find probative — but it is a different claim, and it isn't before me today.
+
+MR. SOTO: Understood, Your Honor.
+
+THE COURT: Second matter. Mr. Whitfield, your motion in limine to exclude Kesterline's damages calculation. This was filed eleven days after the deadline in the scheduling order.
+
+MR. WHITFIELD: Your Honor, we can address the merits—
+
+THE COURT: We'll get to the merits. First: did you seek leave, or notify Mr. Soto that it would be late?
+
+MR. WHITFIELD: We did not, Your Honor. It was an oversight in our calendaring.
+
+THE COURT: Mr. Soto, does the delay prejudice you?
+
+MR. SOTO: It compressed our response window, Your Honor, but we were able to respond.
+
+THE COURT: Then I'm going to hear it, because the lateness cost nobody anything real and I don't strike papers to punish a calendaring error. But Mr. Whitfield — this is the third filing in this matter that has come in past a date in my order, and each time the explanation has been administrative. Your substantive work is sound. The paperwork around it is not, and at some point a pattern of missed dates stops being an oversight and starts being prejudice to someone. Consider this the notice.
+
+MR. WHITFIELD: Understood, Your Honor.
+
+THE COURT: On the merits of the limine motion. You seek to exclude Kesterline's lost-profits model as speculative. The model applies Kesterline's realized margin on the Aldridge account over the preceding eight quarters to the volume Aldridge's own purchase forecasts projected for the remaining term. That is this account, this margin, this counterparty's own forecast. It is not a generic industry figure and I am not excluding it. The motion in limine is DENIED.
+
+MR. WHITFIELD: Note our exception, Your Honor.
+
+THE COURT: Noted. Third matter, briefly. Both sides ask me to resolve whether the quarterly delivery measurement runs on calendar quarters or on the contract-year quarters beginning in March. The agreement says "quarterly" and defines nothing. So I look at what the parties did: every performance report either side generated for two years used calendar quarters, including the reports Kesterline sent Aldridge. The parties' own consistent practice answers it. The measurement period is CALENDAR quarters. We're adjourned.
+
+(Proceedings concluded.)
