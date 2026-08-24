@@ -133,17 +133,30 @@ CONTROLLED_VOCABULARY = (
     | POSTURE_TAGS
 )
 
-# Defines the comparison group in get_context_cluster(). Deliberately
+# The groups get_context_cluster() builds its key from, in order. Each group
+# contributes one segment, so the key is a description of the SITUATION a
+# ruling happened in.
+#
 # EXCLUDES ruling type, outcome and posture: those describe how a matter came
 # out, and clustering must group by shared context first so that direction can
-# then be compared within a cluster. Folding outcome into the cluster key
-# would group memories by their result and make every cluster look internally
-# consistent by construction.
-CLUSTERING_TAGS = (
-    LEGAL_BASIS_TAGS
-    | PROCEEDING_TAGS
-    | STRATEGY_TAGS
+# then be compared within a cluster. Folding outcome into the cluster key would
+# group memories by their result and make every cluster internally consistent
+# by construction.
+#
+# EXCLUDES strategy tags, which describe what the ATTORNEY did rather than the
+# context the judge ruled in. Including them fragmented clusters badly, and
+# perversely: every additional strategy tag the extractor attached split the
+# memory into a narrower bucket, so more thorough tagging produced worse
+# clustering. Measured on 31 judge memories, dropping strategy took usable
+# clusters from 18/31 to 27/31; on 12 opposing-counsel memories it took them
+# from 0/12 to 9/12.
+CLUSTER_KEY_GROUPS = (
+    LEGAL_BASIS_TAGS,
+    PROCEEDING_TAGS,
 )
+
+# Flat union of everything that participates in the cluster key.
+CLUSTERING_TAGS = frozenset().union(*CLUSTER_KEY_GROUPS)
 
 # Earns a memory the structured-tag relevance bonus in score_memory(). Any
 # tag from the controlled vocabulary signals a well-structured memory, so

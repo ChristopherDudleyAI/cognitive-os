@@ -1534,4 +1534,41 @@ The posture mix is still plaintiff-leaning by memory count (10/6/2) against a de
 
 ---
 
+### DECISION: Cluster on context only — strategy tags removed from the cluster key
+DATE: August 22, 2026
+STATUS: confirmed — implemented and measured against the ingested Reynolds data
+
+WHAT WAS DECIDED:
+`get_context_cluster()` now builds its key from legal basis and proceeding type only. Strategy tags are excluded. The groups that form the key live in `vocabulary.CLUSTER_KEY_GROUPS`, and `CLUSTERING_TAGS` is derived from it rather than declared separately.
+
+WHY:
+Strategy tags describe what the **attorney did**, not the context the **judge ruled in**. Including them fragmented clusters, and did so perversely: every additional strategy tag the extractor attached split a memory into a narrower bucket, so more thorough extraction produced worse clustering. `discovery_hearing`, `discovery_hearing|motion_strategy`, `discovery_hearing|document_strategy` and `discovery_hearing|argument_framing_examination_technique` were four separate clusters describing one situation.
+
+Four candidate keys were measured on the real ingested data before choosing, rather than reasoning about it:
+
+| key | judge clusters | singletons | usable memories |
+|---|---:|---:|---:|
+| current (basis \| proceeding \| strategy) | 19 | 13 | 18/31 |
+| **drop strategy (chosen)** | **13** | **4** | **27/31** |
+| drop strategy, one tag per group | 12 | 4 | 27/31 |
+| legal basis only | 9 | 2 | 29/31 |
+
+"Legal basis only" aggregated best but was rejected as too coarse — it would group a deposition hearsay ruling with a summary-judgment hearsay ruling, and proceeding type genuinely changes how Reynolds behaves. The one-tag-per-group variant gained one cluster while discarding information when a memory legitimately spans two proceedings.
+
+**The finding that mattered more than the numbers:** opposing-counsel clustering was producing **12 clusters from 12 memories — every one a singleton**. `build_pattern_evidence()` counts a singleton as corroborating without comparing it to anything, so every counsel confidence score was a memory count wearing the costume of pattern evidence. All three counsel reported `deviating=0` not because they were consistent but because **no comparison had ever been performed**. Counsel pattern evidence was non-functional and reported confidence anyway.
+
+After the change, counsel clustering yields 7 clusters, 3 singletons, 9 of 12 memories usable — and Priya Anand registered `deviating=2`, the first opposing-counsel deviation the system has ever detected. It is also correct: the Character Bible designs her as a strong written advocate who is weak on her feet, and her transcript has her winning the tortious-interference count while losing the covenant motion and the settlement-letter fight. The engine detected a characteristic that was deliberately written into the data.
+
+ALTERNATIVES CONSIDERED (if known):
+Separate cluster keys for judges and for opposing counsel — strategy is arguably signal when asking "does this attorney's technique work." Rejected for now: the measurement showed a strategy-only counsel key performed slightly worse than dropping it (8/12 usable versus 9/12), the counsel sample is only 12 memories, and one clearly-defined notion of "context" is easier to reason about than two. Worth revisiting with more data.
+
+A coarsening fallback that merges leftover singletons into a broader bucket — not built. Four judge and three counsel singletons remain, and some memories genuinely describe unique contexts. Added complexity for a small gain.
+
+STILL OPEN / NEEDS REVISITING:
+`CLUSTERING_TAGS` had been **declared and never consumed** since the vocabulary consolidation earlier the same day — referenced only in a comment while `get_context_cluster()` reached past it to the three underlying sets. That is the fifth instance of this project's characteristic bug, and this one was self-inflicted: it was introduced by the consolidation that was supposed to prevent exactly this class of problem. The constant is now load-bearing.
+
+Judge deviations fell from 9 to 5 and corroborating from 26 to 23 on the same query. Both moves are expected — better-formed clusters compare memories that genuinely belong together — but the absolute numbers still rest on 56 memories from three transcripts and should not be read as a validated pattern.
+
+---
+
 *(Append new entries below this line, oldest first, using the template above.)*
