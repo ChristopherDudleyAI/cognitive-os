@@ -188,34 +188,19 @@ class SearchEngine:
     def get_context_cluster(self,
                              memory: dict) -> str:
         # Groups memories by shared CONTEXT so that ruling direction can
-        # then be compared within a cluster. Deliberately excludes ruling
-        # type, outcome and posture — clustering on those would group
-        # memories by their result and make every cluster look internally
-        # consistent by construction. See vocabulary.CLUSTERING_TAGS.
+        # then be compared within a cluster. The groups that make up the
+        # key live in vocabulary.CLUSTER_KEY_GROUPS — edit there, not
+        # here, and read the note above it for what is deliberately
+        # excluded and why.
         tags = set(
             memory.get('fact_pattern_tags', [])
         )
 
-        legal_basis = tags & vocabulary.LEGAL_BASIS_TAGS
-        proceeding = tags & vocabulary.PROCEEDING_TAGS
-        strategy = tags & vocabulary.STRATEGY_TAGS
-
         cluster_parts = []
-
-        if legal_basis:
-            cluster_parts.append(
-                '_'.join(sorted(legal_basis))
-            )
-
-        if proceeding:
-            cluster_parts.append(
-                '_'.join(sorted(proceeding))
-            )
-
-        if strategy:
-            cluster_parts.append(
-                '_'.join(sorted(strategy))
-            )
+        for group in vocabulary.CLUSTER_KEY_GROUPS:
+            matched = tags & group
+            if matched:
+                cluster_parts.append('_'.join(sorted(matched)))
 
         if cluster_parts:
             return '|'.join(cluster_parts)
