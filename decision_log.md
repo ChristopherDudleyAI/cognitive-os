@@ -1658,4 +1658,37 @@ The per-context numbers make it plain that more transcripts are the binding cons
 
 ---
 
+### CONFIRMATION: the model follows the per-context confidence rule
+DATE: August 22, 2026
+STATUS: confirmed (verified with a live query) — **resolves the open item** in the entry above, "Pattern confidence is reported per ruling context, not per entity"
+
+WHAT WAS DECIDED:
+Recorded as a verification result. That entry noted the mechanical rule had only been checked by inspection, and flagged genuine doubt about whether it would hold: posture tagging responded to a mechanical instruction because the trigger was *syntactic*, whereas this rule asks the model to match a pattern it wrote to a context it was given. That is a weaker trigger and it might simply have pasted the overall figure anyway.
+
+It held. Six patterns, six different contexts, every figure a real cluster value:
+
+```
+LOW | 3 corroborating | 0 deviating | context: motion_hearing_summary_judgment
+LOW | 4 corroborating | 2 deviating | context: motion_hearing
+LOW | 4 corroborating | 0 deviating | context: discovery_hearing
+LOW | 2 corroborating | 0 deviating | context: causation|summary_judgment
+LOW | 2 corroborating | 0 deviating | context: deadline_violation|discovery_hearing
+LOW | 3 corroborating | 1 deviating | context: relevance_objection|discovery_hearing
+```
+
+**Zero patterns quoted the entity overall figure of 23/5, against six of seven before.** Every pair appears in the valid per-cluster set.
+
+WHY:
+Two secondary confirmations came with it. The response ended cleanly and contained both the Confidence Note and the Confidence Caveat — the previous run was cut off mid-word and lost both, so the raised query ceiling is verified as well. And the Caveat now lists deviating memory IDs *per pattern* rather than as one undifferentiated entity-level list, which is the shape the traceability layer needs.
+
+The model's own Confidence Note articulated the distinction unprompted: "the overall pattern is consistent, but individual context windows are LOW confidence given observation counts." That is the honest reading, and the previous format made it impossible to state.
+
+ALTERNATIVES CONSIDERED (if known):
+Not applicable — this records a verification, not a choice.
+
+STILL OPEN / NEEDS REVISITING:
+One query on one judge. The rule should be re-checked once a second docket exists, since a query spanning two judges gives the model more entities and more contexts to confuse.
+
+---
+
 *(Append new entries below this line, oldest first, using the template above.)*
