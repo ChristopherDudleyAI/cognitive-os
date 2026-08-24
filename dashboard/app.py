@@ -53,7 +53,8 @@ def initialize_system():
             effort=config.get("extraction_effort")
         )
         st.session_state.structurer = Structurer(
-            default_project=config["default_project"]
+            default_project=config["default_project"],
+            firm_attorneys=config.get("firm_attorneys", [])
         )
         st.session_state.search_engine = SearchEngine(
             memory_db=st.session_state.memory_db,

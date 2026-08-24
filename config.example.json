@@ -9,6 +9,7 @@
   "app_name": "Cognitive OS — Legal Intelligence Platform",
   "version": "2.0",
   "default_project": "Legal Cognitive OS",
+  "firm_attorneys": ["Diane Okafor", "Raymond Soto", "Lillian Pace"],
   "db_path": "data/memories.db",
   "chroma_path": "data/chroma.db",
   "retrieval_candidates": 20,
