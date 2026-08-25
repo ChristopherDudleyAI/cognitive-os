@@ -1791,4 +1791,51 @@ One tension is acknowledged and deliberately left unresolved: accuracy and usefu
 
 ---
 
+### DECISION: Count rulings, not memories (implements the fix for #22)
+DATE: 2026-08-24
+STATUS: confirmed
+
+WHAT WAS DECIDED:
+The unit of evidence in the corroboration/deviation engine is a distinct ruling, identified by `SearchEngine.ruling_key()` as `(matter_id, ruling context, direction)`. Memories describing the same ruling now count once. Confidence is calculated from ruling counts; memory counts are still reported alongside, and every memory ID is preserved.
+
+WHY:
+The entry above measured the problem: plaintiff-favourable rulings yield 1.9-2.3 memories each against 1.5 for defendant-favourable, a bias that appeared on two dockets written days apart. Counting memories reported a plaintiff lean the rulings did not have.
+
+The key was chosen by measurement rather than argument. Three candidates were scored against a hand count of the transcripts:
+
+| method | Reynolds error | Kimball error | total |
+|---|---|---|---|
+| current (one memory = one unit) | 15 | 10 | 25 |
+| **matter + cluster + posture** | **2** | **2** | **4** |
+| the same plus ruling-type tags | 6 | 1 | 7 |
+
+The third variant was rejected despite scoring best on Kimball. It is inconsistent — memories describing one ruling often carry different ruling-type tags, so it splits them back apart, which is why Reynolds got worse. Consistency across dockets matters more than one good result.
+
+The residual error of 2 per docket is genuine ambiguity, not bias. Whether summary judgment granted on two counts of one motion is one ruling or two is a question the transcripts do not settle either.
+
+WHAT IT COST, STATED PLAINLY:
+Confidence fell wherever it had been inflated, which was the point:
+
+- Helena Cross: MEDIUM to LOW. Five memories were one ruling.
+- Margaret Stahl: MEDIUM to LOW. Nine memories were two rulings.
+- Brett Kowalski: HIGH to MEDIUM. Ten memories were five rulings.
+- Janet Wu: MEDIUM to LOW.
+- Reynolds overall: 50 corroborating / 11 deviating became 25 / 8. Still MEDIUM.
+
+**The fix does not produce the demo contrast, and it was never going to.** Measured honestly, Reynolds is 60/40 plaintiff and Kimball is 54/46 plaintiff. Both still lean plaintiff. The counting bias was hiding a second, separate problem: the Kimball transcripts as written do not actually lean defendant. That is a transcript-writing failure, not an engine failure, and it is now visible because the engine stopped lying about it. Fixing it means rewriting Kimball cases, not touching code.
+
+ALTERNATIVES CONSIDERED (if known):
+Deduplicating at ingest by assigning a shared ruling identifier during extraction — rejected for now. It would require the model to recognise which fragments belong to one ruling, which is exactly the judgment call that produced the attribution errors already guarded against in code. Deriving the key at query time from data already stored needs no re-ingest and no model call, and can be corrected without reprocessing anything.
+
+Weighting memories rather than deduplicating them — rejected. Any weight is a tuning knob, and a tuning knob on a confidence figure is the thing the governing rule forbids.
+
+STILL OPEN / NEEDS REVISITING:
+Neutral memories still count as corroborating. A cluster holding twenty general observations and two rulings will report twenty-two corroborating units, and the observations are doing work they have not earned. This is the same family of error as #22 and was deliberately not bundled into this change, so that the ruling fix could be measured on its own. It needs its own measurement and its own issue.
+
+The uncompared-singles path filters by retrieval rank while the compared path filters by relevance threshold. Pre-existing inconsistency, noticed while working here, not changed for the same reason.
+
+`tests/test_ruling_count.py` is the project's first test file. It was verified to fail — eight assertions, exit code 1 — when the key is reverted, so it is not passing vacuously.
+
+---
+
 *(Append new entries below this line, oldest first, using the template above.)*

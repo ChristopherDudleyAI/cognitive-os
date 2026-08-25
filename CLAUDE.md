@@ -27,15 +27,20 @@ When accuracy and usefulness genuinely diverge — a tool that correctly reports
 
 ## Where things stand
 
-The three-judge demo dataset is the current work. Only **Reynolds** has transcripts (3 of a target ~10); Caldwell has 1, Kimball has 0. The database holds **56 memories** from the Reynolds docket.
+The three-judge demo dataset is the current work. Reynolds has **6** transcripts of a target ~10, Kimball has **4**, Caldwell has **1**. The database holds **183 memories** (Reynolds 112, Kimball 71).
 
-The pipeline works end to end and has been measured, not just assumed: ingest labels persist, `get_by_matter()` returns, posture coverage is 100%, and the deviation engine reads posture tags. The open questions are clustering quality and threshold tuning, not whether it runs.
+The pipeline works end to end and has been measured, not just assumed: ingest labels persist, `get_by_matter()` returns, the deviation engine reads posture tags, and evidence is now counted by ruling rather than by memory. The open questions are clustering quality and threshold tuning, not whether it runs.
+
+**Known and unfixed:** measured honestly, both judges lean plaintiff — Reynolds 60/40, Kimball 54/46. Kimball was designed to lean defendant and the transcripts as written do not. That is a transcript problem, not an engine problem, and rewriting Kimball cases is the next real task. Separately, 24 Reynolds memories are mis-tagged `trial_proceeding` from a stray phrase in Reynolds_06; the wording is fixed but the ingested memories still carry it.
+
+Run `python tests/test_ruling_count.py` from the project root before and after touching the evidence engine. No pytest needed.
 
 ## Gotchas that will waste your time
 
 - **`config.json` is loaded by relative path.** Run from the project root or it won't be found. Gitignored (live API key); `config.example.json` is the template.
 - **`vocabulary.py` is the single source of truth for controlled tags.** `structurer.py` and `search_engine.py` both import from it and reference the *same* frozenset objects. Edit the module, never the instance aliases. Adding a tag also means adding it to the extraction prompt in `extractor.py`, or nothing emits it.
 - **The posture rule is tag-triggered, not judgment-triggered.** If `fact_pattern_tags` contains a ruling-type tag it MUST contain a posture tag. Phrasing it as "required on any memory describing a ruling" was measured at 70% compliance; the mechanical form gets 100%. Don't soften it back.
+- **`corroborating_count` means rulings; `corroborating_memory_count` means memories.** Never feed a memory count into `calculate_confidence()`, and never show one where a reader would read it as the amount of evidence. One ruling is routinely three memories, and unevenly so — that asymmetry is what erased the contrast between two judges. See ARCHITECTURE §10.
 - **`### Confidence Note` is load-bearing in two places.** The prompt in `llm_interface/interface.py` tells the model to emit it; `dashboard/app.py` matches that literal string to parse the section. Change both together or parsing silently stops finding it.
 - **`max_tokens` caps thinking AND visible output together.** Models that think by default spend part of the budget before emitting JSON. A ceiling tuned for a non-thinking model truncates the array mid-object. `extraction_max_tokens` defaults to 16000.
 - **Ingest labels come from the form, not the model.** `source_type`, `matter_id`, `source`, `date_of_event` are captured in the UI and override anything the extractor emits. Don't add them to the extraction prompt.

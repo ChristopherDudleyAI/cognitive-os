@@ -248,13 +248,52 @@ class SearchEngine:
 
         return 'neutral'
 
+    def ruling_key(self, memory: dict) -> tuple:
+        """Identify the distinct ruling a memory describes.
+
+        Extraction deliberately splits one ruling into several memories —
+        the rule the judge stated, the relief ordered, the warning
+        attached. That is correct for retrieval and wrong for counting:
+        it makes one ruling look like three pieces of evidence.
+
+        It is also not evenly wrong. Plaintiff-favorable rulings measured
+        1.9-2.3 memories each against 1.5 for defendant-favorable, on two
+        dockets written days apart. Counting memories therefore reports a
+        plaintiff lean that the rulings themselves do not have, and it
+        erased the designed contrast between two judges entirely (#22).
+
+        Memories describing the same ruling share a matter, a ruling
+        context, and a direction. Against a hand count of the transcripts
+        this key lands within 2 rulings per docket; counting memories was
+        off by 15 and 10. Its residual error is a genuine ambiguity, not
+        a bias — whether summary judgment granted on two counts of one
+        motion is one ruling or two is a question the transcript does not
+        settle either.
+
+        `matter_id` falls back to `source` so that memories predating
+        matter capture do not all collapse into a single ruling.
+        """
+        return (
+            memory.get('matter_id') or memory.get('source') or 'unknown',
+            self.get_context_cluster(memory),
+            self.get_ruling_direction(memory),
+        )
+
     def _cluster_evidence(self, memories: list, top_ids: list,
                           prompt: str, practice_area: str = None):
-        """Cluster memories by context, then classify each cluster's
-        members as corroborating or deviating from that cluster's own
-        majority direction.
+        """Cluster memories by context, collapse each cluster's memories
+        onto the rulings they describe, then classify each *ruling* as
+        corroborating or deviating from that cluster's majority direction.
 
-        Returns (cluster_records, corroborating_ids, deviating_ids).
+        Returns (cluster_records, totals).
+
+        The unit of evidence is a ruling, never a memory — see
+        `ruling_key()`. Every record therefore carries two figures:
+        `corroborating_count` is rulings and drives confidence;
+        `corroborating_memory_count` is how many memories those rulings
+        were extracted from. Both are reported so the drop from one to
+        the other is visible rather than silent, and the memory IDs are
+        preserved untouched so any figure can still be traced to source.
 
         The per-cluster breakdown is returned, not just the totals. A
         "pattern" in the response brief corresponds to a cluster, not to
@@ -271,6 +310,8 @@ class SearchEngine:
         cluster_records = []
         corroborating = []
         deviating = []
+        corroborating_rulings = 0
+        deviating_rulings = 0
 
         for cluster_key, cluster_memories in clusters.items():
             if len(cluster_memories) < 2:
@@ -284,12 +325,15 @@ class SearchEngine:
                 ]
                 corroborating.extend(singles)
                 if singles:
+                    corroborating_rulings += 1
                     cluster_records.append({
                         "cluster": cluster_key,
                         "compared": False,
                         "reason": "only one memory in this context",
-                        "corroborating_count": len(singles),
+                        "corroborating_count": 1,
                         "deviating_count": 0,
+                        "corroborating_memory_count": len(singles),
+                        "deviating_memory_count": 0,
                         "corroborating_ids": singles,
                         "deviating_ids": [],
                     })
@@ -308,9 +352,41 @@ class SearchEngine:
             if not scored:
                 continue
 
-            direction_counts = {}
+            # Collapse memories onto the rulings they describe. Direction
+            # is part of the key, so every memory grouped under one ruling
+            # already agrees on direction — the group cannot be internally
+            # split, and reading it off the key is exact rather than a
+            # majority vote within the group.
+            rulings = {}
             for m in scored:
-                d = self.get_ruling_direction(m)
+                rulings.setdefault(self.ruling_key(m), []).append(m)
+
+            if len(rulings) < 2:
+                # Several memories, but all describing one ruling. That is
+                # one observation restated, not a corroborated pattern, and
+                # counting it as agreement is exactly the inflation #22
+                # was about.
+                ids = [m['id'] for m in scored]
+                corroborating.extend(ids)
+                corroborating_rulings += 1
+                cluster_records.append({
+                    "cluster": cluster_key,
+                    "compared": False,
+                    "reason": (
+                        f"{len(ids)} memories, all describing one ruling"
+                    ),
+                    "corroborating_count": 1,
+                    "deviating_count": 0,
+                    "corroborating_memory_count": len(ids),
+                    "deviating_memory_count": 0,
+                    "corroborating_ids": ids,
+                    "deviating_ids": [],
+                })
+                continue
+
+            direction_counts = {}
+            for key in rulings:
+                d = key[-1]
                 direction_counts[d] = direction_counts.get(d, 0) + 1
 
             majority = max(
@@ -319,27 +395,35 @@ class SearchEngine:
 
             c_ids = []
             d_ids = []
-            for m in scored:
-                d = self.get_ruling_direction(m)
+            c_rulings = 0
+            d_rulings = 0
+            for key, group in rulings.items():
+                d = key[-1]
                 if d == majority or d == 'neutral':
-                    c_ids.append(m['id'])
+                    c_rulings += 1
+                    c_ids.extend(m['id'] for m in group)
                 else:
-                    d_ids.append(m['id'])
+                    d_rulings += 1
+                    d_ids.extend(m['id'] for m in group)
 
             corroborating.extend(c_ids)
             deviating.extend(d_ids)
+            corroborating_rulings += c_rulings
+            deviating_rulings += d_rulings
 
             cluster_records.append({
                 "cluster": cluster_key,
                 "compared": True,
                 "majority_direction": majority,
                 "direction_counts": direction_counts,
-                "corroborating_count": len(c_ids),
-                "deviating_count": len(d_ids),
+                "corroborating_count": c_rulings,
+                "deviating_count": d_rulings,
+                "corroborating_memory_count": len(c_ids),
+                "deviating_memory_count": len(d_ids),
                 "corroborating_ids": c_ids,
                 "deviating_ids": d_ids,
                 "confidence_level": self.calculate_confidence(
-                    len(c_ids), len(d_ids)
+                    c_rulings, d_rulings
                 ),
             })
 
@@ -347,7 +431,15 @@ class SearchEngine:
             key=lambda r: -(r['corroborating_count']
                             + r['deviating_count'])
         )
-        return cluster_records, corroborating, deviating
+        totals = {
+            "corroborating_count": corroborating_rulings,
+            "deviating_count": deviating_rulings,
+            "corroborating_memory_count": len(corroborating),
+            "deviating_memory_count": len(deviating),
+            "corroborating_ids": corroborating,
+            "deviating_ids": deviating,
+        }
+        return cluster_records, totals
 
     def build_pattern_evidence(self,
                                 top_memories: list,
@@ -387,24 +479,21 @@ class SearchEngine:
                 if not matched:
                     continue
 
-                clusters, corroborating, deviating = (
-                    self._cluster_evidence(
-                        matched, top_ids, prompt, practice_area
-                    )
+                clusters, totals = self._cluster_evidence(
+                    matched, top_ids, prompt, practice_area
                 )
-                if not (corroborating or deviating):
+                if not (totals['corroborating_ids']
+                        or totals['deviating_ids']):
                     continue
 
                 key = f"{prefix}_{name.replace(' ', '_').lower()}"
                 evidence[key] = {
                     "entity": name,
                     "entity_type": field,
-                    "corroborating_count": len(corroborating),
-                    "deviating_count": len(deviating),
-                    "corroborating_ids": corroborating,
-                    "deviating_ids": deviating,
+                    **totals,
                     "confidence_level": self.calculate_confidence(
-                        len(corroborating), len(deviating)
+                        totals['corroborating_count'],
+                        totals['deviating_count'],
                     ),
                     "clusters": clusters,
                 }
