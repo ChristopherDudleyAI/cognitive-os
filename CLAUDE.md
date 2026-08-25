@@ -2,6 +2,22 @@
 
 Prototype that turns legal transcripts into a structured, queryable institutional memory for a law firm. Python + Streamlit + SQLite + ChromaDB + Anthropic API. Entry point: `streamlit run dashboard/app.py` **from the project root**.
 
+## The governing rule: accuracy over appearance
+
+**Nothing in this project may be inflated, exaggerated, or altered to make anything look good.** This is a standing instruction from Christopher, not a preference — treat it as binding on every decision.
+
+The product's whole value is that an attorney can rely on what it says. A confidence figure that overstates its evidence is worse than no figure, because it invites reliance it has not earned. Christopher handles persuasion and sales himself; this codebase's only job is to make sure the thing underneath is true.
+
+In practice:
+
+- **Report the honest number even when it is worse.** Confidence dropping from MEDIUM to LOW because the counting was corrected is a fix, not a regression.
+- **Never tune thresholds, scoring weights, confidence bands, or the demo data to produce nicer output.** Thin evidence is answered with better evidence, never a softer standard.
+- **Separate measured from estimated, and demonstrated from validated,** every time. "One query, one judge" — not an implied generality.
+- **Report failures and limitations plainly, including your own.** The most valuable findings here have all been failures that only surfaced by running the system, never by reading it.
+- **Correctness before presentation.** UI polish and demo framing come later.
+
+When accuracy and usefulness genuinely diverge — a tool that correctly reports LOW confidence on everything is accurate but not yet useful — **say so**. The fix is better data or a better engine, never a relabelling.
+
 ## Read first
 
 - **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** — durable design constraints. Read before writing code; several fail *silently* if violated.

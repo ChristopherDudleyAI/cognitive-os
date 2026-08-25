@@ -6,6 +6,19 @@ Read this before writing code. If a change would violate something here, that's 
 
 ---
 
+## 0. Accuracy governs every other constraint
+
+**Nothing may be inflated, exaggerated, or altered to make output look good.** This is a standing instruction from Christopher, and it outranks everything below it. The reasoning is in the decision log entry of 2026-08-24; the operational form is in `CLAUDE.md`.
+
+What it forbids, concretely, because these are the shapes the temptation actually takes in this codebase:
+
+- **Tuning thresholds, scoring weights, or confidence bands to move a label.** Retrieval thresholds are unvalidated and will eventually be tuned — that tuning must be driven by retrieval quality measured against known-good results, never by which value makes a demo query return a better-looking confidence.
+- **Counting the same thing twice to make evidence look deeper.** One ruling described by four memories is one piece of evidence, not four. This is not hypothetical — it is issue #22, and it silently erased the designed contrast between two judges.
+- **Shaping the synthetic corpus to flatter the engine.** The demo data exists to test whether the system detects patterns that are really there. Writing transcripts to compensate for a measurement flaw hides the flaw and does not transfer to real documents.
+- **Letting a claim outrun its evidence in any user-visible string, doc, or README.** Distinguish measured from estimated, and demonstrated from validated. One query against one judge is exactly that.
+
+When accuracy and usefulness genuinely diverge — a system that correctly reports LOW confidence on everything is accurate but not yet useful — **surface it rather than resolving it quietly.** The response is better data or a better engine, never a relabelling.
+
 ## 1. The memory schema is a shared contract
 
 Every extraction path — no matter what kind of document it reads — must emit the same JSON shape. Storage, retrieval, scoring, and clustering all depend on it.
