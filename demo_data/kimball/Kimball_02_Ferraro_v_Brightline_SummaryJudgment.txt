@@ -1,0 +1,61 @@
+IN THE CIRCUIT COURT OF COOK COUNTY, ILLINOIS
+COUNTY DEPARTMENT, LAW DIVISION
+
+MICHAEL FERRARO,
+                              Plaintiff,
+v.
+BRIGHTLINE STAFFING SOLUTIONS, INC.,
+                              Defendant.
+
+Case No. 2025-L-003921
+
+TRANSCRIPT OF HEARING ON MOTION FOR SUMMARY JUDGMENT
+BEFORE THE HONORABLE ROBERT D. KIMBALL
+
+APPEARANCES:
+For the Plaintiff:   RAYMOND SOTO, ESQ.
+For the Defendant:   DANIEL REYES, ESQ.
+
+---
+
+THE COURT: 2025-L-003921, Ferraro against Brightline Staffing. Defendant moves for summary judgment on the FMLA interference and retaliation counts. Mr. Reyes, same framework as always — I'll take the elements in order. Interference first. Mr. Soto, eligibility and entitlement.
+
+MR. SOTO: Fourteen months of employment, one thousand four hundred and ten hours in the preceding year, Your Honor. Brightline concedes both.
+
+THE COURT: Mr. Reyes, do you concede eligibility?
+
+MR. REYES: We do, Your Honor. Our position is that no leave was denied. Mr. Ferraro requested leave on the twelfth and was terminated on the nineteenth for performance, before any leave decision was made.
+
+THE COURT: Then the question is whether the termination interfered with an entitlement, not whether a form was denied. Mr. Soto, what is in the record on the performance rationale?
+
+MR. SOTO: Mr. Ferraro's last three performance reviews were "exceeds expectations," Your Honor, the most recent dated five weeks before termination. The first written criticism in his file is dated the fourteenth — two days after the leave request. It was authored by the same supervisor who received the request.
+
+THE COURT: Mr. Reyes, is that accurate?
+
+MR. REYES: The criticism reflects issues that had been discussed verbally, Your Honor.
+
+THE COURT: Discussed verbally is not in the record. What is in the record is three favorable reviews, a leave request on the twelfth, a first-ever written criticism on the fourteenth from the recipient of that request, and a termination on the nineteenth. Mr. Reyes, that is a genuine dispute of material fact on the reason for the termination, and it is not a close one. Summary judgment on the FMLA interference count is DENIED. Summary judgment on the retaliation count is DENIED.
+
+MR. REYES: Your Honor, the plaintiff still bears the ultimate burden—
+
+THE COURT: He does, at trial, before a finder of fact. That is precisely why I am not resolving it here. Counsel, a motion for summary judgment is not an opportunity to argue that your version of disputed facts is the better one. It is an assertion that no reasonable finder of fact could accept the other version. On this record that assertion is not sustainable, and filing it consumed everyone's time.
+
+MR. REYES: Understood, Your Honor.
+
+THE COURT: Second matter. Defendant's motion to exclude the plaintiff's damages expert on front-pay. Mr. Reyes, your ground is qualification.
+
+MR. REYES: Yes, Your Honor. Dr. Halvorsen is an economist. She has no expertise in the staffing industry specifically.
+
+THE COURT: The opinion offered is a present-value calculation of projected lost earnings using the plaintiff's actual compensation history and standard discount methodology. That is economics. It is not an opinion about the staffing industry, and an expert need not be a specialist in the defendant's line of business to compute a present value. The motion to exclude Dr. Halvorsen is DENIED.
+
+Now the third matter, and Mr. Soto, this one goes against you. Plaintiff moves to bar Brightline from introducing the after-acquired evidence of Mr. Ferraro's résumé misstatement. Your ground is that it is unfairly prejudicial.
+
+MR. SOTO: Your Honor, the misstatement was discovered eight months after termination and had nothing to do with the decision—
+
+THE COURT: Correct on both counts, and neither is the test. After-acquired evidence is inadmissible as to liability, because it played no part in the decision, and it is admissible as to the remedy, because it bears on the period for which reinstatement or front pay is available. That is the controlling rule and it does not turn on how unfair it feels. The motion is GRANTED IN PART and DENIED IN PART: the résumé evidence is EXCLUDED on liability and ADMITTED on damages. I will instruct accordingly.
+
+MR. SOTO: Understood, Your Honor.
+
+THE COURT: Adjourned.
+
+(Proceedings concluded.)

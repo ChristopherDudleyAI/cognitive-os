@@ -1691,4 +1691,75 @@ One query on one judge. The rule should be re-checked once a second docket exist
 
 ---
 
+### DECISION: Validate on public written opinions before seeking a pilot firm
+DATE: August 22, 2026
+STATUS: confirmed (strategy) — step 1 in progress
+
+WHAT WAS DECIDED:
+A three-step sequence, agreed after Christopher proposed building on a large synthetic corpus first and then finding pilot firms:
+
+1. **Finish the synthetic set at roughly 10 transcripts per judge — not 30.** Enough to demonstrate per-judge differentiation, and no more.
+2. **Build a written-opinion extraction branch and run it against real opinions from real judges**, from public record.
+3. **Then approach firms**, showing the system profiling a judge in their own jurisdiction from material they can independently check.
+
+WHY:
+Christopher's sequencing was right and is unchanged — a firm will not hand over privileged material on the strength of a pitch deck, so demo must precede pilot. Two things changed the middle of the plan.
+
+**A factual correction about what is obtainable.** Verbatim hearing transcripts are produced by court reporters, purchased by the parties, priced per page and frequently restricted. They are not available in bulk. Written opinions and orders are public record and available in enormous quantity — CourtListener and the RECAP archive, Google Scholar case law, state appellate courts publishing directly. On the source-value ranking produced earlier this session, written opinions ranked **second of twelve**, above briefs and negotiation history: a transcript records that a judge sustained an objection, an opinion records why, in their own words.
+
+**Which means a pilot is not required to obtain real judicial data.** A pilot is required for client and firm material — intake calls, debriefs, internal strategy. Judge intelligence, the most demoable half of the product, can be validated against real judges on public record now.
+
+**Why not go large on synthetic data.** The risk is not that a big fictional corpus fails to impress; it is that it succeeds and everything gets tuned to it — thresholds, cluster sizes, confidence bands — after which real data arrives at different density with different noise and every number moves. That would produce a system finely calibrated to a world that does not exist. Going from 6 transcripts to 10 demonstrates differentiation; going from 10 to 30 demonstrates the same thing with larger numbers while deepening the overfit.
+
+A secondary risk worth recording: a demo that is *too* clean invites suspicion. A lawyer watching flawless pattern detection may reasonably wonder whether the data was arranged to produce it — and against a self-authored corpus, they would be right.
+
+ALTERNATIVES CONSIDERED (if known):
+Pursuing real hearing transcripts in volume before a pilot — rejected on availability and cost. Building the large synthetic corpus first as originally proposed — modified rather than rejected: the sequence stands, the synthetic volume is capped.
+
+STILL OPEN / NEEDS REVISITING:
+Written opinions differ structurally from transcripts — no dialogue, no objection sequence — so the existing extraction prompt will not serve them. That is real work rather than a config change, and it is the first genuine use of the branch architecture.
+
+The largest unvalidated assumption in the project is unchanged and untouched by any of this: whether real legal documents contain per-judge patterns at the density the synthetic corpus does. Step 2 is the first test of it.
+
+---
+
+### DECISION: Memory-count weighting is blocking the core demo claim — pause transcript writing and fix it
+DATE: August 22, 2026
+STATUS: confirmed (measured on two independently written dockets)
+
+WHAT WAS DECIDED:
+Step 1 of the agreed plan — finishing the synthetic set to roughly ten transcripts per judge — is **paused**. The memory-count weighting issue is promoted from a filed concern to the blocking item and gets fixed before any further transcripts are written.
+
+WHY:
+Kimball's docket was written specifically to lean **defendant**, as the designed opposite of Caldwell's plaintiff lean, so the engine could be shown detecting different per-judge leans. Four cases were written and ingested; 183 memories in the database.
+
+| | designed | measured by ruling | measured by memory |
+|---|---|---|---|
+| Reynolds | 45 plf / 45 def | 50 plf / 40 def | **54 plf / 28 def** |
+| Kimball | 40 plf / 50 def | 50 plf / 43 def | **57 plf / 32 def** |
+
+**The two judges are indistinguishable on posture** — both read as roughly 55% plaintiff — and the designed contrast is erased.
+
+The cause is measurable and consistent. Plaintiff-favourable rulings generate **2.0 to 2.1 memories each**; defendant-favourable rulings generate **1.3**. That is a **1.6x bias**, and it appeared at 1.6x on *both* dockets independently, written days apart with different fact patterns. Systematic, not noise.
+
+The mechanism is plausible and probably not an artifact of these particular transcripts: a plaintiff win in a hearing tends to involve the judge stating a rule, imposing a remedy, and warning someone — several discrete extractable facts. A defendant win is often a single sentence dismissing a count. If that holds in real transcripts, and there is every reason to think it does, the bias transfers.
+
+**Writing more transcripts cannot fix this.** More data through a distorted measurement produces more distorted output. Continuing step 1 would have produced six further Reynolds cases and six further Kimball cases whose posture mix the engine misreports in the same direction.
+
+**What does still differentiate cleanly**, and is worth protecting: the *context signature*. Kimball shows 22 summary-judgment contexts and zero discovery or spoliation; Reynolds shows 10 summary-judgment and 17 discovery or spoliation. That is a crisp, correct fingerprint of two judges with different dockets and different triggers, and it is unaffected by the counting bias because it depends on which contexts exist rather than how many memories each ruling yields.
+
+The honest position is that half the demo claim is demonstrated and half is not: the engine distinguishes judges by what they hear and how their rulings cluster, but not by which way they lean.
+
+ALTERNATIVES CONSIDERED (if known):
+Writing transcripts with deliberately more verbose defendant-favourable rulings to compensate — rejected outright. That is tuning the data to fit a broken measurement, it would not transfer to real documents, and it is exactly the overfitting risk recorded when the synthetic corpus was capped at ten per judge.
+
+Accepting the context signature as sufficient differentiation — rejected. The posture lean is the more legible claim to a lawyer, and "this judge favours defendants on summary judgment" is precisely the kind of statement the product exists to make.
+
+STILL OPEN / NEEDS REVISITING:
+The fix direction is undecided. Deduplicating memories to the ruling they describe needs a shared identifier that does not exist; weighting by distinct ruling needs a way to infer which memories describe the same ruling. Both are more involved than anything attempted so far, and either changes what every confidence figure in the system means.
+
+Two smaller items from the same ingest: posture coverage was 93.3% (2 misses of 30), and the attribution guard added earlier fired correctly twice, swapping Okafor and Stahl — confirming the model still makes that error and that the code-level guard was the right call rather than a prompt fix.
+
+---
+
 *(Append new entries below this line, oldest first, using the template above.)*

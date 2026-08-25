@@ -1,0 +1,61 @@
+IN THE CIRCUIT COURT OF COOK COUNTY, ILLINOIS
+COUNTY DEPARTMENT, LAW DIVISION
+
+ANGELA RADCLIFFE,
+                              Plaintiff,
+v.
+NORDWELL LOGISTICS CORPORATION,
+                              Defendant.
+
+Case No. 2025-L-004188
+
+TRANSCRIPT OF HEARING ON MOTION FOR SUMMARY JUDGMENT
+BEFORE THE HONORABLE ROBERT D. KIMBALL
+
+APPEARANCES:
+For the Plaintiff:   DIANE OKAFOR, ESQ.
+For the Defendant:   MARGARET STAHL, ESQ.
+
+---
+
+THE COURT: 2025-L-004188, Radcliffe against Nordwell Logistics. Defendant's motion for summary judgment on the ADEA claim. Ms. Stahl, I've read the briefs and the Rule 191 materials. I'm going to walk the burden-shifting framework in order and I want each of you on your own step. Ms. Okafor, prima facie case. Age, qualification, adverse action, and circumstances giving rise to an inference. Take the fourth element.
+
+MS. OKAFOR: Ms. Radcliffe was fifty-eight, twenty-two years in the role, terminated in March and replaced in May by an employee who was thirty-one, Your Honor.
+
+THE COURT: Replacement by a substantially younger employee. That satisfies the fourth element. Ms. Stahl, do you contest the prima facie case?
+
+MS. STAHL: We do not, Your Honor. We proceed to the second step.
+
+THE COURT: Then state the legitimate non-discriminatory reason and identify where it appears in the record.
+
+MS. STAHL: A reduction in force affecting the Midwest distribution group, Your Honor. The decision matrix is Exhibit 14 — nine positions scored on four criteria, documented in November, four months before any termination. Ms. Radcliffe scored eleventh of fourteen. Three positions were eliminated. The two other employees eliminated were forty-one and thirty-six.
+
+THE COURT: That is a legitimate non-discriminatory reason and it is documented in the record. The burden shifts back. Ms. Okafor, pretext. And I will tell you plainly what does not carry it here: that Ms. Radcliffe was a long-serving employee, that the outcome was hard on her, or that the numbers look bad in the aggregate. Pretext requires evidence that the stated reason is a lie. What is your evidence?
+
+MS. OKAFOR: Your Honor, the scoring criteria were weighted in a way that disadvantaged senior employees—
+
+THE COURT: Weighted how, and by reference to what in the record?
+
+MS. OKAFOR: The "adaptability to new systems" criterion carried thirty percent.
+
+THE COURT: That criterion applied to all fourteen employees on the same weighting. A criterion that a plaintiff believes is unwise is not a criterion that is pretextual. Is there evidence that the scores were altered, that the matrix was created after the decision, or that a decisionmaker said anything about age?
+
+MS. OKAFOR: There is no direct evidence of that, Your Honor.
+
+THE COURT: Then there is no genuine dispute of material fact on pretext, and the third step fails on this record. Summary judgment on the ADEA claim is GRANTED. The claim is dismissed.
+
+I want to say one thing for the record, because plaintiffs sometimes leave my courtroom believing I decided they were treated fairly. I decided no such thing. I decided that the evidence in this record does not permit a finder of fact to conclude the stated reason was a pretext for age discrimination. Those are different questions. The second is the only one before me.
+
+MS. OKAFOR: Understood, Your Honor.
+
+THE COURT: Second matter. Plaintiff's cross-motion for partial summary judgment on the retaliation count. Ms. Okafor, your position is that the temporal proximity between Ms. Radcliffe's HR complaint and her termination establishes causation as a matter of law.
+
+MS. OKAFOR: Six weeks, Your Honor.
+
+THE COURT: Temporal proximity can support an inference. It does not establish causation as a matter of law, and a party moving for summary judgment on its own claim carries the burden of showing no reasonable finder of fact could decide otherwise. Ms. Stahl has put in evidence that the decision matrix predates the complaint by two months. That is a genuine dispute. Your cross-motion is DENIED — and Ms. Stahl, before you get comfortable, so is any suggestion that the retaliation count goes away with it. You did not move on it, and I do not dismiss claims nobody asked me to dismiss. The retaliation count proceeds to trial.
+
+MS. STAHL: Understood, Your Honor.
+
+THE COURT: We are adjourned. Written order this week.
+
+(Proceedings concluded.)
