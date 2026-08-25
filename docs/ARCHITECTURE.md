@@ -13,7 +13,7 @@ Read this before writing code. If a change would violate something here, that's 
 What it forbids, concretely, because these are the shapes the temptation actually takes in this codebase:
 
 - **Tuning thresholds, scoring weights, or confidence bands to move a label.** Retrieval thresholds are unvalidated and will eventually be tuned — that tuning must be driven by retrieval quality measured against known-good results, never by which value makes a demo query return a better-looking confidence.
-- **Counting the same thing twice to make evidence look deeper.** One ruling described by four memories is one piece of evidence, not four. This is not hypothetical — it is issue #22, and it silently erased the designed contrast between two judges.
+- **Counting the same thing twice to make evidence look deeper.** One ruling described by four memories is one piece of evidence, not four. This is not hypothetical — it was issue #22, and it silently erased the designed contrast between two judges. See §10.
 - **Shaping the synthetic corpus to flatter the engine.** The demo data exists to test whether the system detects patterns that are really there. Writing transcripts to compensate for a measurement flaw hides the flaw and does not transfer to real documents.
 - **Letting a claim outrun its evidence in any user-visible string, doc, or README.** Distinguish measured from estimated, and demonstrated from validated. One query against one judge is exactly that.
 
@@ -127,7 +127,27 @@ It is **not** a basis for cross-lifecycle predictive claims — "clients who pre
 
 If both kinds of claim are ever rendered in the same confidence UI, they must be visually distinguished, or the system will present a small-sample coincidence with the same authority as a well-established pattern.
 
-## 10. Local-first, model-agnostic
+## 10. The unit of evidence is a ruling, never a memory
+
+Extraction deliberately splits one ruling into several memories — the rule the judge stated, the relief ordered, the warning attached. That is right for retrieval, because each fragment is separately findable, and wrong for counting, because it makes one ruling look like three pieces of evidence.
+
+It is also not evenly wrong, which is what made it dangerous. Plaintiff-favorable rulings measured **1.9–2.3 memories each against 1.5 for defendant-favorable**, on two dockets written days apart with unrelated fact patterns. Counting memories therefore reported a plaintiff lean the rulings did not have, and it erased the designed contrast between two judges entirely. Nothing errored. The mechanism is not an artifact of synthetic transcripts either: a plaintiff win tends to involve a stated rule, a remedy, and a warning, while a defendant win is often one sentence dismissing a count.
+
+`SearchEngine.ruling_key()` identifies the ruling a memory describes as `(matter_id, ruling context, direction)`. `matter_id` falls back to `source` so memories predating matter capture do not collapse together. Direction is part of the key, so every memory in a group already agrees on direction and the group can never split internally.
+
+**Every evidence record carries two figures, and they mean different things:**
+
+| Field | Meaning |
+|---|---|
+| `corroborating_count` / `deviating_count` | **Rulings.** This is the evidence count, and the only input to `calculate_confidence()`. |
+| `corroborating_memory_count` / `deviating_memory_count` | How many memories those rulings were extracted from. Context only. |
+| `corroborating_ids` / `deviating_ids` | Every memory ID, untouched, so any figure traces back to source. |
+
+Both are reported wherever either appears, so the drop from memories to rulings is visible rather than silent. **Never feed a memory count into a confidence calculation, and never display one where a reader would take it as the amount of evidence** — that is the bug this section exists to prevent, restated.
+
+Validation: against a hand count of distinct rulings in the transcripts, ruling-keying lands within 2 per docket where memory-counting was off by 15 and 10. The residual is genuine ambiguity — whether summary judgment granted on two counts of one motion is one ruling or two is a question the transcript does not settle either. `tests/test_ruling_count.py` asserts all of this and fails loudly if the key regresses.
+
+## 11. Local-first, model-agnostic
 
 Memories are stored as structured data in a local database, not as text baked into a model's context window. The reasoning engine on top should be swappable without rebuilding the knowledge base.
 

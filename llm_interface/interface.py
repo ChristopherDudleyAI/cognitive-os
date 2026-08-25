@@ -37,6 +37,15 @@ class LLMInterface:
         )
         lines.append("")
         lines.append(
+            "COUNTS ARE RULINGS, NOT MEMORIES. One ruling is usually "
+            "extracted into several memories, so the memory total is "
+            "always the larger number and is shown only to indicate how "
+            "much source material the rulings came from. State the ruling "
+            "count when you cite evidence. Never cite the memory total as "
+            "though it were the amount of evidence."
+        )
+        lines.append("")
+        lines.append(
             "Each entity below lists an OVERALL figure and a breakdown BY "
             "RULING CONTEXT. The overall figure is the sum across every "
             "context. A single pattern is supported by ONE context, so "
@@ -71,6 +80,10 @@ class LLMInterface:
             corroborating_count = evidence.get('corroborating_count', 0)
             deviating_count = evidence.get('deviating_count', 0)
             deviating_ids = evidence.get('deviating_ids', [])
+            memory_count = (
+                evidence.get('corroborating_memory_count', 0)
+                + evidence.get('deviating_memory_count', 0)
+            )
 
             confidence_label = {
                 'high': 'HIGH CONFIDENCE',
@@ -86,8 +99,9 @@ class LLMInterface:
             )
             lines.append(
                 f"OVERALL (all contexts combined): {confidence_label} — "
-                f"{corroborating_count} corroborating, "
-                f"{deviating_count} deviating"
+                f"{corroborating_count} corroborating rulings, "
+                f"{deviating_count} deviating "
+                f"(drawn from {memory_count} memories)"
             )
 
             clusters = evidence.get('clusters') or []
@@ -103,18 +117,15 @@ class LLMInterface:
                     lines.append(
                         f"    [{c['confidence_level'].upper()}] "
                         f"{c['cluster']} — "
-                        f"{c['corroborating_count']} corroborating, "
+                        f"{c['corroborating_count']} corroborating rulings, "
                         f"{c['deviating_count']} deviating"
                     )
             if uncompared:
-                total_single = sum(
-                    c['corroborating_count'] for c in uncompared
-                )
                 lines.append(
-                    f"  NOT COMPARED: {len(uncompared)} context(s) held a "
-                    f"single memory each ({total_single} total). These "
-                    f"count toward the overall figure but evidence no "
-                    f"pattern — do not build a pattern on them."
+                    f"  NOT COMPARED: {len(uncompared)} context(s) held "
+                    f"only one ruling each. These count toward the overall "
+                    f"figure but evidence no pattern — do not build a "
+                    f"pattern on them."
                 )
 
             if deviating_ids:

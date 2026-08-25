@@ -186,6 +186,12 @@ def render_confidence_blocks(pattern_evidence: dict):
         deviating_count = evidence.get('deviating_count', 0)
         corroborating_ids = evidence.get('corroborating_ids', [])
         deviating_ids = evidence.get('deviating_ids', [])
+        corroborating_memory_count = evidence.get(
+            'corroborating_memory_count', len(corroborating_ids)
+        )
+        deviating_memory_count = evidence.get(
+            'deviating_memory_count', len(deviating_ids)
+        )
 
         label = confidence_labels.get(
             confidence, 'LOW CONFIDENCE'
@@ -197,46 +203,59 @@ def render_confidence_blocks(pattern_evidence: dict):
         col1, col2 = st.columns(2)
         with col1:
             st.metric(
-                "Corroborating Memories",
-                corroborating_count
+                "Corroborating Rulings",
+                corroborating_count,
+                help=(
+                    f"Distinct rulings, extracted from "
+                    f"{corroborating_memory_count} memories. One ruling "
+                    f"usually yields several memories, so memories are "
+                    f"not counted as separate evidence."
+                )
             )
         with col2:
             st.metric(
-                "Deviating Memories",
-                deviating_count
+                "Deviating Rulings",
+                deviating_count,
+                help=(
+                    f"Distinct rulings, extracted from "
+                    f"{deviating_memory_count} memories."
+                )
             )
 
         if confidence == 'contradicted':
             st.error(
-                "WARNING: Deviating memories outweigh "
-                "corroborating memories. Review all memory IDs "
+                "WARNING: Deviating rulings outweigh "
+                "corroborating rulings. Review all memory IDs "
                 "before relying on this conclusion."
             )
         elif deviating_count > 0:
             st.warning(
-                f"{deviating_count} memory(s) deviate "
+                f"{deviating_count} ruling(s) deviate "
                 f"from this pattern."
             )
 
         if corroborating_ids:
             with st.expander(
                 f"Corroborating Memory IDs "
-                f"({corroborating_count})"
+                f"({len(corroborating_ids)})"
             ):
                 st.caption(
-                    "Use these IDs in the Memory Browser "
-                    "to view and verify each memory."
+                    f"The {corroborating_count} corroborating ruling(s) "
+                    f"above were extracted from these "
+                    f"{len(corroborating_ids)} memories. Use the IDs in "
+                    f"the Memory Browser to verify each one."
                 )
                 for mem_id in corroborating_ids:
                     st.code(mem_id)
 
         if deviating_ids:
             with st.expander(
-                f"Deviating Memory IDs ({deviating_count})"
+                f"Deviating Memory IDs ({len(deviating_ids)})"
             ):
                 st.caption(
-                    "These memories contradict or deviate "
-                    "from the pattern. Review carefully."
+                    f"The {deviating_count} deviating ruling(s) were "
+                    f"extracted from these {len(deviating_ids)} memories. "
+                    f"They contradict the pattern — review carefully."
                 )
                 for mem_id in deviating_ids:
                     st.code(mem_id)
