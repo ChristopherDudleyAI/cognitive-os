@@ -31,9 +31,22 @@ The three-judge demo dataset is the current work. Reynolds has **6** transcripts
 
 The pipeline works end to end and has been measured, not just assumed: ingest labels persist, `get_by_matter()` returns, the deviation engine reads posture tags, and evidence is now counted by ruling rather than by memory. The open questions are clustering quality and threshold tuning, not whether it runs.
 
-**Known and unfixed:** measured honestly, both judges lean plaintiff — Reynolds 60/40, Kimball 54/46. Kimball was designed to lean defendant and the transcripts as written do not. That is a transcript problem, not an engine problem, and rewriting Kimball cases is the next real task. Separately, 24 Reynolds memories are mis-tagged `trial_proceeding` from a stray phrase in Reynolds_06; the wording is fixed but the ingested memories still carry it.
+**Known and unfixed — the gap is a defendant shortfall, not a plaintiff lean.** Measured three ways against the Character Bible's own targets:
+
+| judge | actual (p/d/n) | bible target | gap |
+|---|---|---|---|
+| Reynolds | 46 / 30 / 23 | 45 / 45 / 10 | defendant 15 low, neither 13 high |
+| Kimball | 43 / 37 / 18 | 40 / 50 / 10 | defendant 13 low, neither 8 high |
+
+Plaintiff is on target for both. What's missing is defendant-favorable rulings, and too many rulings are landing `favored_neither`. Both dockets need the same correction, so this is a writing habit, not a per-judge problem. It is a transcript problem, not an engine problem.
+
+Note the denominator: quoting plaintiff-vs-defendant alone (Reynolds 60/40) drops `favored_neither` and makes a defendant shortfall look like a plaintiff lean. The bible's targets are three-way — measure them the same way.
+
+Separately, 24 Reynolds memories are mis-tagged `trial_proceeding` from a stray phrase in Reynolds_06; the wording is fixed but the ingested memories still carry it.
 
 Run `python tests/test_ruling_count.py` from the project root before and after touching the evidence engine. No pytest needed.
+
+`python tools/repair_attribution.py` scans stored memories for inverted attorney attribution and repairs unambiguous swaps in both stores. Dry run by default, `--apply` to write. The ingest-time guard only protects memories ingested after it existed, so run this after any bulk ingest.
 
 ## Gotchas that will waste your time
 

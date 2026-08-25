@@ -1838,4 +1838,35 @@ The uncompared-singles path filters by retrieval rank while the compared path fi
 
 ---
 
+### DECISION: Correcting my own diagnosis — the gap is a defendant shortfall, not a plaintiff lean
+DATE: 2026-08-24
+STATUS: confirmed — supersedes the closing claim of the entry above
+
+WHAT WAS DECIDED:
+The entry above states that "both judges still lean plaintiff — Reynolds 60/40, Kimball 54/46" and that the remaining problem is that the Kimball transcripts do not lean defendant as designed. Those numbers are arithmetically right and diagnostically wrong, because they were measured on a different denominator than the target they were being compared against.
+
+Measured three ways, as the Character Bible's targets are actually stated:
+
+| judge | actual (p/d/n) | bible target | gap |
+|---|---|---|---|
+| Reynolds | 46 / 30 / 23 | 45 / 45 / 10 | defendant 15 low, neither 13 high |
+| Kimball | 43 / 37 / 18 | 40 / 50 / 10 | defendant 13 low, neither 8 high |
+
+WHY THIS MATTERS RATHER THAN BEING A ROUNDING QUIBBLE:
+Plaintiff is on target for both judges. Dropping `favored_neither` from the denominator inflates whichever of the two remaining shares is larger, so a defendant shortfall reads as a plaintiff lean. The prescriptions differ: "make Kimball lean defendant" would have meant rewriting his rulings, when what the data actually asks for is more defendant-favourable rulings and fewer that land `favored_neither`.
+
+It also mislocated the problem. The entry above framed this as a Kimball problem. **Both dockets have the same defect in the same direction** — Reynolds's defendant shortfall is the larger of the two, and Reynolds was designed to have no party lean at all. That makes it a writing habit across the corpus, not a per-judge failure: too many rulings written as procedural or administrative, too few genuine defence wins.
+
+A second-order lesson worth keeping: when comparing a measurement to a target, confirm both use the same denominator before drawing any conclusion from the difference. This one survived being written into a commit message, a pull request, and two documents before the bible was re-read.
+
+ALSO FOUND, unrelated but in the same measurement:
+Three memories in matter 2025-CH-01055 (Kesterline v. Aldridge) had `opposing_counsel` and `source_attorney` inverted — Raymond Soto, one of the firm's own, was filed as opposing counsel and Gregory Whitfield as ours. The ingest-time guard in `structurer.py` would have caught it; those memories predate the guard. Root cause is therefore coverage, not logic: the guard only ever protects what is ingested after it exists.
+
+Repaired with a new `tools/repair_attribution.py`, which applies the same unambiguous-swap rule to already-stored memories, writes to **both** SQLite and ChromaDB (the vector store keeps `opposing_counsel` in its metadata, and fixing only one store would leave them silently disagreeing), and dry-runs by default. Three memories repaired; a re-scan reports clean.
+
+STILL OPEN / NEEDS REVISITING:
+The counsel roster and the posture target are in tension on the Kimball docket, and this is a flaw in the bible rather than in the transcripts. Three of his five defence attorneys — Reyes, Fitzgerald, Hoffman — are specified as losing, which produces `favored_plaintiff` rulings, while the docket target is 50% `favored_defendant`. With every counsel appearing 2-4 times as the bible also requires, the arithmetic does not close unless Stahl carries three or four appearances, or the weaker advocates' clients still win the counts that fail as a matter of law regardless of who briefed them. The second is both realistic and consistent with Kimball being unmoved by advocacy quality, and is the reading the next transcripts should follow. Recorded here rather than silently resolved, because it is a specification conflict and someone should get the chance to disagree with the resolution.
+
+---
+
 *(Append new entries below this line, oldest first, using the template above.)*
