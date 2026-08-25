@@ -1762,4 +1762,33 @@ Two smaller items from the same ingest: posture coverage was 93.3% (2 misses of 
 
 ---
 
+### DECISION: Accuracy over appearance is a standing constraint on the whole project
+DATE: 2026-08-24
+STATUS: confirmed
+
+WHAT WAS DECIDED:
+Nothing in this project may be inflated, exaggerated, or altered to make anything look good. Christopher stated this directly and then asked that it be recorded permanently so that every future session inherits it rather than rediscovering it. It is now recorded in three places: the governing section at the top of `CLAUDE.md`, a constraint in `docs/ARCHITECTURE.md`, and this entry.
+
+WHY:
+Christopher's words: *"I want this to be the most accurate and effective tool, we are not going to code this to 'look' good. that comes later and will mostly have to do with my sales ability. lets focus on making an effective tool that works... nothing matters if we dont have a working tool."*
+
+The reasoning is his own division of labour. He handles persuasion; the codebase's job is to make sure the thing underneath is true. A confidence figure that overstates its evidence is worse than no figure at all, because it invites reliance it has not earned — and an attorney's instinct in a demo is to probe precisely the number that looks too good. A demo that impresses on massaged numbers damages him in the room rather than helping.
+
+The immediate trigger was the memory-count weighting bias in the entry above. The fix reduces Reynolds's corroborating count from roughly 45 to roughly 20 and will lower confidence bands across the system. Before implementing it I flagged that trade explicitly — more defensible, less impressive — and this was the answer.
+
+WHAT IT MEANS IN PRACTICE:
+- Report the honest number even when it is worse. Confidence dropping from MEDIUM to LOW because the counting was corrected is a fix, not a regression.
+- Never tune thresholds, scoring weights, confidence bands, or the demo data to produce nicer output. Thin evidence is answered with better evidence, never a softer standard. This is the same principle that rejected "write more verbose defendant rulings" in the entry above, now generalised.
+- Distinguish measured from estimated, and demonstrated from validated, every time.
+- Report failures and limitations plainly, including one's own errors.
+- Correctness before presentation. UI polish and demo framing come later.
+
+ALTERNATIVES CONSIDERED (if known):
+None. This was a direct instruction, not a choice between options.
+
+STILL OPEN / NEEDS REVISITING:
+One tension is acknowledged and deliberately left unresolved: accuracy and usefulness can diverge. A tool that correctly reports LOW confidence on everything is accurate but not yet useful. The agreed handling is to say so when it happens — the response is better data or a better engine, never a relabelling. Whether the corpus at ~10 transcripts per judge is large enough to clear that bar under honest ruling-level counting is not yet known, and will not be known until the fix in the entry above is implemented and measured.
+
+---
+
 *(Append new entries below this line, oldest first, using the template above.)*
