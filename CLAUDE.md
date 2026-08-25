@@ -48,6 +48,8 @@ Run `python tests/test_ruling_count.py` from the project root before and after t
 
 `python tools/repair_attribution.py` scans stored memories for inverted attorney attribution and repairs unambiguous swaps in both stores. Dry run by default, `--apply` to write. The ingest-time guard only protects memories ingested after it existed, so run this after any bulk ingest.
 
+**`python tools/snapshot_memories.py --export data/snapshot.json` before any wipe.** Testing a change means wiping and rebuilding, and rebuilding by re-ingesting costs ~$0.06 a transcript every time. A snapshot restores the same memories for free with `--restore`. Valid for anything downstream of extraction — retrieval, scoring, clustering, confidence, dashboard. **Not** valid when the change *is* extraction (prompt, branch, vocabulary, posture rule, structurer): the point there is to see different memories come out, so restoring old ones tests nothing. Those runs have to be paid for. Snapshots land in `data/`, which is gitignored — copy anything worth keeping somewhere durable.
+
 ## Gotchas that will waste your time
 
 - **`config.json` is loaded by relative path.** Run from the project root or it won't be found. Gitignored (live API key); `config.example.json` is the template.
