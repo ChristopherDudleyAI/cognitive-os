@@ -1,0 +1,75 @@
+IN THE CIRCUIT COURT OF COOK COUNTY, ILLINOIS
+COUNTY DEPARTMENT, LAW DIVISION
+
+THOMAS BRANNIGAN,
+                              Plaintiff,
+v.
+HALLOWAY FREIGHT SYSTEMS, INC.,
+                              Defendant.
+
+Case No. 2025-L-005240
+
+TRANSCRIPT OF HEARING ON MOTION FOR SUMMARY JUDGMENT
+BEFORE THE HONORABLE ROBERT D. KIMBALL
+
+APPEARANCES:
+For the Plaintiff:   RAYMOND SOTO, ESQ.
+For the Defendant:   CARL HOFFMAN, ESQ.
+
+---
+
+THE COURT: 2025-L-005240, Brannigan against Halloway Freight Systems. Defendant moves for summary judgment on all three counts and to bar the plaintiff's economic damages calculation. Mr. Hoffman.
+
+MR. HOFFMAN: Thank you, Your Honor. Count III first, if I may — defamation per se. Mr. Brannigan alleges that Halloway's operations director told a prospective employer at Cardinal Transport that he had been terminated for falsifying dispatch logs.
+
+THE COURT: Was he told that?
+
+MR. HOFFMAN: The statement was made, Your Honor. Our position is that it is privileged. It was made by a former employer to a prospective employer, in response to a reference inquiry the plaintiff himself authorized in writing, on a subject the inquiry asked about.
+
+THE COURT: Mr. Soto, that is a qualified privilege on its face. What defeats it?
+
+MR. SOTO: Actual malice, Your Honor. The operations director knew the falsification finding was disputed.
+
+THE COURT: Disputed by whom, and known to him how?
+
+MR. SOTO: Mr. Brannigan disputed it in his termination meeting.
+
+THE COURT: An employee denying the finding against him is not evidence that the person reporting the finding disbelieved it. Abuse of a qualified privilege requires a reckless disregard for truth or falsity, and the record on this motion contains one statement, accurately reporting what the internal investigation concluded, made to exactly the person authorized to receive it. Summary judgment on Count III is GRANTED.
+
+Count II. The Wage Payment and Collection Act claim for unpaid commissions.
+
+MR. HOFFMAN: The commission plan is Exhibit 11, Your Honor. Section 3(b): "Commissions are earned upon collection of the invoiced amount and not upon booking." Mr. Brannigan seeks commissions on fourteen loads booked before his termination and collected after it. Under the plan text they were never earned.
+
+THE COURT: Mr. Soto.
+
+MR. SOTO: The plan also contains a good-faith provision, Your Honor, and Halloway controlled the timing of collection. It should not benefit from a delay it caused.
+
+THE COURT: Is there evidence Halloway delayed collection on these fourteen invoices?
+
+MR. SOTO: The average days-to-collection on those loads was longer than the company average, Your Honor.
+
+THE COURT: Longer than average is not evidence of manipulation; half of everything is longer than average. Show me a single invoice Halloway could have collected and chose not to, and this is a different motion. Absent that, Section 3(b) says what it says, it is not ambiguous, and the Act does not create a right to wages the contract never made payable. Summary judgment on Count II is GRANTED.
+
+The motion to bar Mr. Ivey's damages calculation.
+
+MR. HOFFMAN: Mr. Ivey projects front pay through age sixty-seven at Halloway's wage scale with annual increases, Your Honor. He assumes no mitigation whatsoever across nine years.
+
+THE COURT: Mr. Soto, does Mr. Ivey account for mitigation?
+
+MR. SOTO: He presents the gross figure, Your Honor, and defense is free to argue mitigation to the finder of fact.
+
+THE COURT: A projection that assumes a fact contradicted by the plaintiff's own deposition — he testified he has been driving for Meridian since March — is not a calculation the other side argues about, it is a calculation with a known error in it. The motion is GRANTED IN PART. Mr. Ivey may not present a front pay figure that omits documented post-termination earnings. He may present a corrected figure, and he may present the wage-scale methodology, which is unobjectionable.
+
+Count I. Retaliatory discharge. Mr. Hoffman.
+
+MR. HOFFMAN: Your Honor, Mr. Brannigan filed his workers' compensation claim in February and was terminated in May, but the falsification investigation was opened in April on a referral from a customer, not from anyone who knew about the claim. And I would say plainly — this is a plaintiff whose account of the dispatch logs has shifted three times, and whose credibility a jury will not—
+
+THE COURT: Stop there. Whose credibility a finder of fact will assess, which is the reason I cannot grant this motion. You have just told me your best argument is that the plaintiff is not believable. That is a trial argument. On summary judgment I take his account as true and ask whether it leaves a genuine dispute, and it does: the customer referral is dated April eleventh, the plaintiff's supervisor was copied on the workers' compensation notice on April ninth, and the investigation file has no entry between those two dates. That is a two-day gap that a finder of fact is entitled to look at.
+
+MR. HOFFMAN: The referral is independent, Your Honor.
+
+THE COURT: It may well be. If it is, you will win at trial. Summary judgment on Count I is DENIED.
+
+Counts II and III are dismissed. Count I proceeds, with damages limited as I have described. Mr. Hoffman, you won two counts today on the text of a contract and the scope of a privilege, which is where your record was clean. You did not win the third, and telling me a witness is a liar is never going to be the argument that gets you there. Status in thirty days.
+
+(Proceedings concluded.)

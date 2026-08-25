@@ -29,10 +29,22 @@ Three rules cause the most damage when broken:
 
 ## Current state
 
-| Judge | Written | Target |
-|---|---:|---:|
-| Caldwell | 1 | ~10 |
-| Reynolds | 6 | ~10 |
-| Kimball | 4 | ~10 |
+| Judge | Written | Target | Hand-counted posture (p/d/n) | Bible target |
+|---|---:|---:|---|---|
+| Caldwell | 1 | ~10 | — | 70 / 25 / 5 |
+| Reynolds | 6 | ~10 | 46 / 30 / 23 | 45 / 45 / 10 |
+| Kimball | 10 | ~10 | 42 / 50 / 8 | 40 / 50 / 10 |
 
-Each judge's opposing counsel should each appear in 2–4 of that judge's cases, so every attorney accumulates enough rulings to form a confidence-backed pattern. A one-off attorney produces no usable per-attorney intelligence.
+Each judge's opposing counsel should each appear in 2–4 of that judge's cases, so every attorney accumulates enough rulings to form a confidence-backed pattern. A one-off attorney produces no usable per-attorney intelligence. Owen Fitzgerald is currently at one appearance and is owed a second.
+
+Reynolds's four remaining cases should run about **2 plaintiff / 3 defendant each with no neutrals** — her defendant share is 15 points light and her neutral share 13 heavy, which is the padding problem described in the bible's global rules.
+
+## Before you ingest
+
+```bash
+python tools/check_transcripts.py
+```
+
+Ingestion costs roughly $0.06 a transcript, so mistakes are cheaper to find before paying for them. The checker verifies canonical judge names, catches an opposing counsel appearing before the wrong judge, catches a firm attorney seated at the defence table, and flags language describing a hearing as a trial — the last of which is not hypothetical, it mis-tagged 24 memories as `trial_proceeding` and manufactured clusters that did not exist.
+
+Note that the posture figures above are hand counts of the transcripts. What the extractor produces from them is a different number, and the two should never be quoted interchangeably.

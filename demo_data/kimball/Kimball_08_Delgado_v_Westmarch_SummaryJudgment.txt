@@ -1,0 +1,81 @@
+IN THE CIRCUIT COURT OF COOK COUNTY, ILLINOIS
+COUNTY DEPARTMENT, LAW DIVISION
+
+MARISOL DELGADO,
+                              Plaintiff,
+v.
+WESTMARCH FINANCIAL GROUP, LLC,
+                              Defendant.
+
+Case No. 2025-L-005388
+
+TRANSCRIPT OF HEARING ON CROSS-MOTIONS FOR SUMMARY JUDGMENT
+BEFORE THE HONORABLE ROBERT D. KIMBALL
+
+APPEARANCES:
+For the Plaintiff:   DIANE OKAFOR, ESQ.
+For the Defendant:   CARL HOFFMAN, ESQ.
+
+---
+
+THE COURT: 2025-L-005388, Delgado against Westmarch Financial Group. Cross-motions. Plaintiff moves for partial summary judgment that the non-solicitation covenant is unenforceable. Defendant moves for summary judgment on the deferred compensation count and the retaliatory discharge count, and to bar plaintiff's industry custom witness. Ms. Okafor, yours first.
+
+MS. OKAFOR: Thank you, Your Honor. The covenant bars Ms. Delgado for twenty-four months from soliciting "any client of the firm." Not her clients — any client. Westmarch has roughly nine hundred households across four offices. She serviced sixty-one.
+
+THE COURT: What is the geographic scope?
+
+MS. OKAFOR: There is none stated, Your Honor. That is part of our argument.
+
+THE COURT: A client-based restriction does not require a geographic limit; the client list supplies the boundary. That is settled. Your stronger point is the reach to clients she never touched, so let me ask about it directly. Mr. Hoffman, what legitimate business interest does Westmarch have in barring this advisor from soliciting eight hundred and thirty-nine households she never met?
+
+MR. HOFFMAN: Near-permanent client relationships across the firm, Your Honor, and confidential information about firm-wide holdings that any advisor could access.
+
+THE COURT: Could access, or did access?
+
+MR. HOFFMAN: The system permitted access, Your Honor. Exhibit 22 is the audit log showing she ran nineteen firm-wide reports in her last quarter.
+
+THE COURT: That is a fact, and it is a fact Ms. Okafor did not address. Nineteen reports covering holdings outside her book, in the ninety days before she resigned, is evidence of a protectable interest in the broader client base — not conclusive evidence, but enough that I cannot declare this covenant unenforceable as a matter of law. Reasonableness under the totality of the circumstances is exactly the kind of question that survives when the facts point both ways. Plaintiff's motion for partial summary judgment is DENIED.
+
+MS. OKAFOR: Your Honor, may I be heard on the nineteen reports—
+
+THE COURT: You may be heard on them at trial. You did not brief them, and I am not going to resolve them from the podium either.
+
+Defendant's motion. Count II, deferred compensation.
+
+MR. HOFFMAN: Section 7 of the deferred compensation agreement, Your Honor. Unvested units are forfeited on "voluntary separation for any reason." Ms. Delgado resigned. Four hundred and ten thousand dollars in unvested units were forfeited under a clause she signed twice, in 2019 and again on the 2023 amendment.
+
+MS. OKAFOR: Constructive discharge, Your Honor. She resigned because of the conduct alleged in Count III.
+
+THE COURT: Then Count II rises or falls with Count III, and you have not pleaded it that way — you have pleaded a straightforward breach. Is there a reading of Section 7 under which a resignation is not a voluntary separation?
+
+MS. OKAFOR: Only the constructive discharge reading, Your Honor.
+
+THE COURT: Which is not in this count. The text is unambiguous and it was signed twice. Summary judgment on Count II is GRANTED. If the constructive discharge theory survives trial on Count III, you may take that up in a post-trial motion; I am deciding the contract as pleaded.
+
+The motion to bar Mr. Reinhart.
+
+MR. HOFFMAN: Mr. Reinhart offers an opinion that the covenant is "outside industry norms," Your Honor. Enforceability is a question for the Court.
+
+THE COURT: It is. Ms. Okafor, what is Mr. Reinhart adding that I do not decide myself?
+
+MS. OKAFOR: Context on what comparable firms do, Your Honor.
+
+THE COURT: An opinion that other firms write narrower covenants tells me what other firms do. It does not tell me whether this covenant protects a legitimate interest of this firm, which is the legal question and mine to answer. The motion to bar is GRANTED as to the enforceability opinion. He may testify to the mechanics of book transfer at a wirehouse, which is factual and which the finder of fact may not know.
+
+Count III. Retaliatory discharge — reporting suspected anti-money-laundering failures. Mr. Hoffman.
+
+MR. HOFFMAN: Your Honor, before the legal argument I would ask the Court to consider the shape of this case. Ms. Delgado earned two point one million dollars at Westmarch over six years. She left voluntarily for a competitor, she forfeited units under a clause she read and signed, and she now says the firm she profited from for six years drove her out. At some point—
+
+THE COURT: At some point what, Mr. Hoffman?
+
+MR. HOFFMAN: At some point the equities matter, Your Honor.
+
+THE COURT: They do not. Not here, not on this motion, and not from either side. If she was terminated or constructively discharged for reporting a suspected reporting violation, the fact that she was paid well while it happened is not a defense, and I would say the same to Ms. Okafor if she came here asking me to weigh how sympathetic her client is. Give me the record.
+
+MR. HOFFMAN: The compliance escalation was in January. She resigned in September. Eight months.
+
+THE COURT: And in between, according to her declaration and to Exhibit 31, her book was reassigned twice, her office was moved to the third floor, and her assistant was reallocated. Whether that is a firm reorganizing or a firm making an advisor's position untenable is a genuine dispute of material fact. Summary judgment on Count III is DENIED.
+
+So: Count II is out, the covenant stands for trial, Mr. Reinhart is limited, and Count III proceeds. Mr. Hoffman, you had the text of Section 7 and you had the audit log, and both were enough. You did not need the two point one million dollars, and it did you no good. Status in thirty days.
+
+(Proceedings concluded.)

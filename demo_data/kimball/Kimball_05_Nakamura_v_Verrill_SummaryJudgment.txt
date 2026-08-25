@@ -1,0 +1,75 @@
+IN THE CIRCUIT COURT OF COOK COUNTY, ILLINOIS
+COUNTY DEPARTMENT, LAW DIVISION
+
+ELENA NAKAMURA,
+                              Plaintiff,
+v.
+VERRILL PRECISION COMPONENTS, LLC,
+                              Defendant.
+
+Case No. 2025-L-004772
+
+TRANSCRIPT OF HEARING ON MOTION FOR SUMMARY JUDGMENT
+BEFORE THE HONORABLE ROBERT D. KIMBALL
+
+APPEARANCES:
+For the Plaintiff:   DIANE OKAFOR, ESQ.
+For the Defendant:   MARGARET STAHL, ESQ.
+
+---
+
+THE COURT: 2025-L-004772, Nakamura against Verrill Precision Components. Defendant moves for summary judgment on three counts and to bar the plaintiff's vocational expert. Plaintiff has a fourth count under the Wage Payment and Collection Act that the motion also reaches. Ms. Stahl.
+
+MS. STAHL: Thank you, Your Honor. Count I is failure to accommodate under the ADA. The interactive process here is documented in a way that is genuinely unusual — Exhibit 4 is a fourteen-page log, every request, every response, every meeting, dated. Ms. Nakamura asked for a modified lifting restriction in March. Verrill granted it in nine days. She asked for a seated workstation in May. Verrill built one and installed it in three weeks. She asked in August to be transferred off the line entirely to a quality inspection role.
+
+THE COURT: And that one was denied.
+
+MS. STAHL: That position did not exist, Your Honor. There were two quality inspectors and neither vacancy was open. The ADA does not require an employer to create a position.
+
+THE COURT: Ms. Okafor, does your client contend a vacancy existed in August?
+
+MS. OKAFOR: We contend the role could have been created without hardship, Your Honor, and that the two inspectors were carrying overflow that would have justified a third.
+
+THE COURT: That is a business-judgment argument, not an accommodation argument. The statute requires reassignment to a vacant position. It does not require the creation of one, and "they were busy enough to justify hiring" is not evidence of a vacancy — it is an argument that there should have been one. Is there anything in this record showing an open, posted, or budgeted third inspector position in August of that year?
+
+MS. OKAFOR: There is not, Your Honor.
+
+THE COURT: Then Count I fails. On a record where every documented request was granted within weeks and the only denial concerns a position that did not exist, no reasonable finder of fact could find a failure to accommodate. Summary judgment on Count I is GRANTED.
+
+Count II, retaliation. Ms. Stahl, briefly.
+
+MS. STAHL: The protected activity is the August accommodation request. The adverse action is the November reduction in force. Eleven employees were separated in that RIF across three departments, selected by a seniority-and-cross-training matrix prepared in June — two months before Ms. Nakamura made the request at issue.
+
+THE COURT: Ms. Okafor, the selection criteria predate the protected activity. What is your causation evidence?
+
+MS. OKAFOR: Temporal proximity, Your Honor. Three months.
+
+THE COURT: Three months is at the outer edge where proximity alone does anything, and it does nothing at all when the criteria were fixed before the activity occurred. A decision made in June cannot have been caused by a request made in August. Do you have evidence the matrix was revisited or the scores altered after August?
+
+MS. OKAFOR: We do not have that evidence, Your Honor.
+
+THE COURT: Summary judgment on Count II is GRANTED.
+
+The motion to bar Dr. Feldstein. Ms. Stahl.
+
+MS. STAHL: Dr. Feldstein is a vocational rehabilitation counselor offering an opinion that Ms. Nakamura is permanently unemployable in the regional manufacturing labor market. He performed no labor market survey. He identified no specific employers, no wage data, and no job listings. His methodology, in his deposition at page 61, is that he "relied on his experience."
+
+THE COURT: Ms. Okafor, what is the methodology?
+
+MS. OKAFOR: Dr. Feldstein has thirty-one years of experience placing workers with physical restrictions, Your Honor. That experience is itself the method.
+
+THE COURT: Experience qualifies a witness. It is not a substitute for a methodology once he is qualified. An opinion about a labor market that rests on no labor market data cannot be tested, and an opinion that cannot be tested cannot be checked by the other side or by me. The motion to bar Dr. Feldstein's employability opinion is GRANTED. He may testify to Ms. Nakamura's functional restrictions, which he did examine.
+
+Last count. The Wage Payment and Collection Act claim — unpaid overtime for the seated-workstation period. Ms. Stahl, your brief gives this two paragraphs.
+
+MS. STAHL: Verrill's position is that the time records show no overtime worked, Your Honor.
+
+THE COURT: Verrill's time records show no overtime recorded. Ms. Okafor has produced eleven supervisor emails directing Ms. Nakamura to stay past shift to finish a run, and the punch data shows her badge at the east door after shift end on nine of those eleven dates. That is a genuine dispute of material fact about whether the records are accurate, and it is precisely the kind of dispute I cannot resolve on paper.
+
+MS. STAHL: The emails are ambiguous as to whether she in fact stayed, Your Honor.
+
+THE COURT: They are, and a finder of fact will resolve that ambiguity. That is what the standard requires. Summary judgment on Count IV is DENIED. That count proceeds to trial.
+
+To be clear about what I have and have not decided — I have decided that three of these four counts fail as a matter of law on this record. I have not decided that Verrill treated Ms. Nakamura well, and nothing in this order says so. Count IV is set for a status in thirty days.
+
+(Proceedings concluded.)

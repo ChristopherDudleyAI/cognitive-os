@@ -1,0 +1,79 @@
+IN THE CIRCUIT COURT OF COOK COUNTY, ILLINOIS
+COUNTY DEPARTMENT, LAW DIVISION
+
+IRINA SOKOLOV,
+                              Plaintiff,
+v.
+GRANTHAM MEDICAL STAFFING, INC.,
+                              Defendant.
+
+Case No. 2025-L-005501
+
+TRANSCRIPT OF HEARING ON MOTION FOR SUMMARY JUDGMENT
+BEFORE THE HONORABLE ROBERT D. KIMBALL
+
+APPEARANCES:
+For the Plaintiff:   RAYMOND SOTO, ESQ.
+For the Defendant:   DANIEL REYES, ESQ.
+
+---
+
+THE COURT: 2025-L-005501, Sokolov against Grantham Medical Staffing. Defendant moves for summary judgment on all three counts and to bar the plaintiff's treating physician from offering causation testimony. Mr. Reyes, take them in order.
+
+MR. REYES: Thank you, Your Honor. Count I is disability discrimination under the Human Rights Act. Ms. Sokolov was a staffing coordinator. She was terminated in October for performance — three documented coachings and a final written warning, all before Grantham had any knowledge of her diagnosis.
+
+THE COURT: What is the date Grantham learned of the diagnosis?
+
+MR. REYES: She disclosed it to her manager on October third, Your Honor. The final written warning is dated September twenty-ninth.
+
+THE COURT: Mr. Soto.
+
+MR. SOTO: The final written warning is dated September twenty-ninth and was delivered on October ninth, Your Honor. Six days after the disclosure. Ms. Sokolov's declaration says so, the delivery acknowledgment she signed is dated October ninth, and the HR system audit trail shows the document was created on October eighth.
+
+THE COURT: Mr. Reyes, is that accurate?
+
+MR. REYES: The document bears a September twenty-ninth date, Your Honor.
+
+THE COURT: That is not what I asked. Was it created on October eighth?
+
+MR. REYES: The audit trail shows an October eighth entry. Our position is that reflects a formatting revision to a document drafted earlier.
+
+THE COURT: Then your position is a disputed fact, and you have brought it to me on summary judgment. Whether a warning was written before or after the employer learned of a disability is about as material as a fact gets in this kind of case, and there is evidence on both sides of it. Summary judgment on Count I is DENIED.
+
+Count II, the Wage Payment and Collection Act claim for accrued vacation.
+
+MR. REYES: The handbook provides that unused vacation is forfeited if not taken within the accrual year, Your Honor.
+
+THE COURT: Read me the sentence.
+
+MR. REYES: "Vacation should be used within the accrual year in which it is earned."
+
+THE COURT: "Should be used." Mr. Reyes, that is a sentence about what employees ought to do. It is not a forfeiture provision. Illinois requires earned vacation to be paid on separation unless an agreement clearly provides otherwise, and "should" is the opposite of clearly. Is there other language?
+
+MR. REYES: That is the operative provision, Your Honor.
+
+THE COURT: Summary judgment on Count II is DENIED. I will tell you now that on this text I would have difficulty seeing how you win that count at trial either, but that is not the motion in front of me.
+
+The motion to bar Dr. Ostrowski.
+
+MR. REYES: Dr. Ostrowski is a treating internist, Your Honor. He proposes to testify that the termination caused Ms. Sokolov's stress-related cardiac event. He is not a cardiologist and he did not author a Rule 213(f)(3) report.
+
+THE COURT: A treating physician testifying to the treatment he rendered and to the causation he assessed in the course of it is a 213(f)(2) witness. He does not need a report for opinions formed during treatment. Did he form this opinion during treatment?
+
+MR. SOTO: It is in his October twenty-second chart note, Your Honor, before this suit was filed.
+
+THE COURT: Then it is a treatment opinion and it comes in as one. Mr. Reyes, your specialty objection is better aimed at weight than admissibility for a treater's own causation assessment — and I note it is a different objection than the one Ms. Wu made successfully in a case of mine last month, because she was excluding a retained expert opining on another physician's standard of care. That is not this. The motion to bar is DENIED.
+
+Count III. Intentional infliction of emotional distress.
+
+MR. REYES: Your Honor, the conduct alleged is a performance improvement plan, a schedule change, and a termination.
+
+THE COURT: Mr. Soto, what is the extreme and outrageous conduct?
+
+MR. SOTO: The cumulative course of conduct, Your Honor, in the context of a known medical condition.
+
+THE COURT: Illinois sets that bar high on purpose, and it is not cleared by an employer managing an employee badly or even unlawfully. If ordinary adverse employment actions supported this tort, every discrimination case in this building would carry a count for it. There is no conduct in this record beyond the personnel decisions already at issue in Count I. Summary judgment on Count III is GRANTED.
+
+Mr. Reyes, a word about the shape of this. You were right on Count III and you were right to bring it. You were not close on Counts I and II, and the reason is the same in both: you asked me to accept a version of a document — a warning date, a handbook sentence — that the document itself does not support. I read them. Counts I and II proceed, Dr. Ostrowski testifies, Count III is dismissed. Status in thirty days.
+
+(Proceedings concluded.)
