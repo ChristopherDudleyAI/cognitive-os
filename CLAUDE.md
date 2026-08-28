@@ -27,20 +27,28 @@ When accuracy and usefulness genuinely diverge — a tool that correctly reports
 
 ## Where things stand
 
-The three-judge demo dataset is the current work. Reynolds has **6** transcripts of a target ~10, Kimball has **4**, Caldwell has **1**. The database holds **183 memories** (Reynolds 112, Kimball 71).
+The three-judge demo dataset is the current work. Kimball's docket is **complete at 10** transcripts, Reynolds has **6** of a target ~10, Caldwell has **1** (written, never ingested). The database holds **326 memories** (Kimball 213 across 10 matters, Reynolds 112 across 5).
 
 The pipeline works end to end and has been measured, not just assumed: ingest labels persist, `get_by_matter()` returns, the deviation engine reads posture tags, and evidence is now counted by ruling rather than by memory. The open questions are clustering quality and threshold tuning, not whether it runs.
 
-**Known and unfixed — the gap is a defendant shortfall, not a plaintiff lean.** Measured three ways against the Character Bible's own targets:
+**Measured after the Kimball ingest** — run `python tools/measure_docket.py` to reproduce:
 
-| judge | actual (p/d/n) | bible target | gap |
+| judge | by ruling (p/d/n) | bible target | deviation |
 |---|---|---|---|
-| Reynolds | 46 / 30 / 23 | 45 / 45 / 10 | defendant 15 low, neither 13 high |
-| Kimball | 43 / 37 / 18 | 40 / 50 / 10 | defendant 13 low, neither 8 high |
+| Kimball | 47 / 45 / 9 | 40 / 50 / 10 | 13 points |
+| Reynolds | 46 / 31 / 23 | 45 / 45 / 10 | 28 points |
 
-Plaintiff is on target for both. What's missing is defendant-favorable rulings, and too many rulings are landing `favored_neither`. Both dockets need the same correction, so this is a writing habit, not a per-judge problem. It is a transcript problem, not an engine problem.
+Kimball's rewrite worked: `favored_neither` fell from 18% to 9% and defendant rose from 37% to 45%. Reynolds is untouched and still needs four cases at roughly 2p/3d with no neutrals.
 
-Note the denominator: quoting plaintiff-vs-defendant alone (Reynolds 60/40) drops `favored_neither` and makes a defendant shortfall look like a plaintiff lean. The bible's targets are three-way — measure them the same way.
+**Two findings that matter more than those numbers.**
+
+*The aggregate lean is the wrong readout for this pair.* Reynolds is designed at 45% defendant and Kimball at 50%, so the **designed** spread between them is 5 points. Party posture was never going to separate these two — Reynolds's signature is a conduct lean, directional per cluster. Caldwell (70% plaintiff) is the real contrast partner for Kimball, and he has never been ingested.
+
+*The per-cluster signature is where both designs actually show up, and both are visible.* Kimball's `summary_judgment` cluster runs 59% defendant against the bible's stated ~60% target for that cluster specifically, and his expert-qualification clusters are 100% defendant. Reynolds's clusters run in **different directions from each other** — 100% plaintiff on `privilege_claim|motion_hearing`, 100% defendant on `relevance_objection|motion_hearing` — which is exactly her design. Quote the cluster breakdown, not the docket average.
+
+*Hand count is not extracted count.* The Kimball transcripts hand-count 42/50/8; extraction produced 47/45/9. About 5 points of plaintiff-ward drift. Never quote one figure for the other.
+
+Separately, 24 Reynolds memories are mis-tagged `trial_proceeding` from a stray phrase in Reynolds_06; the wording is fixed but the ingested memories still carry it.
 
 Separately, 24 Reynolds memories are mis-tagged `trial_proceeding` from a stray phrase in Reynolds_06; the wording is fixed but the ingested memories still carry it.
 
