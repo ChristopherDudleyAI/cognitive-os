@@ -1,0 +1,61 @@
+IN THE CIRCUIT COURT OF COOK COUNTY, ILLINOIS
+COUNTY DEPARTMENT, LAW DIVISION
+
+GRACE VANDERMEER, as Independent Administrator
+of the Estate of HAROLD VANDERMEER,
+                              Plaintiff,
+v.
+TRENTWOOD ORTHOPEDIC ASSOCIATES, S.C., and
+MARTIN OYELARAN, M.D.,
+                              Defendants.
+
+Case No. 2025-L-005106
+
+TRANSCRIPT OF MOTIONS HEARING
+BEFORE THE HONORABLE ROBERT D. KIMBALL
+
+APPEARANCES:
+For the Plaintiff:   LILLIAN PACE, ESQ.
+For the Defendants:  JANET WU, ESQ.
+
+---
+
+THE COURT: 2025-L-005106, Vandermeer against Trentwood Orthopedic and Dr. Oyelaran. Four matters. Defendants move to bar the plaintiff's standard-of-care expert and for summary judgment on the institutional negligence count. Plaintiff moves to compel Dr. Oyelaran's privileging file and, filed Tuesday, for leave to disclose a substitute expert. Ms. Wu, the expert motion.
+
+MS. WU: Thank you, Your Honor. Dr. Ann Brightwell is board certified in emergency medicine. Dr. Oyelaran is a board-certified orthopedic surgeon. The allegation is that he failed to recognize compartment syndrome in the twelve hours following an open tibial reduction and failed to order fasciotomy in time. That is post-operative orthopedic management.
+
+THE COURT: Ms. Pace, on what basis is an emergency physician competent to opine on post-operative orthopedic management?
+
+MS. PACE: Compartment syndrome is diagnosed in emergency departments constantly, Your Honor. Dr. Brightwell has recognized it hundreds of times. The recognition question is not specialty-bound.
+
+THE COURT: Recognition in an emergency department is a different setting, with different information available and a different decision to be made. The question here is not whether a physician should recognize compartment syndrome. It is what an orthopedic surgeon's obligations are in monitoring his own post-operative patient, and at what point the standard requires him to return to the operating room. Has Dr. Brightwell ever managed a post-operative orthopedic patient?
+
+MS. PACE: She has consulted on them, Your Honor.
+
+THE COURT: Consulting into a specialty is not practicing it. The like-specialty requirement is not a formality I can set aside because the underlying pathology is familiar to both fields. The motion to bar Dr. Brightwell's standard-of-care opinion is GRANTED. She may testify to causation and to the emergency department course, which is her field.
+
+Second. Summary judgment on Count III, institutional negligence against Trentwood. Ms. Wu.
+
+MS. WU: Negligent credentialing, Your Honor. Dr. Oyelaran has been on staff eleven years with no adverse action, no restriction, and no sustained finding. Plaintiff points to two closed complaints, from 2022 and 2023, both concerning scheduling and communication.
+
+THE COURT: Ms. Pace, what puts Trentwood on notice of a post-operative monitoring deficiency?
+
+MS. PACE: Those two complaints, Your Honor. The institution had this physician on its radar.
+
+THE COURT: "On its radar" is not the standard, counsel, and I would ask you not to argue it as though it were. Negligent credentialing requires that the institution knew or should have known of a deficiency bearing on the care actually rendered. Trentwood's own index describes the 2023 complaint as concerning post-operative follow-up, which is why I read it rather than taking either side's characterization — and it is a patient's complaint that Dr. Oyelaran's office did not return two telephone calls. That is an access complaint. It is not notice of a clinical monitoring deficiency, and no reasonable finder of fact could find otherwise on this record. Summary judgment on Count III is GRANTED.
+
+MS. PACE: Your Honor, the estate had not yet obtained the full file—
+
+THE COURT: Which brings us to your motion to compel, and it is now moot. Count III is out. The privileging file was relevant to institutional knowledge and to nothing else that remains in this case. I would add that had I reached it, the Medical Studies Act would have protected the committee's deliberations and the reviewer notes in any event; the fact of a complaint's existence is not privileged, but you already have that fact and it did not carry you. The motion to compel is DENIED as moot.
+
+Fourth. Plaintiff's motion for leave to disclose a substitute standard-of-care expert. Ms. Wu.
+
+MS. WU: We oppose, Your Honor. The 213(f)(3) deadline ran in June. The estate chose its expert, we deposed her, and the motion to bar was fully briefed before this request was made.
+
+THE COURT: That is all accurate. It is also true that the disclosure was timely when made, that the deficiency is one of qualification rather than diligence, and that barring the opinion today is the first ruling that told this plaintiff her expert would not do. Denying leave would end the case on a ruling issued eleven minutes ago. The motion for leave is GRANTED. Disclosure by the thirtieth, deposition within forty-five days, and Ms. Wu gets her costs for the second deposition regardless of outcome.
+
+MS. PACE: Thank you, Your Honor.
+
+THE COURT: Do not thank me, Ms. Pace — read what happened here. You are out an institutional negligence count and out your expert, and you have thirty days to find an orthopedic surgeon who will say what Dr. Brightwell said. I have given you the opportunity. I have not given you an opinion about whether you can take it. Status in sixty days.
+
+(Proceedings concluded.)

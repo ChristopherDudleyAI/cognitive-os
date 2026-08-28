@@ -1,0 +1,80 @@
+IN THE CIRCUIT COURT OF COOK COUNTY, ILLINOIS
+COUNTY DEPARTMENT, LAW DIVISION
+
+BLESSING ADEYEMI,
+                              Plaintiff,
+v.
+NORTHLINE PROPERTY MANAGEMENT, LLC, and
+DEAN KOVALCHUK, individually,
+                              Defendants.
+
+Case No. 2025-L-005644
+
+TRANSCRIPT OF MOTIONS HEARING
+BEFORE THE HONORABLE ROBERT D. KIMBALL
+
+APPEARANCES:
+For the Plaintiff:   LILLIAN PACE, ESQ.
+For the Defendants:  OWEN FITZGERALD, ESQ.
+
+---
+
+THE COURT: 2025-L-005644, Adeyemi against Northline Property Management and Mr. Kovalchuk. Four matters. Defendants move for summary judgment on the overtime count and to bar the plaintiff's hours reconstruction. Plaintiff moves to compel and for fees. And Mr. Kovalchuk moves separately to dismiss the individual claim. Mr. Fitzgerald, the overtime motion.
+
+MR. FITZGERALD: Thank you, Your Honor. Ms. Adeyemi was an assistant property manager. That is an administrative position, exempt under both the federal and state statutes, and she was salaried at sixty-two thousand dollars.
+
+THE COURT: What were her duties?
+
+MR. FITZGERALD: The job description is Exhibit 2, Your Honor. It describes management of tenant relations, oversight of vendor scheduling, and administrative support to the property manager.
+
+THE COURT: I asked what she did, Mr. Fitzgerald, not what the document says she did. The exemption turns on the duties actually performed. Where in this record is the evidence of what she actually spent her time on?
+
+MR. FITZGERALD: The job description is the best evidence of the role, Your Honor.
+
+THE COURT: It is not evidence of the role at all. It is evidence of what someone wrote down when the position was created. Ms. Pace, what does your record show?
+
+MS. PACE: Ms. Adeyemi's own log and eleven corroborating vendor emails, Your Honor. She spent the majority of her week showing units, processing applications, and doing turnover inspections. She had no authority to hire, to set rent, to approve an expenditure over two hundred dollars, or to sign a lease.
+
+THE COURT: Mr. Fitzgerald, do you have contrary evidence of actual duties? A declaration from her supervisor, calendar data, anything?
+
+MR. FITZGERALD: We rely on the job description and the salary basis, Your Honor.
+
+THE COURT: The salary basis is a threshold, not an exemption. You have moved for summary judgment on an affirmative defense that is yours to prove, on a record that contains no evidence of the element that matters. Summary judgment on Count I is DENIED.
+
+The motion to bar Ms. Adeyemi's hours reconstruction.
+
+MR. FITZGERALD: It is a recreation, Your Honor, prepared for litigation, not contemporaneous.
+
+THE COURT: Whose obligation was it to keep contemporaneous records of her hours?
+
+MR. FITZGERALD: The employer's, Your Honor, if she was non-exempt.
+
+THE COURT: Northline classified her as exempt and therefore kept none. When an employer has not kept the records the statute requires, an employee may prove hours by just and reasonable inference, and the burden shifts to the employer to negate it. You are asking me to bar the only proof available because of a gap your client created. The motion is DENIED.
+
+Plaintiff's motion to compel and for fees.
+
+MS. PACE: Nine of our sixteen document requests drew the identical response, Your Honor — "objection, overly broad, unduly burdensome, not proportional; subject to and without waiving, responsive documents will be produced." No documents followed for any of the nine. We wrote twice.
+
+THE COURT: Mr. Fitzgerald, what is the burden on request eleven? It asks for payroll records for one employee over two years.
+
+MR. FITZGERALD: We would need to review the scope, Your Honor.
+
+THE COURT: The scope is one employee and two years. An objection that a request is burdensome has to say why, with something about this request and this client, and none of these nine do. A general objection followed by a promise to produce and then no production is not a discovery response, it is a delay. The motion to compel is GRANTED. Production in fourteen days, and I am awarding the plaintiff her fees on this motion — Ms. Pace, submit an affidavit of time by the twenty-first.
+
+MR. FITZGERALD: Your Honor, we did not intend—
+
+THE COURT: I have made no finding about your intent. I have made a finding about your responses.
+
+Last. Mr. Kovalchuk's motion to dismiss the individual claim.
+
+MR. FITZGERALD: Mr. Kovalchuk is a member of the LLC, Your Honor. The complaint names him individually on all counts.
+
+THE COURT: Ms. Pace, the state Wage Act reaches individuals who knowingly permit a violation, and I would expect that count to survive. But Count II is brought under the Human Rights Act, and the Act does not provide for individual liability against a non-supervisory owner for discriminatory discharge. What is your authority?
+
+MS. PACE: We would rely on his day-to-day control of the properties, Your Honor.
+
+THE COURT: Control is not the test the statute writes. The individual-capacity claim under Count II is DISMISSED as to Mr. Kovalchuk. He remains a defendant on the wage counts.
+
+Mr. Fitzgerald, so the record is clear about what happened here — Mr. Kovalchuk won that count on the text of the statute, and he won it whether or not anyone briefed it, because I read the statute. Nothing else you filed today was supported. Fourteen days on production. Status in forty-five.
+
+(Proceedings concluded.)

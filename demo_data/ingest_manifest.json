@@ -1,0 +1,139 @@
+{
+  "_comment": [
+    "How to rebuild the demo corpus after a wipe. Every field here is an ingest",
+    "label the extractor cannot infer from the document text -- matter_id, source,",
+    "source_type and date_of_event are captured at the door and override anything",
+    "the model emits (ARCHITECTURE section 8). Losing this file means re-deriving",
+    "all of it by hand.",
+    "",
+    "Two transcripts share matter 2025-CH-01188 on purpose: Brightwater is one",
+    "matter heard twice, and that is what makes it a case-lifecycle test rather",
+    "than two unrelated hearings.",
+    "",
+    "Run with tools/ingest_batch.py. Ingest costs roughly $0.06 a transcript, so a",
+    "full rebuild of this manifest is about $1.00. Prefer",
+    "tools/snapshot_memories.py --restore when the change being tested is",
+    "downstream of extraction."
+  ],
+  "documents": [
+    {
+      "file": "demo_data/caldwell/Caldwell_01_Hayes_v_Riverside_MotionHearing.txt",
+      "matter_id": "2025-CV-08841",
+      "source": "Hayes v. Riverside Regional Medical Center — Motion Hearing",
+      "source_type": "court_transcript",
+      "date_of_event": "2025-05-14"
+    },
+    {
+      "file": "demo_data/reynolds/Reynolds_01_Brightwater_v_Sumner_DiscoveryHearing.txt",
+      "matter_id": "2025-CH-01188",
+      "source": "Brightwater Logistics v. Sumner Freight Systems — Discovery Hearing",
+      "source_type": "court_transcript",
+      "date_of_event": "2025-04-08"
+    },
+    {
+      "file": "demo_data/reynolds/Reynolds_02_Ashfield_v_Calloway_MotionHearing.txt",
+      "matter_id": "2025-CH-00934",
+      "source": "Ashfield Millwork v. Calloway Development — Motion Hearing",
+      "source_type": "court_transcript",
+      "date_of_event": "2025-04-22"
+    },
+    {
+      "file": "demo_data/reynolds/Reynolds_03_Vantage_v_Hartwell_SummaryJudgment.txt",
+      "matter_id": "2025-CH-00602",
+      "source": "Vantage Point Analytics v. Hartwell Capital — Summary Judgment",
+      "source_type": "court_transcript",
+      "date_of_event": "2025-06-10"
+    },
+    {
+      "file": "demo_data/reynolds/Reynolds_04_Meridian_v_Corbin_DiscoveryHearing.txt",
+      "matter_id": "2025-CH-01402",
+      "source": "Meridian Textile Group v. Corbin Holdings — Discovery and Motion Hearing",
+      "source_type": "court_transcript",
+      "date_of_event": "2025-07-08"
+    },
+    {
+      "file": "demo_data/reynolds/Reynolds_05_Kesterline_v_Aldridge_SummaryJudgment.txt",
+      "matter_id": "2025-CH-01055",
+      "source": "Kesterline Industrial Supply v. Aldridge Manufacturing — Summary Judgment",
+      "source_type": "court_transcript",
+      "date_of_event": "2025-06-24"
+    },
+    {
+      "file": "demo_data/reynolds/Reynolds_06_Brightwater_v_Sumner_SanctionsHearing.txt",
+      "matter_id": "2025-CH-01188",
+      "source": "Brightwater Logistics v. Sumner Freight Systems — Sanctions Hearing",
+      "source_type": "court_transcript",
+      "date_of_event": "2025-07-22"
+    },
+    {
+      "file": "demo_data/kimball/Kimball_01_Radcliffe_v_Nordwell_SummaryJudgment.txt",
+      "matter_id": "2025-L-004188",
+      "source": "Radcliffe v. Nordwell Logistics — Summary Judgment",
+      "source_type": "court_transcript",
+      "date_of_event": "2025-06-11"
+    },
+    {
+      "file": "demo_data/kimball/Kimball_02_Ferraro_v_Brightline_SummaryJudgment.txt",
+      "matter_id": "2025-L-003921",
+      "source": "Ferraro v. Brightline Staffing — Summary Judgment",
+      "source_type": "court_transcript",
+      "date_of_event": "2025-05-28"
+    },
+    {
+      "file": "demo_data/kimball/Kimball_03_Delacroix_v_Ashmont_MotionHearing.txt",
+      "matter_id": "2025-L-004510",
+      "source": "Delacroix v. Ashmont Wealth Advisors — Motions Hearing",
+      "source_type": "court_transcript",
+      "date_of_event": "2025-07-16"
+    },
+    {
+      "file": "demo_data/kimball/Kimball_04_Osei_v_Cranmore_SummaryJudgment.txt",
+      "matter_id": "2025-L-004033",
+      "source": "Osei v. Cranmore Industrial Group — Summary Judgment",
+      "source_type": "court_transcript",
+      "date_of_event": "2025-06-25"
+    },
+    {
+      "file": "demo_data/kimball/Kimball_05_Nakamura_v_Verrill_SummaryJudgment.txt",
+      "matter_id": "2025-L-004772",
+      "source": "Nakamura v. Verrill Precision Components — Summary Judgment",
+      "source_type": "court_transcript",
+      "date_of_event": "2025-07-30"
+    },
+    {
+      "file": "demo_data/kimball/Kimball_06_Vandermeer_v_Trentwood_MotionsHearing.txt",
+      "matter_id": "2025-L-005106",
+      "source": "Vandermeer v. Trentwood Orthopedic Associates — Motions Hearing",
+      "source_type": "court_transcript",
+      "date_of_event": "2025-08-13"
+    },
+    {
+      "file": "demo_data/kimball/Kimball_07_Brannigan_v_Halloway_SummaryJudgment.txt",
+      "matter_id": "2025-L-005240",
+      "source": "Brannigan v. Halloway Freight Systems — Summary Judgment",
+      "source_type": "court_transcript",
+      "date_of_event": "2025-08-27"
+    },
+    {
+      "file": "demo_data/kimball/Kimball_08_Delgado_v_Westmarch_SummaryJudgment.txt",
+      "matter_id": "2025-L-005388",
+      "source": "Delgado v. Westmarch Financial Group — Cross-Motions for Summary Judgment",
+      "source_type": "court_transcript",
+      "date_of_event": "2025-09-10"
+    },
+    {
+      "file": "demo_data/kimball/Kimball_09_Sokolov_v_Grantham_SummaryJudgment.txt",
+      "matter_id": "2025-L-005501",
+      "source": "Sokolov v. Grantham Medical Staffing — Summary Judgment",
+      "source_type": "court_transcript",
+      "date_of_event": "2025-09-24"
+    },
+    {
+      "file": "demo_data/kimball/Kimball_10_Adeyemi_v_Northline_MotionsHearing.txt",
+      "matter_id": "2025-L-005644",
+      "source": "Adeyemi v. Northline Property Management — Motions Hearing",
+      "source_type": "court_transcript",
+      "date_of_event": "2025-10-08"
+    }
+  ]
+}

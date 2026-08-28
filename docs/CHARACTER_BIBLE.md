@@ -3,15 +3,20 @@
 
 ---
 
-## ⚠️ GOVERNANCE — READ FIRST
+## GOVERNANCE — READ FIRST
 
-This file is the single source of truth for every fictional judge, attorney, firm, and rule used to generate Cognitive OS demo transcripts. It exists so any conversation can write a new transcript that stays perfectly consistent with everything already built.
+This file is the source of truth for every fictional judge, attorney, firm, and rule used to generate Cognitive OS demo transcripts. It exists for two practical reasons Christopher has stated:
+
+1. **Cross-session consistency.** Any conversation, starting cold, can write a new transcript that fits everything already built.
+2. **Rebuilding after a wipe.** Testing an ingestion or extraction change means wiping the database and re-ingesting. The transcripts in `demo_data/` and this file are what survive that. The database is disposable; these are not.
 
 **Rules for this file:**
-1. **It is READ-ONLY in normal use.** Future conversations read it to write consistent transcripts. They do not edit it casually.
-2. **It changes only in two situations:** (a) when ALL demo data is being re-ingested from scratch, or (b) when deliberately ADDING new characters/judges. Christopher has stated he would rather re-ingest fresh data than make piecemeal "corrections" that risk introducing inconsistency.
-3. **Never silently alter an established character's tendencies or a judge's rule.** If a character needs to change, that is a full-reset decision, made explicitly, not an in-conversation edit.
-4. **If a transcript you are writing would contradict anything here, stop.** The bible wins. Re-read it and adjust the transcript, not the bible.
+
+1. **Prefer reading it to editing it.** It only does its job if a session can trust it without re-deriving everything.
+2. **It may be corrected when it is wrong about itself.** Christopher's instruction: *"you can make changes to the bible to work best."* If the spec is internally inconsistent — a roster that cannot produce the posture mix it also demands — fix it here rather than writing transcripts that quietly miss the target. Say what changed and why, in the same edit.
+3. **Never silently alter an established character's tendencies.** A character change that would contradict transcripts already written is a re-ingest decision, not an in-conversation edit. A change that only affects transcripts not yet written is fine — note it under that character.
+4. **Where this file and the measured data disagree, find out which is wrong before changing either.** Both have been wrong. The `favored_neither` guidance below exists because the corpus drifted; the Kimball roster was rebalanced because the spec's own arithmetic did not close.
+5. **If a transcript would contradict an established fact here** — a canonical name, a judge's signature rule, a case already written — the bible wins. Fix the transcript.
 
 ---
 
@@ -30,6 +35,18 @@ This file is the single source of truth for every fictional judge, attorney, fir
 - "Objection sustained" favors whoever raised it; "objection overruled" favors the opposing party. Always ask: who benefited?
 
 **Don't make every ruling go the same way.** Each judge has a dominant lean, but a believable, demoable docket needs genuine opposite-posture rulings too (a competent opposing counsel winning on real merits; a rule that happens to help the defense). Without real deviations, the confidence/deviation engine has nothing to detect. Each judge profile below states the intended posture mix.
+
+**`favored_neither` is the exception, not the safe default. Target 10%, roughly one ruling in ten.** This rule exists because the corpus drifted badly without it: measured across two dockets, `favored_neither` ran at 18% and 23% while `favored_defendant` came in 13 and 15 points *under* target on the same transcripts. The cause is a writing habit, not a tagging error — hearings were being padded with scheduling matters, joint extensions, and briefing-deadline housekeeping, which are genuinely neutral and genuinely worthless as evidence. They cost a directional ruling every time they appear.
+
+Reserve it for rulings that truly have no winner: a jointly-requested continuance, a courtroom logistics matter. **A contested ruling always has a winner** — if both sides argued it, one of them lost, and it gets a directional tag. Cap it at one per transcript, and prefer zero.
+
+**Budget each transcript at four or five directional rulings.** Fewer than four and the hearing is too thin to establish anything; more than six and one transcript dominates the judge's profile. Write real disputes, not filler.
+
+**Check the docket arithmetic before writing, not after.** A judge's posture mix is the sum of their cases, so a case that is fine on its own can still push the docket off target. Multiply out first:
+
+> Kimball wants ~50% `favored_defendant` across ~10 cases at ~4 directional rulings each — about 20 of 40 rulings. His four written cases hold 6. So the remaining six cases need roughly 14, which means running about 2-to-1 defence. Only counsel designed to *win* can supply that.
+
+This is what caught the roster problem: for a defence-leaning judge, defence counsel written to lose produce `favored_plaintiff` rulings, so a roster of mostly-losing attorneys cannot add up to a defence lean no matter how each individual case is written. **A judge's party lean and their counsel roster's win rates are the same number seen twice.** If they disagree, the roster is wrong.
 
 **Attorney isolation (cross-judge rule):** Each opposing counsel appears in front of **only ONE judge** for now. Do not put a Caldwell defense attorney in a Reynolds case, etc. (Reason: the pattern engine clusters opposing-counsel rulings by ruling context but not by which judge ruled, so the same attorney before two judges could produce a false "deviation." Cross-judge attorney tracking is a deliberate later experiment, not part of the base dataset.) The firm's OWN attorneys (Hollis & Park) MAY appear before any judge — they are not deviation-tracked, so this is safe and realistic.
 
@@ -111,6 +128,10 @@ This is the deliberate CONTRAST to Caldwell. Reynolds has no inherent plaintiff/
 - **Contract interpretation:** where language is ambiguous, looks to course of dealing and commercial context, not just the four corners.
 - **Settlement strong-arming / bad-faith negotiation tactics earn her disfavor** and color how she views that party's other positions.
 
+**Where her written docket actually stands (measured 2026-08-24): 46p / 30d / 23n against a 45/45/10 target.** Plaintiff is right; defence is 15 points light and neutral is 13 heavy. Her roster does not need rebalancing the way Kimball's did — most of that gap is the `favored_neither` padding described in the global rules, and converting those rulings into real contested ones largely closes it. Her four remaining cases should run about **2 plaintiff / 3 defendant each, with no neutrals**, which lands the docket near 20p / 20d / 4n.
+
+Her counsel are written to lose their signature fight and win elsewhere, and the "elsewhere" has been under-written. Cross genuinely wins discovery craft; Whitfield genuinely wins on the merits; Anand's briefs genuinely persuade on the papers. Those wins are in character and they are where her defence rulings come from.
+
 ### Opposing counsel (defense — Reynolds docket only)
 1. **Helena Cross** — aggressive commercial litigator, genuinely strong on discovery strategy, but overreaches in settlement posture and strong-arms. The overreach backfires specifically with Reynolds, who dislikes strong-arming. → wins discovery fights, loses when she overreaches.
 2. **Gregory Whitfield** — methodical on the merits but under-prepared on procedural nuance. (Distinct from DeLuca: DeLuca fails to read the record; Whitfield knows the record but fumbles procedure.) → wins on merits when he has them, loses motions to sloppiness.
@@ -145,17 +166,30 @@ The third distinct type. Kimball follows the text and the controlling precedent 
 - **Predictable IF you know the controlling law cold.** Rewards clean doctrinal records and precise citation; punishes vagueness.
 
 ### Opposing counsel (defense / employer-side — Kimball docket only)
-1. **Margaret Stahl** — elite doctrinal defense advocate. Builds clean records and wins summary judgment frequently under Kimball's rigor. **The strong adversary.** Her favored_defendant wins are CORRECT and consistent — not deviations — which itself tests whether the engine correctly reads a defense-lean rather than flagging it as contradiction.
-2. **Daniel Reyes** — competent, but occasionally over-reaches on summary judgment where the facts ARE genuinely disputed. Kimball denies those. → produces favored_plaintiff "deviations" from the defense lean.
-3. **Owen Fitzgerald** — boilerplate, sloppy employer defense. Fails to build clean doctrinal records. → loses; favored_plaintiff against him.
-4. **Janet Wu** — professional-liability specialist; strong on standard-of-care doctrine and expert qualification fights. Mixed results depending on the record.
-5. **Carl Hoffman** — aggressive employer defense who leans on credibility and sympathy arguments Kimball ignores. → loses when the doctrine isn't on his side.
+
+**Rebalanced 2026-08-24.** The original roster had three of five attorneys designed to lose. Defence losses are `favored_plaintiff` rulings, so that roster could not produce the ~50% `favored_defendant` this docket calls for — the two halves of the spec contradicted each other, and the written transcripts came in at 37% defence as a result. Wu and Hoffman are now net winners. Neither change contradicts a case already written: Wu's one appearance was already split, and Hoffman had none. Target per-case posture is given for each, in directional rulings.
+
+1. **Margaret Stahl** — elite doctrinal defense advocate. Builds clean records and wins summary judgment frequently under Kimball's rigor. **The strong adversary.** Her favored_defendant wins are CORRECT and consistent — not deviations — which itself tests whether the engine correctly reads a defense-lean rather than flagging it as contradiction. → **~1 plaintiff / 3 defendant per case.**
+2. **Janet Wu** — professional-liability specialist, genuinely strong on standard-of-care doctrine and expert qualification. She knows the like-specialty rule cold and uses it to strike plaintiff experts. Loses where the record shows a real factual dispute she cannot argue away. → **~1 plaintiff / 3 defendant per case.**
+3. **Carl Hoffman** — aggressive employer-side advocate with solid doctrinal instincts, who wins on clean records and then overplays credibility and sympathy arguments in the close cases where Kimball ignores both. His losses are concentrated in the contested calls, not the clear ones. → **~1 plaintiff / 3 defendant per case.**
+4. **Daniel Reyes** — competent, but over-reaches on summary judgment where the facts ARE genuinely disputed. Kimball denies those. → produces favored_plaintiff "deviations" from the defense lean. **~3 plaintiff / 1 defendant per case.**
+5. **Owen Fitzgerald** — boilerplate, sloppy employer defense. Fails to build clean doctrinal records and loses the contested motions. His client still wins counts that fail as a matter of law, because Kimball follows the doctrine regardless of who briefed it — that is the whole of his character. → **~3 plaintiff / 1 defendant per case.**
+
+**Where this stands.** All ten cases are written. Hand-counted across the docket: **17 favored_plaintiff, 20 favored_defendant, 3 favored_neither — 42 / 50 / 8** against the 40/50/10 target. Appearances: Stahl 3, Hoffman 2, Wu 2, Reyes 2, Fitzgerald 1. **Fitzgerald is owed a second appearance** whenever this docket grows; write it plaintiff-leaning (~3p/1d) so it does not disturb the mix.
+
+That hand count is of the transcripts, not of what the extractor produced from them. The two are not the same number and should not be quoted interchangeably — check the extracted distribution after ingest and record it separately.
 
 ### Cases already written
 - **Radcliffe v. Nordwell Logistics** (Summary Judgment, 2025-L-004188) — Okafor v. Stahl. ADEA SJ granted at the pretext step (favored_defendant), plaintiff cross-motion on retaliation denied (favored_defendant), retaliation count expressly preserved because nobody moved on it (favored_plaintiff). Establishes step-by-step McDonnell Douglas and his "I decided no such thing" disclaimer about fairness.
 - **Ferraro v. Brightline Staffing** (Summary Judgment, 2025-L-003921) — Soto v. Reyes. FMLA interference and retaliation SJ both denied on a genuinely disputed record (favored_plaintiff), expert qualification challenge denied (favored_plaintiff), after-acquired evidence barred on liability but admitted on damages (split). Reyes over-reaching on SJ where facts are disputed — his designed profile.
 - **Delacroix v. Ashmont Wealth Advisors** (Motions Hearing, 2025-L-004510) — Pace v. Wu. Standard-of-care expert barred for lack of like-specialty qualification (favored_defendant), SJ denied as premature against the scheduling order (favored_plaintiff), disciplinary file compelled in part, sustained finding in and closed complaint out (split). Establishes strict expert qualification in professional liability.
 - **Osei v. Cranmore Industrial Group** (Summary Judgment, 2025-L-004033) — Soto v. Stahl. Both Title VII counts SJ granted (favored_defendant, twice), unsupported affirmative defense struck (favored_plaintiff), joint briefing extension granted (favored_neither). Stahl second appearance; establishes his rejection of "totality of the circumstances" as an argument.
+- **Nakamura v. Verrill Precision Components** (Summary Judgment, 2025-L-004772) — Okafor v. Stahl. ADA failure-to-accommodate SJ granted where every documented request was met and the only denial concerned a position that did not exist (favored_defendant), retaliation SJ granted because the RIF selection matrix predated the protected activity (favored_defendant), vocational expert barred for offering a labor-market opinion resting on no labor-market data (favored_defendant), wage-claim SJ denied on supervisor emails contradicting the time records (favored_plaintiff). Establishes that experience qualifies a witness but does not substitute for methodology.
+- **Vandermeer v. Trentwood Orthopedic** (Motions Hearing, 2025-L-005106) — Pace v. Wu. Emergency physician barred from opining on post-operative orthopedic management (favored_defendant), institutional negligence SJ granted where the prior complaint was about returned phone calls (favored_defendant), motion to compel the privileging file denied as moot (favored_defendant), leave to disclose a substitute expert granted with costs to the defence (favored_plaintiff). Wu's second appearance; "consulting into a specialty is not practicing it."
+- **Brannigan v. Halloway Freight Systems** (Summary Judgment, 2025-L-005240) — Soto v. Hoffman. Defamation SJ granted on qualified privilege (favored_defendant), commission claim SJ granted on unambiguous plan text (favored_defendant), front-pay calculation barred in part for omitting documented mitigation (favored_defendant), retaliatory discharge SJ denied on a two-day gap in the investigation file (favored_plaintiff). Hoffman's first appearance and his signature failure: he argued the plaintiff was not credible, and Kimball told him that is a trial argument.
+- **Delgado v. Westmarch Financial Group** (Cross-Motions for Summary Judgment, 2025-L-005388) — Okafor v. Hoffman. Plaintiff's motion to void the non-solicitation covenant denied on an audit log showing firm-wide report access (favored_defendant), deferred compensation SJ granted on a forfeiture clause signed twice (favored_defendant), industry-custom expert barred from opining on enforceability (favored_defendant), retaliatory discharge SJ denied (favored_plaintiff). Hoffman's second appearance; he argued the equities and was told they do not matter from either side.
+- **Sokolov v. Grantham Medical Staffing** (Summary Judgment, 2025-L-005501) — Soto v. Reyes. Disability discrimination SJ denied where the audit trail showed the final warning was created after the disclosure (favored_plaintiff), vacation-pay SJ denied because "should be used" is not a forfeiture clause (favored_plaintiff), motion to bar a treating physician's causation opinion denied as a 213(f)(2) treatment opinion (favored_plaintiff), IIED SJ granted (favored_defendant). Reyes's second appearance and his designed profile: right on the count that was legally deficient, not close on the two that turned on documents Kimball read himself.
+- **Adeyemi v. Northline Property Management** (Motions Hearing, 2025-L-005644) — Pace v. Fitzgerald. Overtime exemption SJ denied for want of any evidence of actual duties (favored_plaintiff), motion to bar the hours reconstruction denied because the employer kept no records (favored_plaintiff), motion to compel granted with fees against boilerplate objections (favored_plaintiff), individual-capacity Human Rights Act claim dismissed as to the owner (favored_defendant). Fitzgerald's first appearance; the one count his client won turned on statutory text Kimball read regardless of the briefing.
 
 ---
 
